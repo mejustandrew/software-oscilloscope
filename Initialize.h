@@ -4,7 +4,7 @@
   #include"Exported.h"
   #include<iostream>
   #define SAMPLE_RATE         (192000)
-  #define PA_SAMPLE_TYPE      paFloat32
+  #define PA_SAMPLE_TYPE      paInt16
   #define FRAMES_PER_BUFFER   (64)
   
   typedef float SAMPLE;

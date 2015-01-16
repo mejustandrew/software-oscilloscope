@@ -14,7 +14,6 @@ void Container::Add(double value)
 
 DataResponse* Container::GetSamples(int number)
 {
-	int i=0;
 	if(isF_used==true)
 	{
 		if(!f->SetLoopSize(number))return nullptr;
@@ -27,6 +26,28 @@ DataResponse* Container::GetSamples(int number)
 	else
 	{
 		if(!g->SetLoopSize(number))return nullptr;
+		else
+		{
+		isF_used=true;
+		return g;
+		}
+	}
+}
+
+DataResponse* Container::GetSamples(int number,double treshold)
+{
+	if(isF_used==true)
+	{
+		if(!f->SetSamples(number,treshold))return nullptr;
+		else
+		{
+		isF_used=false;
+		return f;
+		}
+	}
+	else
+	{
+		if(!g->SetSamples(number,treshold))return nullptr;
 		else
 		{
 		isF_used=true;

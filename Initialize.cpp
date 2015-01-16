@@ -8,8 +8,9 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
                              void *userData )
   {
         SAMPLE *out = (SAMPLE*)outputBuffer;
-        const SAMPLE *in = (const SAMPLE*)inputBuffer;
-        unsigned int i;
+//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
+		short* in=(short*)inputBuffer;
+        unsigned long i;
         (void) timeInfo; /* Prevent unused variable warnings. */
         (void) statusFlags;
        (void) userData;
@@ -30,7 +31,17 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 IDataResponse* GetSignalSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
-	return c->GetSamples(request->GetTimeBase()*SAMPLE_RATE+1);
+	double s=request->GetTimeBase();
+	int k=request->GetTimeBase()*SAMPLE_RATE;
+	return c->GetSamples(k+1,request->GetTreshold());
+}
+
+IDataResponse* GetSpectrumSamples(IDataRequest* request)
+{
+	Container *c=Singletone::GetContainer();
+	double s=request->GetTimeBase();
+	int k=request->GetTimeBase()*SAMPLE_RATE;
+	return c->GetSamples(k+1);
 }
 
 void Initialize()
@@ -47,7 +58,7 @@ void Initialize()
          std::cout<<"Error: No default input device.\n";
          goto error;
        }
-       inputParameters.channelCount = 2;       /* stereo input */
+       inputParameters.channelCount = 1;       /* stereo input */
        inputParameters.sampleFormat = PA_SAMPLE_TYPE;
        inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
        inputParameters.hostApiSpecificStreamInfo = NULL;
