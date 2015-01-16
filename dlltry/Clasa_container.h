@@ -5,7 +5,7 @@ class Container
 
 	DataResponse *f,*g,*fsimple,*gsimple;
 public:
-	std::atomic_bool isF_used,isFimple_used;
+	std::atomic_bool isF_used,isFsimple_used;
 	double k;
 	Container()
 	{
@@ -14,7 +14,7 @@ public:
 		gsimple=new DataResponse();
 		g=new DataResponse();
 		isF_used=true;
-		isFimple_used=true;
+		isFsimple_used=true;
 		k= ( 1 << 15 ) / 0.447;
 	}
 	~Container()

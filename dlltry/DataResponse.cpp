@@ -50,7 +50,7 @@ bool DataResponse::SetLoopSize(int i)
 bool DataResponse::SetSamples(int number,double treshold)
 {
 	int i=0;
-	double converted_treshold=treshold/k;
+	double converted_treshold=treshold;
 	if(over_buffer)
 	{
 		i=add_pos+1;

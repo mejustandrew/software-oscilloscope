@@ -132,7 +132,7 @@ void WorkingFrame::TimeBaseChanged( wxCommandEvent& event )
 
 void WorkingFrame::TresholdChanged( wxSpinEvent& event )
 {
-	treshold_value = Treshold->GetValue();
+	treshold_value = Treshold->GetValue()*0.001;
 }
 
 void WorkingFrame::OnSecondsChanged( wxCommandEvent& event )

@@ -10,26 +10,35 @@ void Container::Add(double value)
 	{
 		g->Add(value);
 	}
+
+	if(isFsimple_used)
+	{
+		fsimple->Add(value);
+	}
+	else
+	{
+		gsimple->Add(value);
+	}
 }
 
 DataResponse* Container::GetSamples(int number)
 {
-	if(isF_used==true)
+	if(isFsimple_used==true)
 	{
-		if(!f->SetLoopSize(number))return nullptr;
+		if(!fsimple->SetLoopSize(number))return nullptr;
 		else
 		{
-		isF_used=false;
-		return f;
+		isFsimple_used=false;
+		return fsimple;
 		}
 	}
 	else
 	{
-		if(!g->SetLoopSize(number))return nullptr;
+		if(!gsimple->SetLoopSize(number))return nullptr;
 		else
 		{
-		isF_used=true;
-		return g;
+		isFsimple_used=true;
+		return gsimple;
 		}
 	}
 }
