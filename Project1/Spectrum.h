@@ -9,22 +9,27 @@ class SpectrumFrame: public GeneratedFrame
 {
 protected:
 	//std::atomic_bool active;
-	bool active;
-	double*converted_samples;
+	bool active,first_resized,isFFT_spectrum;
+	double*converted_samples,*freq_container,timeBase_value;
 	int number_in_base2;
 	DataRequest*req;
 	wxMemoryDC back_mem,grid_mem;
 	wxBitmap specter_bmp,grid_bmp;
 	wxPen* pen;
-	int panel_width,panel_height,MaxPanel_height,MaxPanel_width,panel_mid;
+	wxString showFreq;
+	int panel_width,panel_height,panel_mid,add_pos,shown_pos;
 
+	static void DrawFFT(SpectrumFrame*frame);
 	static void Draw(SpectrumFrame*frame);
 	static void Refresh(SpectrumFrame*frame);
 	void OnResize( wxSizeEvent& event );
 	void OnClick( wxMouseEvent& event );
 	void OnPaint( wxPaintEvent& event );
+	void VerifyFrequency( wxMouseEvent& event );
+	void OnSpectrumChoice( wxCommandEvent& event );
 	void OnExit( wxCloseEvent& event );
 	
+	float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values);
 	void ConvertSamples(IDataResponse *source,double *dest,int n);
 	void four1(double* data, unsigned long nn);
 	int GetPanelWidth(){ return panel_width; }

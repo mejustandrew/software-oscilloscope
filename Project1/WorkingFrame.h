@@ -5,7 +5,6 @@
 #include <wx/colour.h>
 #include <wx/wx.h>
 #include <wx/utils.h> 
-//#include <mutex>
 #include "IDataRequest.h"
 #include "IDataResponse.h"
 #include "Project.h"

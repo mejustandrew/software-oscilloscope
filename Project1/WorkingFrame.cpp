@@ -98,8 +98,8 @@ void WorkingFrame::OnPositionChanged( wxSpinEvent& event )
 	 }
 	 else
 	 {
-		 spectrum->Start();
-		 spectrum->Show();
+		  spectrum->Show();
+		  spectrum->Start();
 	 }
  }
 

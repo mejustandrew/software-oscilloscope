@@ -16,6 +16,9 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/string.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
+#include <wx/gbsizer.h>
 #include <wx/sizer.h>
 #include <wx/frame.h>
 
@@ -31,17 +34,22 @@ class GeneratedFrame : public wxFrame
 	
 	protected:
 		wxPanel* m_panel1;
+		wxStaticText* info_frequency;
+		wxStaticText* frequency_text;
+		wxChoice* spectrum_Choice;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnExit( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void VerifyFrequency( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnResize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnSpectrumChoice( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		GeneratedFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GeneratedFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Frequnecy Display"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~GeneratedFrame();
 	
