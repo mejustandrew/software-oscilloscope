@@ -1,5 +1,4 @@
-#include "WorkingFrame.h"
-#include"DataRequest.h" 
+#include "WorkingFrame.h" 
 #include "Imported.h"
 #include<thread>
 
@@ -40,7 +39,7 @@ BuiltFrame( parent )
 	grid_mem->SetBackground(*wxBLACK_BRUSH);
 	grid_mem->SelectObject(*grid_bitmap);
 	DrawGrid();
-	Initialize();
+	
 }
 
  //std::mutex WorkingFrame::mu;

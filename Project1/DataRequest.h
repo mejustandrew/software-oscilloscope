@@ -1,4 +1,5 @@
 #include"IDataRequest.h"
+
 class DataRequest: public IDataRequest
 {
 double TimeBase;
