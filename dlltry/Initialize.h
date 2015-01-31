@@ -16,4 +16,4 @@
                              PaStreamCallbackFlags statusFlags,
                              void *userData );
 
-	
+  void Initialize();

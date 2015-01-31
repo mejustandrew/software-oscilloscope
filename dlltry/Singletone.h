@@ -1,5 +1,6 @@
 #include"Clasa_container.h"
-
+#pragma once
+#include"Initialize.h"
 class Singletone
 {
 private:
@@ -14,6 +15,7 @@ public:
 		if(c==nullptr)
 		{
 			c=new Container;
+			Initialize();
 		}
 		return c;
 	}

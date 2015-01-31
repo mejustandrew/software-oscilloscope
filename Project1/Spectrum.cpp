@@ -6,7 +6,7 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent )
 :
 GeneratedFrame( parent )
 {
-	Initialize();
+
 	active=true;
 	m_panel1->GetSize(&panel_width,&panel_height);
 	MaxPanel_height=m_panel1->GetMaxHeight();

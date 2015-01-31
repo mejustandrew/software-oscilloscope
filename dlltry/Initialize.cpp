@@ -32,7 +32,7 @@ IDataResponse* GetSignalSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
 	double s=request->GetTimeBase();
-	int k=request->GetTimeBase()*SAMPLE_RATE;
+	int k=(int)(request->GetTimeBase()*SAMPLE_RATE);
 	return c->GetSamples(k+1,request->GetTreshold());
 }
 
@@ -40,7 +40,7 @@ IDataResponse* GetSpectrumSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
 	double s=request->GetTimeBase();
-	int k=request->GetTimeBase()*SAMPLE_RATE;
+	int k=(int)(request->GetTimeBase()*SAMPLE_RATE);
 	return c->GetSamples(k+1);
 }
 
