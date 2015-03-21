@@ -4,13 +4,14 @@
 #include<atomic>
 #include"DataRequest.h"
 #include "IDataResponse.h"
-
+#include<mutex>
 class SpectrumFrame: public GeneratedFrame
 {
 protected:
 	//std::atomic_bool active;
+	std::mutex mu;
 	bool active,first_resized,isFFT_spectrum;
-	double*converted_samples,*freq_container,timeBase_value;
+	double*converted_samples,*freq_container,timeBase_value,*spectrum_container,sample_rate;
 	int number_in_base2;
 	DataRequest*req;
 	wxMemoryDC back_mem,grid_mem;

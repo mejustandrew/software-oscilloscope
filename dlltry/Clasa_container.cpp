@@ -21,11 +21,11 @@ void Container::Add(double value)
 	}
 }
 
-DataResponse* Container::GetSamples(int number)
+DataResponse* Container::GetSamples(double time_base)
 {
 	if(isFsimple_used==true)
 	{
-		if(!fsimple->SetLoopSize(number))return nullptr;
+		if(!fsimple->SetLoopSize(time_base*sample_rate))return nullptr;
 		else
 		{
 		isFsimple_used=false;
@@ -34,7 +34,7 @@ DataResponse* Container::GetSamples(int number)
 	}
 	else
 	{
-		if(!gsimple->SetLoopSize(number))return nullptr;
+		if(!gsimple->SetLoopSize(time_base*sample_rate))return nullptr;
 		else
 		{
 		isFsimple_used=true;
@@ -43,11 +43,11 @@ DataResponse* Container::GetSamples(int number)
 	}
 }
 
-DataResponse* Container::GetSamples(int number,double treshold)
+DataResponse* Container::GetSamples(double time_base,double treshold)
 {
 	if(isF_used==true)
 	{
-		if(!f->SetSamples(number,treshold))return nullptr;
+		if(!f->SetSamples(time_base*sample_rate,treshold))return nullptr;
 		else
 		{
 		isF_used=false;
@@ -56,7 +56,7 @@ DataResponse* Container::GetSamples(int number,double treshold)
 	}
 	else
 	{
-		if(!g->SetSamples(number,treshold))return nullptr;
+		if(!g->SetSamples(time_base*sample_rate,treshold))return nullptr;
 		else
 		{
 		isF_used=true;

@@ -31,25 +31,23 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 IDataResponse* GetSignalSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
-	double s=request->GetTimeBase();
-	int k=(int)(request->GetTimeBase()*SAMPLE_RATE);
-	return c->GetSamples(k+1,request->GetTreshold());
+	double k=(request->GetTimeBase());
+	return c->GetSamples(k,request->GetTreshold());
 }
 
 IDataResponse* GetSpectrumSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
-	double s=request->GetTimeBase();
-	int k=(int)(request->GetTimeBase()*SAMPLE_RATE);
-	return c->GetSamples(k+1);
+	double k=(request->GetTimeBase());
+	return c->GetSamples(k);
 }
 
-void Initialize()
+void Initialize(Container* c)
 {
 	PaStreamParameters inputParameters;
        PaStream *stream;
        PaError err;
-
+	   
        err = Pa_Initialize();
        if( err != paNoError ) goto error;
    
@@ -62,13 +60,13 @@ void Initialize()
        inputParameters.sampleFormat = PA_SAMPLE_TYPE;
        inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
        inputParameters.hostApiSpecificStreamInfo = NULL;
-  
-   
+	   double sample_rate=GetSampleRate(&inputParameters,nullptr);
+	   c->SetSampleRate(sample_rate);
        err = Pa_OpenStream(
                  &stream,
                  &inputParameters,
                  nullptr,
-                 SAMPLE_RATE,
+				 sample_rate,
                  FRAMES_PER_BUFFER,
                  0, /* paClipOff, */  /* we won't output out of range samples so don't bother clipping them */
                  Callback,
@@ -92,4 +90,25 @@ void Initialize()
        std::cout<<"Error number:"<< err<<"\n" ;
        std::cout<<"Error message:"<< Pa_GetErrorText( err )<<"\n";
 
+}
+
+double GetSampleRate( const PaStreamParameters *inputParameters , const PaStreamParameters * )
+{
+	PaError err;
+	double standardSampleRates[] = {
+		8000.0, 9600.0, 11025.0, 12000.0, 16000.0, 22050.0, 24000.0, 32000.0,
+		44100.0, 48000.0, 88200.0, 96000.0, 192000.0, -1 /* negative terminated  list */
+	};
+	double sampleRate;
+	for( int i = 0; standardSampleRates[i] > 0; i++ )
+	{
+		err = Pa_IsFormatSupported( inputParameters, NULL, standardSampleRates[i] );
+		if( err == paFormatIsSupported )
+		{
+			sampleRate = standardSampleRates[i];
+		}
+		else
+			break;
+	}
+	return sampleRate;
 }

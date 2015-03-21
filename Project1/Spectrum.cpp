@@ -16,7 +16,7 @@ GeneratedFrame( parent )
 	isFFT_spectrum=true;
 	info_frequency->SetLabel("");
 	frequency_text->SetLabel("");
-	timeBase_value=0.1;
+	timeBase_value=0.05;
 	req=new DataRequest(timeBase_value,0.001);
 	IDataResponse* samples=GetSpectrumSamples(req);
 	while(samples==nullptr)
@@ -30,7 +30,7 @@ GeneratedFrame( parent )
 		number_in_base2*=2;
 	}
 	converted_samples=new double[number_in_base2];
-
+	info_frequency->SetLabel("Frequency");
 	grid_mem.Clear();
 }
 
@@ -39,8 +39,9 @@ void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
 	if(spectrum_Choice->GetSelection()==0)
 	{
 		isFFT_spectrum=true;
-		info_frequency->SetLabel("");
-		frequency_text->SetLabel("");
+		//info_frequency->SetLabel("");
+		//frequency_text->SetLabel("");
+
 		for(int i=0;i<panel_width;++i)
 		{
 			freq_container[i]=0;
@@ -49,13 +50,11 @@ void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
 	else 
 	{
 		isFFT_spectrum=false;
+		mu.lock();
 		back_mem.Blit(0,0,panel_width,panel_height,&grid_mem,0,0);
-		Sleep(60);
-		back_mem.Blit(0,0,panel_width,panel_height,&grid_mem,0,0);
-		Sleep(60);
-		back_mem.Blit(0,0,panel_width,panel_height,&grid_mem,0,0);
+		mu.unlock();
 		info_frequency->SetLabel("Frequency");
-		frequency_text->SetLabel("0");
+		//frequency_text->SetLabel("0");
 	}
 }
 
@@ -101,10 +100,13 @@ void SpectrumFrame::OnResize( wxSizeEvent& event )
 	grid_mem.SelectObject(grid_bmp);
 	grid_mem.SetBackground(*wxBLACK_BRUSH);
 	grid_mem.Clear();
+	sample_rate=192000;
 	freq_container=new double[panel_width];
+	spectrum_container=new double[panel_width];
 	for(int i=0;i<panel_width;++i)
 	{
 		freq_container[i]=0;
+		spectrum_container[i]=i*sample_rate/number_in_base2/2;
 	}
 	first_resized=false;
 	}
@@ -169,13 +171,22 @@ void SpectrumFrame::four1(double* data, unsigned long nn)
 
 void SpectrumFrame::VerifyFrequency( wxMouseEvent& event )
 {
-	if(isFFT_spectrum)return;
+	if(isFFT_spectrum)
+	{
+		wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
+		showFreq="";
+		showFreq<<spectrum_container[current_position.x];
+		frequency_text->SetLabel(showFreq);
+	}
+	else
+	{
 	wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
 	shown_pos=add_pos-panel_width+current_position.x;
 	if(shown_pos<0)shown_pos+=panel_width;
 	showFreq="";
 	showFreq<<freq_container[shown_pos];
 	frequency_text->SetLabel(showFreq);
+	}
 }
 
 void SpectrumFrame::ConvertSamples(IDataResponse *source,double *dest,int n)
@@ -195,6 +206,7 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
 	IDataResponse* samples=GetSpectrumSamples(frame->req);
 	if(samples==nullptr)return;	
+	frame->mu.lock();
 	float scalling_factor=2;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 	
@@ -208,15 +220,14 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 	}
 
 	wxClientDC client(frame->m_panel1);
-
 	client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
-	
+	frame->mu.unlock();
 }
 
 float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 {
 	bool crescator=true,new_max=false,new_min=false;
-	float frequency=0,max,min,prag=0.01;
+	double frequency=0,max,min,prag=0.005;
 	int size=values->size()-1;
 	for(int i=0;i<size;i+=2)
 	{
@@ -265,7 +276,7 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,1,0);
 	frame->back_mem.Blit(frame->panel_width-1,0,1,frame->panel_height,&frame->grid_mem,0,0);
 	frame->back_mem.DrawLine(frame->panel_width-1,frame->panel_height-frequency,frame->panel_width-1,frame->panel_height);
-
+	
 	client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
 	frame->freq_container[frame->add_pos]=recieved_freq;
 

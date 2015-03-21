@@ -15,7 +15,7 @@ public:
 		if(c==nullptr)
 		{
 			c=new Container;
-			Initialize();
+			Initialize(c);
 		}
 		return c;
 	}

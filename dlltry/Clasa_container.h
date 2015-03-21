@@ -6,7 +6,7 @@ class Container
 	DataResponse *f,*g,*fsimple,*gsimple;
 public:
 	std::atomic_bool isF_used,isFsimple_used;
-	double k;
+	double k,sample_rate;
 	Container()
 	{
 		f=new DataResponse();
@@ -16,6 +16,7 @@ public:
 		isF_used=true;
 		isFsimple_used=true;
 		k= ( 1 << 15 ) / 0.447;
+		sample_rate=0;
 	}
 	~Container()
 	{
@@ -23,7 +24,8 @@ public:
 		delete g;
 	}
 	void Add(double value);
-	DataResponse * GetSamples(int number);
-	DataResponse * GetSamples(int number,double treshold);
+	void SetSampleRate(double value){ sample_rate=value; }
+	DataResponse * GetSamples(double time_base);
+	DataResponse * GetSamples(double time_base,double treshold);
 };
 
