@@ -112,3 +112,8 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 	}
 	return sampleRate;
 }
+
+double Get_sample_rate()
+{
+	return Singletone::GetContainer()->GetSampleRate();
+}

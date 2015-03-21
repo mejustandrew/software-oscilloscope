@@ -64,3 +64,8 @@ DataResponse* Container::GetSamples(double time_base,double treshold)
 		}
 	}
 }
+
+double Container::GetSampleRate()
+{
+	return sample_rate;
+}

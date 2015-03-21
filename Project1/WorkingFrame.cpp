@@ -211,7 +211,7 @@ void WorkingFrame::OnPanelResized( wxSizeEvent& event )
 void WorkingFrame::DisplayFrequency(WorkingFrame*frame,IDataResponse *values)
 {
 	bool crescator=true,new_max=false,new_min=false;
-	double frequency=0,max,min,prag=0.01;
+	double frequency=0,max,min,prag=0.005;
 	if(values==NULL)return;
 	int size=values->size()-1;
 	for(int i=0;i<size;i+=2)
@@ -219,7 +219,6 @@ void WorkingFrame::DisplayFrequency(WorkingFrame*frame,IDataResponse *values)
 		if((*values)[i+1]>(*values)[i] && crescator==false)
 			{
 				crescator=true;
-				//frequency+=0.5;
 				min=(*values)[i];
 				new_min=true;
 				if(new_max && new_min)
@@ -233,7 +232,6 @@ void WorkingFrame::DisplayFrequency(WorkingFrame*frame,IDataResponse *values)
 			if((*values)[i+1]<(*values)[i] && crescator==true)
 			{
 				crescator=false;
-				//frequency+=0.5;
 				max=(*values)[i];
 				new_max=true;
 				if(new_max && new_min)

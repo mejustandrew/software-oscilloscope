@@ -25,6 +25,7 @@ public:
 	}
 	void Add(double value);
 	void SetSampleRate(double value){ sample_rate=value; }
+	double GetSampleRate();
 	DataResponse * GetSamples(double time_base);
 	DataResponse * GetSamples(double time_base,double treshold);
 };

@@ -39,9 +39,6 @@ void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
 	if(spectrum_Choice->GetSelection()==0)
 	{
 		isFFT_spectrum=true;
-		//info_frequency->SetLabel("");
-		//frequency_text->SetLabel("");
-
 		for(int i=0;i<panel_width;++i)
 		{
 			freq_container[i]=0;
@@ -54,7 +51,6 @@ void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
 		back_mem.Blit(0,0,panel_width,panel_height,&grid_mem,0,0);
 		mu.unlock();
 		info_frequency->SetLabel("Frequency");
-		//frequency_text->SetLabel("0");
 	}
 }
 
@@ -100,7 +96,7 @@ void SpectrumFrame::OnResize( wxSizeEvent& event )
 	grid_mem.SelectObject(grid_bmp);
 	grid_mem.SetBackground(*wxBLACK_BRUSH);
 	grid_mem.Clear();
-	sample_rate=192000;
+	sample_rate=Get_sample_rate();
 	freq_container=new double[panel_width];
 	spectrum_container=new double[panel_width];
 	for(int i=0;i<panel_width;++i)
