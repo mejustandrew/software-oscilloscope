@@ -38,6 +38,16 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	spectrum_Choice->SetSelection( 0 );
 	gbSizer3->Add( spectrum_Choice, wxGBPosition( 0, 20 ), wxGBSpan( 1, 1 ), wxBOTTOM, 5 );
 	
+	scalingFactor_text = new wxStaticText( this, wxID_ANY, wxT("Scaling factor:"), wxDefaultPosition, wxDefaultSize, 0 );
+	scalingFactor_text->Wrap( -1 );
+	gbSizer3->Add( scalingFactor_text, wxGBPosition( 0, 23 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	wxString scalingFactorChoiceChoices[] = { wxT("10"), wxT("5"), wxT("1"), wxT("0.5"), wxT("0.1") };
+	int scalingFactorChoiceNChoices = sizeof( scalingFactorChoiceChoices ) / sizeof( wxString );
+	scalingFactorChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 50,-1 ), scalingFactorChoiceNChoices, scalingFactorChoiceChoices, 0 );
+	scalingFactorChoice->SetSelection( 2 );
+	gbSizer3->Add( scalingFactorChoice, wxGBPosition( 0, 24 ), wxGBSpan( 1, 1 ), 0, 5 );
+	
 	
 	bSizer1->Add( gbSizer3, 0, wxEXPAND, 5 );
 	
@@ -55,6 +65,7 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	m_panel1->Connect( wxEVT_PAINT, wxPaintEventHandler( GeneratedFrame::OnPaint ), NULL, this );
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( GeneratedFrame::OnResize ), NULL, this );
 	spectrum_Choice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnSpectrumChoice ), NULL, this );
+	scalingFactorChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnScalingFactor ), NULL, this );
 }
 
 GeneratedFrame::~GeneratedFrame()
@@ -66,5 +77,6 @@ GeneratedFrame::~GeneratedFrame()
 	m_panel1->Disconnect( wxEVT_PAINT, wxPaintEventHandler( GeneratedFrame::OnPaint ), NULL, this );
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( GeneratedFrame::OnResize ), NULL, this );
 	spectrum_Choice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnSpectrumChoice ), NULL, this );
+	scalingFactorChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnScalingFactor ), NULL, this );
 	
 }

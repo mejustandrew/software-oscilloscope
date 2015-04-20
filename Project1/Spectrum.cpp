@@ -8,7 +8,7 @@ GeneratedFrame( parent )
 {
 	this->Maximize();
 	this->SetMinSize(this->GetSize());
-
+	scaling_factor=1;
 	add_pos=0;
 	shown_pos=0;
 	active=true;
@@ -52,6 +52,12 @@ void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
 		mu.unlock();
 		info_frequency->SetLabel("Frequency");
 	}
+}
+
+void SpectrumFrame::OnScalingFactor( wxCommandEvent& event )
+{
+	wxString returned =scalingFactorChoice->GetString(scalingFactorChoice->GetSelection());
+	returned.ToDouble(&scaling_factor);
 }
 
 void SpectrumFrame::OnClick( wxMouseEvent& event )
@@ -203,7 +209,7 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 	IDataResponse* samples=GetSpectrumSamples(frame->req);
 	if(samples==nullptr)return;	
 	frame->mu.lock();
-	float scalling_factor=2;
+	
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 	
 	frame->four1(frame->converted_samples,frame->number_in_base2>>1);//divideing by 2
@@ -212,7 +218,8 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 
 	for(int i=0;i<frame->panel_width;++i)
 	{
-		frame->back_mem.DrawLine(i,frame->panel_mid+frame->converted_samples[i]*scalling_factor,i,frame->panel_mid-frame->converted_samples[i]*scalling_factor);
+		//frame->back_mem.DrawLine(i,frame->panel_mid+frame->converted_samples[i]*scalling_factor,i,frame->panel_mid-frame->converted_samples[i]*scalling_factor);
+		frame->back_mem.DrawLine(i,frame->panel_height,i,frame->panel_height-frame->converted_samples[i]*frame->scaling_factor);
 	}
 
 	wxClientDC client(frame->m_panel1);

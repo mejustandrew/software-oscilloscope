@@ -11,7 +11,8 @@ protected:
 	//std::atomic_bool active;
 	std::mutex mu;
 	bool active,first_resized,isFFT_spectrum;
-	double*converted_samples,*freq_container,timeBase_value,*spectrum_container,sample_rate;
+	double*converted_samples,*freq_container,timeBase_value,*spectrum_container,sample_rate,scaling_factor;
+
 	int number_in_base2;
 	DataRequest*req;
 	wxMemoryDC back_mem,grid_mem;
@@ -29,7 +30,8 @@ protected:
 	void VerifyFrequency( wxMouseEvent& event );
 	void OnSpectrumChoice( wxCommandEvent& event );
 	void OnExit( wxCloseEvent& event );
-	
+	void OnScalingFactor( wxCommandEvent& event );
+
 	float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values);
 	void ConvertSamples(IDataResponse *source,double *dest,int n);
 	void four1(double* data, unsigned long nn);
