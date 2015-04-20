@@ -7,6 +7,7 @@ class Container
 public:
 	std::atomic_bool isF_used,isFsimple_used;
 	double k,sample_rate;
+	bool succeded_initialize;
 	Container()
 	{
 		f=new DataResponse();

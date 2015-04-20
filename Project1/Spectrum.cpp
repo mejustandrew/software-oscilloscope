@@ -16,18 +16,21 @@ GeneratedFrame( parent )
 	isFFT_spectrum=true;
 	info_frequency->SetLabel("");
 	frequency_text->SetLabel("");
+	number_in_base2=1;
 	timeBase_value=0.05;
+	if(Initialize())
+	{
 	req=new DataRequest(timeBase_value,0.001);
 	IDataResponse* samples=GetSpectrumSamples(req);
 	while(samples==nullptr)
 	{
 		samples=GetSpectrumSamples(req);
 	}
-	number_in_base2=1;
 	int size=samples->size();
 	while(number_in_base2<size)
 	{
 		number_in_base2*=2;
+	}
 	}
 	converted_samples=new double[number_in_base2];
 	info_frequency->SetLabel("Frequency");

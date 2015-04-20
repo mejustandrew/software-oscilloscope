@@ -15,7 +15,8 @@ public:
 		if(c==nullptr)
 		{
 			c=new Container;
-			Initialize(c);
+			bool result=InternInitialize(c);
+			c->succeded_initialize=result;
 		}
 		return c;
 	}

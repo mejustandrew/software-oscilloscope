@@ -265,9 +265,13 @@ void WorkingFrame::OnStateChanged( wxMouseEvent& event )
 
 void WorkingFrame::Create(WorkingFrame* frame)
 {
-	frame->active=true;
-	std::thread refreshThread(Refresh,frame);
-	refreshThread.detach();
+	if(Initialize())
+	{
+		frame->active=true;
+		std::thread refreshThread(Refresh,frame);
+		refreshThread.detach();
+	}
+	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopen application after verify Recording Devices\nmay solve this problem");
 }
 
 void WorkingFrame::Refresh(WorkingFrame* frame)

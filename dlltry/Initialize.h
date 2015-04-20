@@ -16,6 +16,6 @@
                              PaStreamCallbackFlags statusFlags,
                              void *userData );
 
-  void Initialize(Container* c);
+  bool InternInitialize(Container* c);
 
 double  GetSampleRate( const PaStreamParameters *inputParameters , const PaStreamParameters * );

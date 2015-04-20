@@ -35,6 +35,12 @@ IDataResponse* GetSignalSamples(IDataRequest* request)
 	return c->GetSamples(k,request->GetTreshold());
 }
 
+bool Initialize()
+{
+	Container *c=Singletone::GetContainer();
+	return c->succeded_initialize;
+}
+
 IDataResponse* GetSpectrumSamples(IDataRequest* request)
 {
 	Container *c=Singletone::GetContainer();
@@ -42,20 +48,19 @@ IDataResponse* GetSpectrumSamples(IDataRequest* request)
 	return c->GetSamples(k);
 }
 
-void Initialize(Container* c)
+bool InternInitialize(Container* c)
 {
 	PaStreamParameters inputParameters;
        PaStream *stream;
        PaError err;
 	   
        err = Pa_Initialize();
-       if( err != paNoError ) goto error;
-   
+	   if( err==paNoError )
+	   {
        inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-       if (inputParameters.device == paNoDevice) {
-         std::cout<<"Error: No default input device.\n";
-         goto error;
-       }
+       if (inputParameters.device != paNoDevice) 
+	   {
+ 
        inputParameters.channelCount = 1;       /* stereo input */
        inputParameters.sampleFormat = PA_SAMPLE_TYPE;
        inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
@@ -71,24 +76,16 @@ void Initialize(Container* c)
                  0, /* paClipOff, */  /* we won't output out of range samples so don't bother clipping them */
                  Callback,
                  NULL );
-       if( err != paNoError ) goto error;
-   
-       err = Pa_StartStream( stream );
-       if( err != paNoError ) goto error;
-		
-       /*std::cout<<"Hit ENTER to stop program.\n";
-       getchar();
-       err = Pa_CloseStream( stream );
-       if( err != paNoError ) goto error;
-   
-       Pa_Terminate();
-       return;*/
-   
-   error:
-//       Pa_Terminate();
-       std::cout<<  "An error occured while using the portaudio stream\n";
-       std::cout<<"Error number:"<< err<<"\n" ;
-       std::cout<<"Error message:"<< Pa_GetErrorText( err )<<"\n";
+       if( err == paNoError )
+	   {
+		err = Pa_StartStream( stream );
+	   }
+       if( err != paNoError )return false;
+	   else return true;
+		   }
+	   else return false;
+	   }
+	   else return false;
 
 }
 
