@@ -16,9 +16,9 @@ public:
 		loop_size=0;
 		access_pos=0;
 		add_pos=0;
-		number_of_samples=200000;
+		number_of_samples=60000;
 		samples=new double[number_of_samples];
-		k= ( 1 << 15 ) / 0.447;
+		k= ( 1 << 16 )-1;
 		for(int i=0;i<number_of_samples;++i)
 		{
 			samples[i]=0;

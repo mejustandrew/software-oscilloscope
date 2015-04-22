@@ -85,7 +85,7 @@ void SpectrumFrame::Refresh(SpectrumFrame*frame)
 	{
 		if(frame->isFFT_spectrum)DrawFFT(frame);
 		else Draw(frame);
-		//Sleep(1);
+		Sleep(1);
 	}
 }
 
@@ -273,10 +273,10 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 	
 	IDataResponse* samples=GetSpectrumSamples(frame->req);
 	if(samples==nullptr)return;
-	int frequency;
+
 	double recieved_freq=frame->GetFrequency(frame,samples);
-	
-	frequency=pow(log(recieved_freq),2)*7;
+
+	int frequency=pow(log(recieved_freq),2)*7;
 	wxClientDC client(frame->m_panel1);
 	
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,1,0);
@@ -285,7 +285,7 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 	
 	client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
 	frame->freq_container[frame->add_pos]=recieved_freq;
-	//samples->Destroy();
+	
 	if(frame->add_pos+1==frame->panel_width)frame->add_pos=0;
 	else
 	{
