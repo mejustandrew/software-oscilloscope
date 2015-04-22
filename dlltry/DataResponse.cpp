@@ -1,17 +1,8 @@
 #include"DataResponse.h"
 
-int DataResponse::size()
-{
-	return loop_size;
-}
+int DataResponse::size(){	return loop_size; }
 
-double DataResponse::operator[] ( int index )
-{
-	//if(over_buffer)
-	//	return samples[(index+access_pos)%number_of_samples];
-	return
-		samples[(index+access_pos)%number_of_samples];
-}
+double DataResponse::operator[] ( int index ){	return samples[(index+access_pos)%number_of_samples]; }
 
 void DataResponse::Destroy()
 {

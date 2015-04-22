@@ -39,7 +39,7 @@ BuiltFrame( parent )
 	grid_mem->SetBackground(*wxBLACK_BRUSH);
 	grid_mem->SelectObject(*grid_bitmap);
 	DrawGrid();
-	
+	back_mem->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
 }
 
  //std::mutex WorkingFrame::mu;
