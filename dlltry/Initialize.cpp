@@ -1,5 +1,6 @@
 #include"Initialize.h"
-
+#include<chrono>
+#include<thread>
 
 static int Callback( const void *inputBuffer, void *outputBuffer,
                              unsigned long framesPerBuffer,
@@ -48,7 +49,9 @@ IDataResponse* GetSpectrumSamples(IDataRequest* request)
 	return c->GetSamples(k);
 }
 
-bool InternInitialize(Container* c)
+void StartVerify(PaStream * stream);
+
+bool InternInitialize()
 {
 	PaStreamParameters inputParameters;
        PaStream *stream;
@@ -66,7 +69,9 @@ bool InternInitialize(Container* c)
        inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
        inputParameters.hostApiSpecificStreamInfo = NULL;
 	   double sample_rate=GetSampleRate(&inputParameters,nullptr);
+	   Container *c=Singletone::GetContainer();
 	   c->SetSampleRate(sample_rate);
+
        err = Pa_OpenStream(
                  &stream,
                  &inputParameters,
@@ -81,7 +86,11 @@ bool InternInitialize(Container* c)
 		err = Pa_StartStream( stream );
 	   }
        if( err != paNoError )return false;
-	   else return true;
+	   else
+	   {
+		   StartVerify(stream);
+		   return true;
+	   }
 		   }
 	   else return false;
 	   }
@@ -113,4 +122,29 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 double Get_sample_rate()
 {
 	return Singletone::GetContainer()->GetSampleRate();
+}
+
+
+
+void Verify(PaStream * stream)
+{
+	bool is_working=true;
+	
+	while (is_working)
+	{
+		std::chrono::milliseconds m(100);
+		std::this_thread::sleep_for(m);
+		if(Pa_IsStreamStopped(stream)==1 || Pa_IsStreamStopped(stream)<0|| Pa_IsStreamActive(stream)==0)
+		{
+			is_working=false;
+			Pa_StopStream(stream);
+			InternInitialize();
+		}
+	}
+}
+
+void StartVerify(PaStream * stream)
+{
+	std::thread t(Verify,stream);
+	t.detach();
 }
