@@ -111,7 +111,7 @@ void SpectrumFrame::OnResize( wxSizeEvent& event )
 	for(int i=0;i<panel_width;++i)
 	{
 		freq_container[i]=0;
-		spectrum_container[i]=i*sample_rate/number_in_base2/2;
+		spectrum_container[i]=i*sample_rate/number_in_base2;
 	}
 	first_resized=false;
 	}
@@ -212,17 +212,17 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 	IDataResponse* samples=GetSpectrumSamples(frame->req);
 	if(samples==nullptr)return;	
 	frame->mu.lock();
-	
+	int magnitude;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 	
 	frame->four1(frame->converted_samples,frame->number_in_base2>>1);//divideing by 2
 	samples->Destroy();
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->grid_mem,0,0);
 
-	for(int i=0;i<frame->panel_width;++i)
+	for(int i=0,j=0;j<frame->panel_width;i+=2,++j)
 	{
-		//frame->back_mem.DrawLine(i,frame->panel_mid+frame->converted_samples[i]*scalling_factor,i,frame->panel_mid-frame->converted_samples[i]*scalling_factor);
-		frame->back_mem.DrawLine(i,frame->panel_height,i,frame->panel_height-frame->converted_samples[i]*frame->scaling_factor);
+		magnitude=sqrt(frame->converted_samples[i]*frame->converted_samples[i]+frame->converted_samples[i+1]*frame->converted_samples[i+1]);
+		frame->back_mem.DrawLine(j,frame->panel_height,j,frame->panel_height-magnitude*frame->scaling_factor);
 	}
 
 	wxClientDC client(frame->m_panel1);
