@@ -1,6 +1,6 @@
-#include"Clasa_container.h"
+#include"ContainersManager.h"
 
-void Container::Add(double value)
+void ContainersManager::Add(double value)
 {
 	if(isF_used)
 	{
@@ -21,7 +21,7 @@ void Container::Add(double value)
 	}
 }
 
-DataResponse* Container::GetSamples(double time_base)
+DataResponse* ContainersManager::GetSamples(double time_base)
 {
 	if(isFsimple_used==true)
 	{
@@ -43,7 +43,7 @@ DataResponse* Container::GetSamples(double time_base)
 	}
 }
 
-DataResponse* Container::GetSamples(double time_base,double treshold)
+DataResponse* ContainersManager::GetSamples(double time_base,double treshold)
 {
 	if(isF_used==true)
 	{
@@ -65,7 +65,7 @@ DataResponse* Container::GetSamples(double time_base,double treshold)
 	}
 }
 
-double Container::GetSampleRate()
+double ContainersManager::GetSampleRate()
 {
 	return sample_rate;
 }

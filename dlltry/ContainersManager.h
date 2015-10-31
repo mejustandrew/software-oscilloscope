@@ -1,6 +1,6 @@
 #include<atomic> 
 #include"DataResponse.h"
-class Container
+class ContainersManager
 {
 
 	DataResponse *f,*g,*fsimple,*gsimple;
@@ -8,7 +8,7 @@ public:
 	std::atomic_bool isF_used,isFsimple_used;
 	double k,sample_rate;
 	bool succeded_initialize;
-	Container()
+	ContainersManager()
 	{
 		f=new DataResponse();
 		fsimple=new DataResponse();
@@ -19,10 +19,12 @@ public:
 		k= ( 1 << 15 ) / 0.447;
 		sample_rate=0;
 	}
-	~Container()
+	~ContainersManager()
 	{
 		delete f;
 		delete g;
+		delete fsimple;
+		delete gsimple;
 	}
 	void Add(double value);
 	void SetSampleRate(double value){ sample_rate=value; }
