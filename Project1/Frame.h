@@ -39,6 +39,8 @@ class GeneratedFrame : public wxFrame
 		wxChoice* spectrum_Choice;
 		wxStaticText* scalingFactor_text;
 		wxChoice* scalingFactorChoice;
+		wxChoice* frequnciesChoice;
+		wxStaticText* m_staticText4;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnExit( wxCloseEvent& event ) { event.Skip(); }
@@ -48,6 +50,7 @@ class GeneratedFrame : public wxFrame
 		virtual void OnResize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSpectrumChoice( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnScalingFactor( wxCommandEvent& event ) { event.Skip(); }
+		virtual void MaxFrequencyChanged( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

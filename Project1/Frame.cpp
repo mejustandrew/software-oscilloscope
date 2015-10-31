@@ -48,6 +48,15 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	scalingFactorChoice->SetSelection( 2 );
 	gbSizer3->Add( scalingFactorChoice, wxGBPosition( 0, 24 ), wxGBSpan( 1, 1 ), 0, 5 );
 	
+	wxArrayString frequnciesChoiceChoices;
+	frequnciesChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, frequnciesChoiceChoices, 0 );
+	frequnciesChoice->SetSelection( 0 );
+	gbSizer3->Add( frequnciesChoice, wxGBPosition( 0, 28 ), wxGBSpan( 1, 1 ), 0, 5 );
+	
+	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("MaxFrequency:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText4->Wrap( -1 );
+	gbSizer3->Add( m_staticText4, wxGBPosition( 0, 26 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
 	
 	bSizer1->Add( gbSizer3, 0, wxEXPAND, 5 );
 	
@@ -66,6 +75,7 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( GeneratedFrame::OnResize ), NULL, this );
 	spectrum_Choice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnSpectrumChoice ), NULL, this );
 	scalingFactorChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnScalingFactor ), NULL, this );
+	frequnciesChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::MaxFrequencyChanged ), NULL, this );
 }
 
 GeneratedFrame::~GeneratedFrame()
@@ -78,5 +88,6 @@ GeneratedFrame::~GeneratedFrame()
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( GeneratedFrame::OnResize ), NULL, this );
 	spectrum_Choice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnSpectrumChoice ), NULL, this );
 	scalingFactorChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::OnScalingFactor ), NULL, this );
+	frequnciesChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GeneratedFrame::MaxFrequencyChanged ), NULL, this );
 	
 }

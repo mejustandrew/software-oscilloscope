@@ -5,6 +5,7 @@
 #include"DataRequest.h"
 #include "IDataResponse.h"
 #include<mutex>
+
 class SpectrumFrame: public GeneratedFrame
 {
 protected:
@@ -31,6 +32,7 @@ protected:
 	void OnSpectrumChoice( wxCommandEvent& event );
 	void OnExit( wxCloseEvent& event );
 	void OnScalingFactor( wxCommandEvent& event );
+	void MaxFrequencyChanged( wxCommandEvent& event );
 
 	float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values);
 	void ConvertSamples(IDataResponse *source,double *dest,int n);
@@ -41,6 +43,7 @@ protected:
 public:
 	SpectrumFrame( wxWindow* parent );
 	void Start();
+	void ComputeNumberInBase2();
 	void Stop(){ active=false; }
 	bool IsRunning(){ return active; }
 };

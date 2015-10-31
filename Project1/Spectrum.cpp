@@ -17,24 +17,40 @@ GeneratedFrame( parent )
 	info_frequency->SetLabel("");
 	frequency_text->SetLabel("");
 	number_in_base2=1;
-	timeBase_value=0.05;
+	timeBase_value=0.005;
 	if(Initialize())
 	{
-	req=new DataRequest(timeBase_value,0.001);
+		req=new DataRequest(timeBase_value,0.001);
+		ComputeNumberInBase2();
+	}
+	converted_samples=new double[number_in_base2];
+	info_frequency->SetLabel("Frequency");
+	grid_mem.Clear();
+}
+
+void SpectrumFrame::ComputeNumberInBase2()
+{
 	IDataResponse* samples=GetSpectrumSamples(req);
 	while(samples==nullptr)
 	{
 		samples=GetSpectrumSamples(req);
 	}
-	int size=samples->size();
-	while(number_in_base2<size)
+	number_in_base2=1;
+	while(number_in_base2<samples->size())
 	{
-		number_in_base2*=2;
+		number_in_base2+=number_in_base2;
 	}
-	}
+	delete []converted_samples;
 	converted_samples=new double[number_in_base2];
-	info_frequency->SetLabel("Frequency");
-	grid_mem.Clear();
+}
+
+void SpectrumFrame::MaxFrequencyChanged( wxCommandEvent& event )
+{
+	 wxString string_value =frequnciesChoice->GetString(frequnciesChoice->GetSelection());
+	 long converted_value;
+	 string_value.ToLong(&converted_value);
+	 req=new DataRequest(converted_value/sample_rate,0.001);
+	 ComputeNumberInBase2();
 }
 
 void SpectrumFrame::OnSpectrumChoice( wxCommandEvent& event )
@@ -219,7 +235,7 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 	samples->Destroy();
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->grid_mem,0,0);
 
-	for(int i=0,j=0;j<frame->panel_width;i+=2,++j)
+	for(int i=0,j=0;j<frame->number_in_base2/4;i+=2,++j)
 	{
 		magnitude=sqrt(frame->converted_samples[i]*frame->converted_samples[i]+frame->converted_samples[i+1]*frame->converted_samples[i+1]);
 		frame->back_mem.DrawLine(j,frame->panel_height,j,frame->panel_height-magnitude*frame->scaling_factor);

@@ -1,20 +1,20 @@
-#include"Clasa_container.h"
+#include"ContainersManager.h"
 #pragma once
 #include"Initialize.h"
 class Singletone
 {
 private:
-	static Container*c;
+	static ContainersManager*c;
 public:
 	Singletone()
 	{
 		c=nullptr;
 	}
-	static Container* GetContainer()
+	static ContainersManager* GetContainer()
 	{
 		if(c==nullptr)
 		{
-			c=new Container;
+			c=new ContainersManager;
 			bool result=InternInitialize();
 			c->succeded_initialize=result;
 		}

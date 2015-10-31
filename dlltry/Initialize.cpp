@@ -16,7 +16,7 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
         (void) statusFlags;
        (void) userData;
 	   double to_export;
-	   Container *cont=Singletone::GetContainer();
+	   ContainersManager *cont=Singletone::GetContainer();
        if( inputBuffer != NULL )
        {
            for( i=0; i<framesPerBuffer; i++ )
@@ -31,20 +31,20 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 
 IDataResponse* GetSignalSamples(IDataRequest* request)
 {
-	Container *c=Singletone::GetContainer();
+	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
 	return c->GetSamples(k,request->GetTreshold());
 }
 
 bool Initialize()
 {
-	Container *c=Singletone::GetContainer();
+	ContainersManager *c=Singletone::GetContainer();
 	return c->succeded_initialize;
 }
 
 IDataResponse* GetSpectrumSamples(IDataRequest* request)
 {
-	Container *c=Singletone::GetContainer();
+	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
 	return c->GetSamples(k);
 }
@@ -69,7 +69,7 @@ bool InternInitialize()
        inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
        inputParameters.hostApiSpecificStreamInfo = NULL;
 	   double sample_rate=GetSampleRate(&inputParameters,nullptr);
-	   Container *c=Singletone::GetContainer();
+	   ContainersManager *c=Singletone::GetContainer();
 	   c->SetSampleRate(sample_rate);
 
        err = Pa_OpenStream(
