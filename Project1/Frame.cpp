@@ -48,8 +48,9 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	scalingFactorChoice->SetSelection( 2 );
 	gbSizer3->Add( scalingFactorChoice, wxGBPosition( 0, 24 ), wxGBSpan( 1, 1 ), 0, 5 );
 	
-	wxArrayString frequnciesChoiceChoices;
-	frequnciesChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, frequnciesChoiceChoices, 0 );
+	wxString frequnciesChoiceChoices[] = { wxT("5000"), wxT("10000"), wxT("15000"), wxT("20000"), wxT("30000"), wxT("40000") };
+	int frequnciesChoiceNChoices = sizeof( frequnciesChoiceChoices ) / sizeof( wxString );
+	frequnciesChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, frequnciesChoiceNChoices, frequnciesChoiceChoices, 0 );
 	frequnciesChoice->SetSelection( 0 );
 	gbSizer3->Add( frequnciesChoice, wxGBPosition( 0, 28 ), wxGBSpan( 1, 1 ), 0, 5 );
 	
@@ -63,7 +64,6 @@ GeneratedFrame::GeneratedFrame( wxWindow* parent, wxWindowID id, const wxString&
 	
 	this->SetSizer( bSizer1 );
 	this->Layout();
-	bSizer1->Fit( this );
 	
 	this->Centre( wxBOTH );
 	

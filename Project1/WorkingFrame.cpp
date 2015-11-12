@@ -22,8 +22,12 @@ BuiltFrame( parent )
 	grid_bitmap=new wxBitmap;
 	antiAlise_bitmap=new wxBitmap;
 	back_mem=new wxMemoryDC;
+	back_mem2=new wxMemoryDC;
+	antiAlise_mem2=new wxMemoryDC;
 	grid_mem=new wxMemoryDC;
+
 	antiAlise_mem=new wxMemoryDC;
+	antiAlise_mem2=new wxMemoryDC;
 	maxPanel_width=m_panel1->GetMaxSize().GetWidth();
 	antiAlise_bitmap->Create(maxPanel_width,panel_height);
 	wave_bitmap->Create(maxPanel_width,panel_height);
@@ -32,14 +36,21 @@ BuiltFrame( parent )
 	antiAlise_mem->SetPen(*antiAlise_pen);
 	antiAlise_mem->SetBackground(*wxBLACK_BRUSH);	
 	antiAlise_mem->SelectObject(*antiAlise_bitmap);
+	antiAlise_mem2->SetPen(*antiAlise_pen);
+	antiAlise_mem2->SetBackground(*wxBLACK_BRUSH);	
+	antiAlise_mem2->SelectObject(*antiAlise_bitmap);
 	back_mem->SetPen(*wxGREEN_PEN);
 	back_mem->SetBackground(*wxBLACK_BRUSH);
 	back_mem->SelectObject(*wave_bitmap);
+	back_mem2->SetPen(*wxGREEN_PEN);
+	back_mem2->SetBackground(*wxBLACK_BRUSH);
+	back_mem2->SelectObject(*wave_bitmap);
 	grid_mem->SetPen(*wxGREEN_PEN);
 	grid_mem->SetBackground(*wxBLACK_BRUSH);
 	grid_mem->SelectObject(*grid_bitmap);
 	DrawGrid();
 	back_mem->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
+	back_mem2->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
 }
 
  //std::mutex WorkingFrame::mu;
@@ -59,6 +70,29 @@ void WorkingFrame::PanelLeave( wxMouseEvent& event )
 {
 	 timeLabel->SetLabelText("0.00");
 	 amplitudeLabel->SetLabelText("0.00");
+}
+
+void WorkingFrame::PanelLeave2( wxMouseEvent& event )
+{
+	 timeLabel->SetLabelText("0.00");
+	 amplitudeLabel->SetLabelText("0.00");
+}
+
+void WorkingFrame::VerifyValues2( wxMouseEvent& event )
+{
+	 wxPoint current_position=m_panel2->ScreenToClient(wxGetMousePosition());
+	 wxString s;
+	 s<<GetTimeBase()*1000/panel_width*current_position.x;
+	 timeLabel->SetLabelText(s);
+	 s="";
+	 s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
+	 amplitudeLabel->SetLabelText(s);
+}
+
+void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
+{
+	wxPaintDC paint(m_panel1);
+	paint.Blit(0,0,panel_width,panel_height,back_mem2,0,0);
 }
 
 void WorkingFrame::OnAntiAliase( wxCommandEvent& event )

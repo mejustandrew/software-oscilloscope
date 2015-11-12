@@ -94,6 +94,9 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	bSizer2->Add( m_panel1, 1, wxALL|wxEXPAND, 5 );
 	
+	m_panel2 = new wxPanel( this, wxID_ANY, wxPoint( 0,0 ), wxSize( 400,200 ), wxTAB_TRAVERSAL );
+	bSizer2->Add( m_panel2, 1, wxEXPAND | wxALL, 5 );
+	
 	
 	bSizer1->Add( bSizer2, 1, wxEXPAND, 5 );
 	
@@ -158,6 +161,9 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_panel1->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
+	m_panel2->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
+	m_panel2->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
+	m_panel2->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
 	antiAliseCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 	state_button->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 }
@@ -177,6 +183,9 @@ BuiltFrame::~BuiltFrame()
 	m_panel1->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
+	m_panel2->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
+	m_panel2->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
+	m_panel2->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
 	antiAliseCheckBox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 	state_button->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 	

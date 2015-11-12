@@ -10,10 +10,11 @@
 #include "Project.h"
 #include "Spectrum.h"
 #include <atomic>
+
 class WorkingFrame : public BuiltFrame
 {
-	protected:
-		// Handlers for BuildedFrame events.
+protected:
+	// Handlers for BuildedFrame events.
 	void VerifyValues( wxMouseEvent& event );
 	void PanelLeave( wxMouseEvent& event );
 	void OnPanelResized( wxSizeEvent& event );
@@ -27,6 +28,9 @@ class WorkingFrame : public BuiltFrame
 	void OnSpecterClick( wxCommandEvent& event );
 	void OnAntiAliase( wxCommandEvent& event );
 	void OnPanelPaint( wxPaintEvent& event );
+	virtual void PanelLeave2( wxMouseEvent& event );
+	virtual void VerifyValues2( wxMouseEvent& event );
+	virtual void OnPanelPaint2( wxPaintEvent& event );
 	void Close( wxCloseEvent& event );
 
 	void DrawGrid();
@@ -40,16 +44,16 @@ class WorkingFrame : public BuiltFrame
 	bool isAntiAlise;
 	wxString display_frequency;
 	wxBitmap *grid_bitmap;
-	wxBitmap *wave_bitmap;
-	wxBitmap *antiAlise_bitmap;
+	wxBitmap *wave_bitmap,*wave_bitmap2;
+	wxBitmap *antiAlise_bitmap,*antiAlise_bitmap2;
 	wxPen *antiAlise_pen;
-	wxMemoryDC *back_mem;
+	wxMemoryDC *back_mem,*back_mem2;
 	wxMemoryDC *grid_mem;
-	wxMemoryDC *antiAlise_mem;
-	public:
-		WorkingFrame( wxWindow* parent );
-		~WorkingFrame(); 
-	
+	wxMemoryDC *antiAlise_mem,*antiAlise_mem2;
+public:
+	WorkingFrame( wxWindow* parent );
+	~WorkingFrame(); 
+
 	double GetTimeBase(){ return timeBase_value; }
 	double GetTreshold(){ return treshold_value; }
 	double GetVerticalSize(){ return vertical_value; }
@@ -57,7 +61,6 @@ class WorkingFrame : public BuiltFrame
 	static void Refresh(WorkingFrame* frame);
 	static void Create(WorkingFrame* frame);
 	static void Draw(WorkingFrame* frame);
-	//static std::mutex mu;
 };
 
 #endif

@@ -39,7 +39,7 @@ protected:
 	void four1(double* data, unsigned long nn);
 	int GetPanelWidth(){ return panel_width; }
 	int GetPanelHeight(){ return panel_height; }
-
+	void RefreshContainers();
 public:
 	SpectrumFrame( wxWindow* parent );
 	void Start();

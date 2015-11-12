@@ -1,4 +1,5 @@
-  #include <math.h>
+  
+#include <math.h>
   #include "portaudio.h"
   #include"Singletone.h"
   #include"Exported.h"

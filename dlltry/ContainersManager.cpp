@@ -1,5 +1,7 @@
 #include"ContainersManager.h"
 
+int ContainersManager::SampleRate=0;
+
 void ContainersManager::Add(double value)
 {
 	if(isF_used)
@@ -25,7 +27,7 @@ DataResponse* ContainersManager::GetSamples(double time_base)
 {
 	if(isFsimple_used==true)
 	{
-		if(!fsimple->SetLoopSize(time_base*sample_rate))return nullptr;
+		if(!fsimple->SetLoopSize(time_base*SampleRate))return nullptr;
 		else
 		{
 		isFsimple_used=false;
@@ -34,7 +36,7 @@ DataResponse* ContainersManager::GetSamples(double time_base)
 	}
 	else
 	{
-		if(!gsimple->SetLoopSize(time_base*sample_rate))return nullptr;
+		if(!gsimple->SetLoopSize(time_base*SampleRate))return nullptr;
 		else
 		{
 		isFsimple_used=true;
@@ -47,7 +49,7 @@ DataResponse* ContainersManager::GetSamples(double time_base,double treshold)
 {
 	if(isF_used==true)
 	{
-		if(!f->SetSamples(time_base*sample_rate,treshold))return nullptr;
+		if(!f->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else
 		{
 		isF_used=false;
@@ -56,7 +58,7 @@ DataResponse* ContainersManager::GetSamples(double time_base,double treshold)
 	}
 	else
 	{
-		if(!g->SetSamples(time_base*sample_rate,treshold))return nullptr;
+		if(!g->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else
 		{
 		isF_used=true;
@@ -67,5 +69,5 @@ DataResponse* ContainersManager::GetSamples(double time_base,double treshold)
 
 double ContainersManager::GetSampleRate()
 {
-	return sample_rate;
+	return SampleRate;
 }

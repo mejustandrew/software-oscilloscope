@@ -49,6 +49,7 @@ class BuiltFrame : public wxFrame
 		wxStaticText* positionText;
 		wxButton* SpectrumButton;
 		wxPanel* m_panel1;
+		wxPanel* m_panel2;
 		wxCheckBox* antiAliseCheckBox;
 		wxStaticText* textFrequency;
 		wxStaticText* FrequencyDisplayText;
@@ -72,13 +73,16 @@ class BuiltFrame : public wxFrame
 		virtual void VerifyValues( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPanelPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnPanelResized( wxSizeEvent& event ) { event.Skip(); }
+		virtual void PanelLeave2( wxMouseEvent& event ) { event.Skip(); }
+		virtual void VerifyValues2( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnPanelPaint2( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnAntiAliase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStateChanged( wxMouseEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 812,553 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 812,634 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~BuiltFrame();
 	
