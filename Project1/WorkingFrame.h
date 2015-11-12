@@ -1,10 +1,6 @@
 #ifndef __WorkingFrame__
 #define __WorkingFrame__
-#include <wx/dcclient.h>
-#include <wx/brush.h>
-#include <wx/colour.h>
-#include <wx/wx.h>
-#include <wx/utils.h> 
+#include"PanelSpecs.h"
 #include "IDataRequest.h"
 #include "IDataResponse.h"
 #include "Project.h"

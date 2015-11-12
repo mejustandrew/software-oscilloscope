@@ -332,7 +332,6 @@ void WorkingFrame::Draw(WorkingFrame* frame)
 	float iteratii=response->size();
 	float pas;
 	//avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
-	
 	if(frame->isAntiAlise)
 	{
 		frame->antiAlise_mem->Blit(0, 0, frame->maxPanel_width,frame->panel_height, (frame->grid_mem), 0, 0);
