@@ -59,7 +59,7 @@ IDataResponse* GetSpectrumRightSamples(IDataRequest* request)
 	return c->GetRightSamples(k);
 }
 
-IDataResponse* GetSpectrumleftSamples(IDataRequest* request)
+IDataResponse* GetSpectrumLeftSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
