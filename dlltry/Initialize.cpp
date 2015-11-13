@@ -23,33 +23,47 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 	{
 		for( i=0; i<framesPerBuffer; i+=2 )
 		{
-			cont->Add(*in++);//adding left sample
-			cont->Add(*in++);//adding right sample
+			cont->AddToLeftBuffer(*in++);//adding left sample
+			cont->AddToRightBuffer(*in++);//adding right sample
 		}
 	}
 
 	return paContinue;
 }
 
-IDataResponse* GetSignalSamples(IDataRequest* request)
+IDataResponse* GetSignalLeftSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
-	return c->GetSamples(k,request->GetTreshold());
+	return c->GetLeftSamples(k,request->GetTreshold());
+}
+
+IDataResponse* GetSignalRightSamples(IDataRequest* request)
+{
+	ContainersManager *c=Singletone::GetContainer();
+	double k=(request->GetTimeBase());
+	return c->GetRightSamples(k,request->GetTreshold());
 }
 
 bool Initialize()
 {
 	if(!InitializeResult)
-	return InternInitialize();
+		return InternInitialize();
 	else return InitializeResult;
 }
 
-IDataResponse* GetSpectrumSamples(IDataRequest* request)
+IDataResponse* GetSpectrumRightSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
-	return c->GetSamples(k);
+	return c->GetRightSamples(k);
+}
+
+IDataResponse* GetSpectrumleftSamples(IDataRequest* request)
+{
+	ContainersManager *c=Singletone::GetContainer();
+	double k=(request->GetTimeBase());
+	return c->GetRightSamples(k);
 }
 
 void StartVerify(PaStream * stream);
