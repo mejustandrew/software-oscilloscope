@@ -1,6 +1,6 @@
 #include"PanelSpecs.h"
 
-PanelSpecs::PanelSpecs(wxPanel*panel):panel(panel)
+PanelSpecs::PanelSpecs(wxPanel*panel,IDataResponse* (*GetSamples)(IDataRequest*)):panel(panel),GetSamples(GetSamples)
 {
 	panel->GetSize(&panel_width,&panel_height);
 	panel_mid=panel_height*0.5;
