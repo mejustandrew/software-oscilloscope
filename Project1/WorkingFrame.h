@@ -46,6 +46,8 @@ protected:
 	wxMemoryDC *back_mem,*back_mem2;
 	wxMemoryDC *grid_mem;
 	wxMemoryDC *antiAlise_mem,*antiAlise_mem2;
+	PanelSpecs *panel1_specs,*panel2_specs;
+
 public:
 	WorkingFrame( wxWindow* parent );
 	~WorkingFrame(); 

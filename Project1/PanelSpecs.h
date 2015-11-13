@@ -4,6 +4,8 @@
 #include <wx/wx.h>
 #include <wx/utils.h> 
 
+class IDataRequest;
+class IDataResponse;
 
 struct PanelSpecs
 {
@@ -11,7 +13,9 @@ struct PanelSpecs
 	bool active,isAntiAlise;
 	wxMemoryDC*antiAlise_mem,*back_mem,*grid_mem;
 	wxPanel *panel;
-	PanelSpecs(wxPanel*panel);
+	PanelSpecs(wxPanel*panel,IDataResponse* (*GetSamples)(IDataRequest*));
+	IDataResponse* (*GetSamples)(IDataRequest*);
+
 private:
 	wxBitmap *grid_bitmap;
 	wxBitmap *wave_bitmap,*wave_bitmap2;

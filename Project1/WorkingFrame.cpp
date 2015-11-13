@@ -3,8 +3,8 @@
 #include<thread>
 
 WorkingFrame::WorkingFrame( wxWindow* parent )
-:
-BuiltFrame( parent )
+	:
+	BuiltFrame( parent )
 {
 	spectrum=new SpectrumFrame(NULL);
 	vertical_value=0.05;
@@ -51,42 +51,45 @@ BuiltFrame( parent )
 	DrawGrid();
 	back_mem->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
 	back_mem2->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
+
+	panel1_specs=new PanelSpecs(m_panel1,GetSignalSamples);
+	panel2_specs=new PanelSpecs(m_panel2,GetSignalSamples);
 }
 
- //std::mutex WorkingFrame::mu;
+//std::mutex WorkingFrame::mu;
 
- void WorkingFrame::VerifyValues( wxMouseEvent& event )
- {
-	 wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
-	 wxString s;
-	 s<<GetTimeBase()*1000/panel_width*current_position.x;
-	 timeLabel->SetLabelText(s);
-	 s="";
-	 s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
-	 amplitudeLabel->SetLabelText(s);
- }
+void WorkingFrame::VerifyValues( wxMouseEvent& event )
+{
+	wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
+	wxString s;
+	s<<GetTimeBase()*1000/panel_width*current_position.x;
+	timeLabel->SetLabelText(s);
+	s="";
+	s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
+	amplitudeLabel->SetLabelText(s);
+}
 
 void WorkingFrame::PanelLeave( wxMouseEvent& event )
 {
-	 timeLabel->SetLabelText("0.00");
-	 amplitudeLabel->SetLabelText("0.00");
+	timeLabel->SetLabelText("0.00");
+	amplitudeLabel->SetLabelText("0.00");
 }
 
 void WorkingFrame::PanelLeave2( wxMouseEvent& event )
 {
-	 timeLabel->SetLabelText("0.00");
-	 amplitudeLabel->SetLabelText("0.00");
+	timeLabel->SetLabelText("0.00");
+	amplitudeLabel->SetLabelText("0.00");
 }
 
 void WorkingFrame::VerifyValues2( wxMouseEvent& event )
 {
-	 wxPoint current_position=m_panel2->ScreenToClient(wxGetMousePosition());
-	 wxString s;
-	 s<<GetTimeBase()*1000/panel_width*current_position.x;
-	 timeLabel->SetLabelText(s);
-	 s="";
-	 s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
-	 amplitudeLabel->SetLabelText(s);
+	wxPoint current_position=m_panel2->ScreenToClient(wxGetMousePosition());
+	wxString s;
+	s<<GetTimeBase()*1000/panel_width*current_position.x;
+	timeLabel->SetLabelText(s);
+	s="";
+	s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
+	amplitudeLabel->SetLabelText(s);
 }
 
 void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
@@ -105,53 +108,53 @@ void WorkingFrame::OnPositionChanged( wxSpinEvent& event )
 	panel_mid=panel_height*0.5-5*PositionValue->GetValue();
 }
 
- void WorkingFrame::DrawGrid()
- {
-	  grid_mem->Clear();
-	 for(int i=0;i<maxPanel_width;i+=5)
-	 {
-		 for(int j=0;j<maxPanel_width;j+=grid_div)
-		 {
-			 grid_mem->DrawLine(i,j,i,j+1);
-		 }
-	 }
-	 for(int i=0;i<maxPanel_width;i+=5)
-	 {
-		 for(int j=0;j<maxPanel_width;j+=grid_div)
-		 {
-			 grid_mem->DrawLine(j,i,j,i+1);
-		 }
-	 }
- }
+void WorkingFrame::DrawGrid()
+{
+	grid_mem->Clear();
+	for(int i=0;i<maxPanel_width;i+=5)
+	{
+		for(int j=0;j<maxPanel_width;j+=grid_div)
+		{
+			grid_mem->DrawLine(i,j,i,j+1);
+		}
+	}
+	for(int i=0;i<maxPanel_width;i+=5)
+	{
+		for(int j=0;j<maxPanel_width;j+=grid_div)
+		{
+			grid_mem->DrawLine(j,i,j,i+1);
+		}
+	}
+}
 
- void WorkingFrame::OnSpecterClick( wxCommandEvent& event )
- {
-	 if(spectrum->IsShown())
-	 {
-		 return;
-	 }
-	 else
-	 {
-		  spectrum->Show();
-		  spectrum->Start();
-	 }
- }
+void WorkingFrame::OnSpecterClick( wxCommandEvent& event )
+{
+	if(spectrum->IsShown())
+	{
+		return;
+	}
+	else
+	{
+		spectrum->Show();
+		spectrum->Start();
+	}
+}
 
 WorkingFrame::~WorkingFrame()
-	{ 
-		delete back_mem;
-		delete grid_mem;
-		delete grid_bitmap;
-		delete wave_bitmap;
-	}
+{ 
+	delete back_mem;
+	delete grid_mem;
+	delete grid_bitmap;
+	delete wave_bitmap;
+}
 
 void WorkingFrame::VerticalSizeChanged(wxCommandEvent& event)
 {
-	 wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
-	 double converted;
-	 returned.ToDouble(&converted);
-	 if(voltSelection->GetSelection()==1)converted*=0.001;
-	 vertical_value=converted;
+	wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
+	double converted;
+	returned.ToDouble(&converted);
+	if(voltSelection->GetSelection()==1)converted*=0.001;
+	vertical_value=converted;
 }
 
 void WorkingFrame::TimeBaseChanged( wxCommandEvent& event )
@@ -251,31 +254,31 @@ void WorkingFrame::DisplayFrequency(WorkingFrame*frame,IDataResponse *values)
 	for(int i=0;i<size;i+=2)
 	{
 		if((*values)[i+1]>(*values)[i] && crescator==false)
+		{
+			crescator=true;
+			min=(*values)[i];
+			new_min=true;
+			if(new_max && new_min)
 			{
-				crescator=true;
-				min=(*values)[i];
-				new_min=true;
-				if(new_max && new_min)
-				{
-					new_max=false;
-					new_min=false;
-					if(max-min>prag)
-						++frequency;
-				}
+				new_max=false;
+				new_min=false;
+				if(max-min>prag)
+					++frequency;
 			}
-			if((*values)[i+1]<(*values)[i] && crescator==true)
+		}
+		if((*values)[i+1]<(*values)[i] && crescator==true)
+		{
+			crescator=false;
+			max=(*values)[i];
+			new_max=true;
+			if(new_max && new_min)
 			{
-				crescator=false;
-				max=(*values)[i];
-				new_max=true;
-				if(new_max && new_min)
-				{
-					new_max=false;
-					new_min=false;
-					if(max-min>prag)
-						++frequency;
-				}
+				new_max=false;
+				new_min=false;
+				if(max-min>prag)
+					++frequency;
 			}
+		}
 	}
 	frequency/=frame->timeBase_value;
 	frame->display_frequency<<(int)frequency;
@@ -340,7 +343,7 @@ void WorkingFrame::Draw(WorkingFrame* frame)
 	{
 		frame->back_mem->Blit(0, 0, frame->maxPanel_width,frame->panel_height, (frame->grid_mem), 0, 0);
 	}
-		
+
 	float k=frame->panel_height*0.5/frame->GetVerticalSize();
 	// vertical size represents maximum voltage to be displayed on the screen
 	// since the signal can go frm max voltage to -max voltage,
@@ -425,11 +428,11 @@ void WorkingFrame::Close( wxCloseEvent& event )
 {
 	active=false;
 	this->Hide();
-	 if(spectrum->IsShown())
-	 {
-		 spectrum->Hide();
-		 spectrum->Stop();
-	 }
+	if(spectrum->IsShown())
+	{
+		spectrum->Hide();
+		spectrum->Stop();
+	}
 	int countClose=0;
 	while(!finished)
 	{
