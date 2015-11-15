@@ -2,9 +2,9 @@
 #include"Imported.h"
 #include<thread>
 
-SpectrumFrame::SpectrumFrame( wxWindow* parent )
+SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(IDataRequest*))
 	:
-	GeneratedFrame( parent )
+	GeneratedFrame( parent ),GetSamples(GetSamples)
 {
 	this->Maximize();
 	this->SetMinSize(this->GetSize());
@@ -30,10 +30,10 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent )
 
 void SpectrumFrame::ComputeNumberInBase2()
 {
-	IDataResponse* samples=GetSpectrumLeftSamples(req);
+	IDataResponse* samples=GetSamples(req);
 	while(samples==nullptr)
 	{
-		samples=GetSpectrumLeftSamples(req);
+		samples=GetSamples(req);
 	}
 	number_in_base2=1;
 	while(number_in_base2<samples->size())
@@ -231,7 +231,7 @@ void SpectrumFrame::ConvertSamples(IDataResponse *source,double *dest,int n)
 
 void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
-	IDataResponse* samples=GetSpectrumLeftSamples(frame->req);
+	IDataResponse* samples=frame->GetSamples(frame->req);
 	if(samples==nullptr)return;	
 	frame->mu.lock();
 	int magnitude;
@@ -293,7 +293,7 @@ float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 void SpectrumFrame::Draw(SpectrumFrame*frame)
 {
 
-	IDataResponse* samples=GetSpectrumLeftSamples(frame->req);
+	IDataResponse* samples=frame->GetSamples(frame->req);
 	if(samples==nullptr)return;
 
 	double recieved_freq=frame->GetFrequency(frame,samples);

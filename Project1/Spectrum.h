@@ -40,8 +40,10 @@ protected:
 	int GetPanelWidth(){ return panel_width; }
 	int GetPanelHeight(){ return panel_height; }
 	void RefreshContainers();
+	IDataResponse* (*GetSamples)(IDataRequest*);
+
 public:
-	SpectrumFrame( wxWindow* parent );
+	SpectrumFrame( wxWindow* parent ,IDataResponse* (*GetSamples)(IDataRequest*));
 	void Start();
 	void ComputeNumberInBase2();
 	void Stop(){ active=false; }

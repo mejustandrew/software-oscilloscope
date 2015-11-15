@@ -140,8 +140,11 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_staticText17->Wrap( -1 );
 	gbSizer42->Add( m_staticText17, wxGBPosition( 7, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
+	SpectrumButton2 = new wxButton( this, wxID_ANY, wxT("Spectrum"), wxDefaultPosition, wxDefaultSize, 0 );
+	gbSizer42->Add( SpectrumButton2, wxGBPosition( 7, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
 	state_button2 = new wxButton( this, wxID_ANY, wxT("Off"), wxDefaultPosition, wxSize( 45,23 ), 0 );
-	gbSizer42->Add( state_button2, wxGBPosition( 7, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer42->Add( state_button2, wxGBPosition( 7, 5 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
 	gbSizer1->Add( gbSizer42, wxGBPosition( 0, 15 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
@@ -220,7 +223,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	voltSelection->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVoltsChanged ), NULL, this );
 	secondSelection->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnSecondsChanged ), NULL, this );
 	PositionValue->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPositionChanged ), NULL, this );
-	SpectrumButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpecterClick ), NULL, this );
+	SpectrumButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClick ), NULL, this );
 	state_button->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 	VerticalSizeChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::VerticalSize2Changed ), NULL, this );
 	voltSelectionChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVolts2Changed ), NULL, this );
@@ -228,6 +231,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	secondSelectionChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnSeconds2Changed ), NULL, this );
 	TresholdChannel2->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::Treshold2Changed ), NULL, this );
 	PositionValueChannel2->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPosition2Changed ), NULL, this );
+	SpectrumButton2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClickChannel2 ), NULL, this );
 	state_button2->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChangedChannel2 ), NULL, this );
 	m_panel1->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave ), NULL, this );
 	m_panel1->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
@@ -250,7 +254,7 @@ BuiltFrame::~BuiltFrame()
 	voltSelection->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVoltsChanged ), NULL, this );
 	secondSelection->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnSecondsChanged ), NULL, this );
 	PositionValue->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPositionChanged ), NULL, this );
-	SpectrumButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpecterClick ), NULL, this );
+	SpectrumButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClick ), NULL, this );
 	state_button->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 	VerticalSizeChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::VerticalSize2Changed ), NULL, this );
 	voltSelectionChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVolts2Changed ), NULL, this );
@@ -258,6 +262,7 @@ BuiltFrame::~BuiltFrame()
 	secondSelectionChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnSeconds2Changed ), NULL, this );
 	TresholdChannel2->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::Treshold2Changed ), NULL, this );
 	PositionValueChannel2->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPosition2Changed ), NULL, this );
+	SpectrumButton2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClickChannel2 ), NULL, this );
 	state_button2->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChangedChannel2 ), NULL, this );
 	m_panel1->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave ), NULL, this );
 	m_panel1->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );

@@ -7,12 +7,13 @@ WorkingFrame::WorkingFrame( wxWindow* parent )
 	BuiltFrame( parent )
 {
 	Initialize();
-	spectrum=new SpectrumFrame(NULL);
+	spectrumLeft=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
+	spectrumRight=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
+
 	prev_seconds_selection=1;
 	prev_volt_selection=1;
 	prev_seconds_selection2=1;
 	prev_volt_selection2=1;
-
 
 	panel1_specs=new PanelSpecs(m_panel1,GetSignalLeftSamples);
 	panel2_specs=new PanelSpecs(m_panel2,GetSignalRightSamples);
@@ -20,8 +21,6 @@ WorkingFrame::WorkingFrame( wxWindow* parent )
 	Create(panel1_specs);
 	Create(panel2_specs);
 }
-
-//std::mutex WorkingFrame::mu;
 
 void WorkingFrame::VerifyValues( wxMouseEvent& event )
 {
@@ -84,16 +83,29 @@ void WorkingFrame::OnPosition2Changed( wxSpinEvent& event )
 	panel2_specs->panel_mid=panel2_specs->panel_height*0.5-5*PositionValueChannel2->GetValue();
 }
 
-void WorkingFrame::OnSpecterClick( wxCommandEvent& event )
+void WorkingFrame::OnSpectrumClick( wxCommandEvent& event )
 {
-	if(spectrum->IsShown())
+	if(spectrumLeft->IsShown())
 	{
 		return;
 	}
 	else
 	{
-		spectrum->Show();
-		spectrum->Start();
+		spectrumLeft->Show();
+		spectrumLeft->Start();
+	}
+}
+
+void WorkingFrame::OnSpectrumClickChannel2( wxCommandEvent& event )
+{
+	if(spectrumRight->IsShown())
+	{
+		return;
+	}
+	else
+	{
+		spectrumRight->Show();
+		spectrumRight->Start();
 	}
 }
 
@@ -443,11 +455,19 @@ void WorkingFrame::Close( wxCloseEvent& event )
 	panel1_specs->active=false;
 	panel2_specs->active=false;
 	this->Hide();
-	if(spectrum->IsShown())
+
+	if(spectrumLeft->IsShown())
 	{
-		spectrum->Hide();
-		spectrum->Stop();
+		spectrumLeft->Hide();
+		spectrumLeft->Stop();
 	}
+
+	if(spectrumRight->IsShown())
+	{
+		spectrumRight->Hide();
+		spectrumRight->Stop();
+	}
+
 	Sleep(500);
 	exit(0);
 }

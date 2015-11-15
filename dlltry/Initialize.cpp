@@ -149,7 +149,7 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 
 double Get_sample_rate()
 {
-	return ContainersManager::SampleRate;
+	return ContainersManager::SampleRate/2;
 }
 
 

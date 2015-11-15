@@ -60,6 +60,7 @@ class BuiltFrame : public wxFrame
 		wxStaticText* m_staticText16;
 		wxSpinCtrl* PositionValueChannel2;
 		wxStaticText* m_staticText17;
+		wxButton* SpectrumButton2;
 		wxButton* state_button2;
 		wxPanel* m_panel1;
 		wxPanel* m_panel2;
@@ -80,7 +81,7 @@ class BuiltFrame : public wxFrame
 		virtual void OnVoltsChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSecondsChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPositionChanged( wxSpinEvent& event ) { event.Skip(); }
-		virtual void OnSpecterClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSpectrumClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStateChanged( wxMouseEvent& event ) { event.Skip(); }
 		virtual void VerticalSize2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnVolts2Changed( wxCommandEvent& event ) { event.Skip(); }
@@ -88,6 +89,7 @@ class BuiltFrame : public wxFrame
 		virtual void OnSeconds2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void Treshold2Changed( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnPosition2Changed( wxSpinEvent& event ) { event.Skip(); }
+		virtual void OnSpectrumClickChannel2( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStateChangedChannel2( wxMouseEvent& event ) { event.Skip(); }
 		virtual void PanelLeave( wxMouseEvent& event ) { event.Skip(); }
 		virtual void VerifyValues( wxMouseEvent& event ) { event.Skip(); }
@@ -102,7 +104,7 @@ class BuiltFrame : public wxFrame
 	
 	public:
 		
-		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 840,718 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 876,718 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~BuiltFrame();
 	

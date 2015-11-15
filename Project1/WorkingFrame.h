@@ -21,9 +21,10 @@ protected:
 	void OnSecondsChanged( wxCommandEvent& event );
 	void OnVoltsChanged( wxCommandEvent& event );
 	void OnPositionChanged( wxSpinEvent& event );
-	void OnSpecterClick( wxCommandEvent& event );
+	void OnSpectrumClick( wxCommandEvent& event );
 	void OnAntiAliase( wxCommandEvent& event );
 	void OnPanelPaint( wxPaintEvent& event );
+	void OnSpectrumClickChannel2( wxCommandEvent& event );
 	void OnStateChangedChannel2( wxMouseEvent& event );
 	virtual void VerticalSize2Changed( wxCommandEvent& event );
 	virtual void OnVolts2Changed( wxCommandEvent& event );
@@ -37,7 +38,7 @@ protected:
 	virtual void OnPanelResized2( wxSizeEvent& event );
 	void Close( wxCloseEvent& event );
 
-	SpectrumFrame* spectrum;
+	SpectrumFrame* spectrumLeft,*spectrumRight;
 	std::atomic_bool active;
 	int prev_seconds_selection, prev_seconds_selection2, prev_volt_selection,prev_volt_selection2;
 	wxString display_frequency;
