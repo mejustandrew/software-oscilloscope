@@ -30,10 +30,10 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent )
 
 void SpectrumFrame::ComputeNumberInBase2()
 {
-	IDataResponse* samples=GetSpectrumSamples(req);
+	IDataResponse* samples=GetSpectrumLeftSamples(req);
 	while(samples==nullptr)
 	{
-		samples=GetSpectrumSamples(req);
+		samples=GetSpectrumLeftSamples(req);
 	}
 	number_in_base2=1;
 	while(number_in_base2<samples->size())
@@ -231,7 +231,7 @@ void SpectrumFrame::ConvertSamples(IDataResponse *source,double *dest,int n)
 
 void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
-	IDataResponse* samples=GetSpectrumSamples(frame->req);
+	IDataResponse* samples=GetSpectrumLeftSamples(frame->req);
 	if(samples==nullptr)return;	
 	frame->mu.lock();
 	int magnitude;
@@ -293,7 +293,7 @@ float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 void SpectrumFrame::Draw(SpectrumFrame*frame)
 {
 
-	IDataResponse* samples=GetSpectrumSamples(frame->req);
+	IDataResponse* samples=GetSpectrumLeftSamples(frame->req);
 	if(samples==nullptr)return;
 
 	double recieved_freq=frame->GetFrequency(frame,samples);

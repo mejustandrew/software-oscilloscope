@@ -14,6 +14,6 @@ bool MyApp::OnInit()
         return false;
 	WorkingFrame *frame = new WorkingFrame(NULL);
 	frame->Show(true);
-	WorkingFrame::Create(frame);  
+ 
     return true;
 }

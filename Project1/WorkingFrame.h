@@ -24,41 +24,31 @@ protected:
 	void OnSpecterClick( wxCommandEvent& event );
 	void OnAntiAliase( wxCommandEvent& event );
 	void OnPanelPaint( wxPaintEvent& event );
+	void OnStateChangedChannel2( wxMouseEvent& event );
+	virtual void VerticalSize2Changed( wxCommandEvent& event );
+	virtual void OnVolts2Changed( wxCommandEvent& event );
+	virtual void TimeBase2Changed( wxCommandEvent& event );
+	virtual void OnSeconds2Changed( wxCommandEvent& event );
+	virtual void Treshold2Changed( wxSpinEvent& event );
+	virtual void OnPosition2Changed( wxSpinEvent& event );
 	virtual void PanelLeave2( wxMouseEvent& event );
 	virtual void VerifyValues2( wxMouseEvent& event );
 	virtual void OnPanelPaint2( wxPaintEvent& event );
 	void Close( wxCloseEvent& event );
 
-	void DrawGrid();
 	SpectrumFrame* spectrum;
 	std::atomic_bool active;
-	std::atomic_bool finished;
-	double vertical_value,timeBase_value,treshold_value;
-	int prev_seconds_selection, prev_volt_selection;
-	int grid_div;
-	int panel_width,panel_height,panel_mid,maxPanel_width;
-	bool isAntiAlise;
+	int prev_seconds_selection, prev_seconds_selection2, prev_volt_selection,prev_volt_selection2;
 	wxString display_frequency;
-	wxBitmap *grid_bitmap;
-	wxBitmap *wave_bitmap,*wave_bitmap2;
-	wxBitmap *antiAlise_bitmap,*antiAlise_bitmap2;
-	wxPen *antiAlise_pen;
-	wxMemoryDC *back_mem,*back_mem2;
-	wxMemoryDC *grid_mem;
-	wxMemoryDC *antiAlise_mem,*antiAlise_mem2;
 	PanelSpecs *panel1_specs,*panel2_specs;
 
 public:
 	WorkingFrame( wxWindow* parent );
 	~WorkingFrame(); 
 
-	double GetTimeBase(){ return timeBase_value; }
-	double GetTreshold(){ return treshold_value; }
-	double GetVerticalSize(){ return vertical_value; }
-	static void DisplayFrequency(WorkingFrame*frame,IDataResponse *values);
-	static void Refresh(WorkingFrame* frame);
-	static void Create(WorkingFrame* frame);
-	static void Draw(WorkingFrame* frame);
+	static void Refresh(PanelSpecs* frame);
+	static void Create(PanelSpecs* frame);
+	static void Draw(PanelSpecs* frame);
 };
 
 #endif
