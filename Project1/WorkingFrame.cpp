@@ -57,6 +57,12 @@ void WorkingFrame::PanelLeave2( wxMouseEvent& event )
 	amplitudeLabel->SetLabelText("0.00");
 }
 
+void WorkingFrame::OnPanelPaint( wxPaintEvent& event )
+{
+	wxPaintDC paint(m_panel1);
+	paint.Blit(0,0,panel1_specs->panel_width,panel1_specs->panel_height,panel1_specs->back_mem,0,0);
+}
+
 void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
 {
 	wxPaintDC paint(m_panel2);
@@ -430,12 +436,6 @@ void WorkingFrame::Draw(PanelSpecs* frame)
 	response->Destroy();
 	wxClientDC client(frame->panel);
 	client.Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
-}
-
-void WorkingFrame::OnPanelPaint( wxPaintEvent& event )
-{
-	wxPaintDC paint(m_panel1);
-	paint.Blit(0,0,panel1_specs->panel_width,panel1_specs->panel_height,panel1_specs->back_mem,0,0);
 }
 
 void WorkingFrame::Close( wxCloseEvent& event )

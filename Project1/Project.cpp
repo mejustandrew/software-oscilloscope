@@ -159,6 +159,9 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	bSizer2->Add( m_panel1, 1, wxALL|wxEXPAND, 5 );
 	
 	m_panel2 = new wxPanel( this, wxID_ANY, wxPoint( 0,0 ), wxSize( 400,200 ), wxTAB_TRAVERSAL );
+	m_panel2->SetMinSize( wxSize( 400,200 ) );
+	m_panel2->SetMaxSize( wxSize( 1350,200 ) );
+	
 	bSizer2->Add( m_panel2, 1, wxEXPAND | wxALL, 5 );
 	
 	
