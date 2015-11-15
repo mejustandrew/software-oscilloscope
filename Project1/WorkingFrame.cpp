@@ -59,7 +59,7 @@ void WorkingFrame::PanelLeave2( wxMouseEvent& event )
 
 void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
 {
-	wxPaintDC paint(m_panel1);
+	wxPaintDC paint(m_panel2);
 	paint.Blit(0,0,panel2_specs->panel_width,panel2_specs->panel_height,panel2_specs->back_mem,0,0);
 }
 
@@ -282,6 +282,12 @@ void WorkingFrame::OnPanelResized( wxSizeEvent& event )
 {
 	m_panel1->GetSize(&panel1_specs-> panel_width,&panel1_specs->panel_height);
 	panel1_specs->panel_mid=panel1_specs->panel_height*0.5;
+}
+
+void WorkingFrame::OnPanelResized2( wxSizeEvent& event )
+{
+	m_panel2->GetSize(&panel2_specs-> panel_width,&panel2_specs->panel_height);
+	panel2_specs->panel_mid=panel2_specs->panel_height*0.5;
 }
 
 void WorkingFrame::OnStateChanged( wxMouseEvent& event )

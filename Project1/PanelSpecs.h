@@ -9,7 +9,8 @@ class IDataResponse;
 
 struct PanelSpecs
 {
-	int panel_width,panel_height,TimeBase,Treshold,VerticalSize,maxPanel_width,panel_mid;
+	int panel_width,panel_height,maxPanel_width,panel_mid;
+	double TimeBase,Treshold,VerticalSize;
 	bool active,isAntiAlise;
 	wxMemoryDC*antiAlise_mem,*back_mem,*grid_mem;
 	wxPanel *panel;

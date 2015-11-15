@@ -96,6 +96,7 @@ class BuiltFrame : public wxFrame
 		virtual void PanelLeave2( wxMouseEvent& event ) { event.Skip(); }
 		virtual void VerifyValues2( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPanelPaint2( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnPanelResized2( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnAntiAliase( wxCommandEvent& event ) { event.Skip(); }
 		
 	

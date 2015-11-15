@@ -233,6 +233,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_panel2->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
 	m_panel2->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
 	m_panel2->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
+	m_panel2->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized2 ), NULL, this );
 	antiAliseCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 }
 
@@ -262,6 +263,7 @@ BuiltFrame::~BuiltFrame()
 	m_panel2->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
 	m_panel2->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
 	m_panel2->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
+	m_panel2->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized2 ), NULL, this );
 	antiAliseCheckBox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 	
 }
