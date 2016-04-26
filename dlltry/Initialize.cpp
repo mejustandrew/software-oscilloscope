@@ -123,7 +123,6 @@ bool InternInitialize()
 		InitializeResult=false;
 		return false;
 	}
-
 }
 
 double GetSampleRate( const PaStreamParameters *inputParameters , const PaStreamParameters * )
@@ -151,8 +150,6 @@ double Get_sample_rate()
 {
 	return ContainersManager::SampleRate/2;
 }
-
-
 
 void Verify(PaStream * stream)
 {
