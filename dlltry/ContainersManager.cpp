@@ -1,71 +1,138 @@
 #include"ContainersManager.h"
 
-void ContainersManager::Add(double value)
+int ContainersManager::SampleRate=0;
+
+void ContainersManager::AddToLeftBuffer(double value)
 {
-	if(isF_used)
+	if(isFLeft_used)
 	{
-		f->Add(value);
+		fLeft->Add(value);
 	}
 	else
 	{
-		g->Add(value);
+		gLeft->Add(value);
 	}
 
-	if(isFsimple_used)
+	if(isFsimpleLeft_used)
 	{
-		fsimple->Add(value);
+		fsimpleLeft->Add(value);
 	}
 	else
 	{
-		gsimple->Add(value);
+		gsimpleLeft->Add(value);
 	}
 }
 
-DataResponse* ContainersManager::GetSamples(double time_base)
+void ContainersManager::AddToRightBuffer(double value)
 {
-	if(isFsimple_used==true)
+	if(isFRight_used)
 	{
-		if(!fsimple->SetLoopSize(time_base*sample_rate))return nullptr;
+		fRight->Add(value);
+	}
+	else
+	{
+		gRight->Add(value);
+	}
+
+	if(isFsimpleRight_used)
+	{
+		fsimpleRight->Add(value);
+	}
+	else
+	{
+		gsimpleRight->Add(value);
+	}
+}
+
+DataResponse* ContainersManager::GetRightSamples(double time_base)
+{
+	if(isFsimpleRight_used==true)
+	{
+		if(!fsimpleRight->SetLoopSize(time_base*SampleRate))return nullptr;
 		else
 		{
-		isFsimple_used=false;
-		return fsimple;
+			isFsimpleRight_used=false;
+			return fsimpleRight;
 		}
 	}
 	else
 	{
-		if(!gsimple->SetLoopSize(time_base*sample_rate))return nullptr;
+		if(!gsimpleRight->SetLoopSize(time_base*SampleRate))return nullptr;
 		else
 		{
-		isFsimple_used=true;
-		return gsimple;
+			isFsimpleRight_used=true;
+			return gsimpleRight;
 		}
 	}
 }
 
-DataResponse* ContainersManager::GetSamples(double time_base,double treshold)
+DataResponse* ContainersManager::GetRightSamples(double time_base,double treshold)
 {
-	if(isF_used==true)
+	if(isFRight_used==true)
 	{
-		if(!f->SetSamples(time_base*sample_rate,treshold))return nullptr;
+		if(!fRight->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else
 		{
-		isF_used=false;
-		return f;
+			isFRight_used=false;
+			return fRight;
 		}
 	}
 	else
 	{
-		if(!g->SetSamples(time_base*sample_rate,treshold))return nullptr;
+		if(!gRight->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else
 		{
-		isF_used=true;
-		return g;
+			isFRight_used=true;
+			return gRight;
+		}
+	}
+}
+
+DataResponse* ContainersManager::GetLeftSamples(double time_base)
+{
+	if(isFsimpleLeft_used==true)
+	{
+		if(!fsimpleLeft->SetLoopSize(time_base*SampleRate))return nullptr;
+		else
+		{
+			isFsimpleLeft_used=false;
+			return fsimpleLeft;
+		}
+	}
+	else
+	{
+		if(!gsimpleLeft->SetLoopSize(time_base*SampleRate))return nullptr;
+		else
+		{
+			isFsimpleLeft_used=true;
+			return gsimpleLeft;
+		}
+	}
+}
+
+DataResponse* ContainersManager::GetLeftSamples(double time_base,double treshold)
+{
+	if(isFLeft_used==true)
+	{
+		if(!fLeft->SetSamples(time_base*SampleRate,treshold))return nullptr;
+		else
+		{
+			isFLeft_used=false;
+			return fLeft;
+		}
+	}
+	else
+	{
+		if(!gLeft->SetSamples(time_base*SampleRate,treshold))return nullptr;
+		else
+		{
+			isFLeft_used=true;
+			return gLeft;
 		}
 	}
 }
 
 double ContainersManager::GetSampleRate()
 {
-	return sample_rate;
+	return SampleRate;
 }

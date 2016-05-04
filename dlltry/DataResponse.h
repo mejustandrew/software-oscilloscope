@@ -3,7 +3,7 @@
 
 class DataResponse: public IDataResponse
 {
-	double*samples,k;
+	double*samples,conversion_coefficient;
 	int number_of_samples,//used to initialize samples vector
 		add_pos,//to add on it, and it's the last position for added sample
 		access_pos,//used when samples are read with operator
@@ -16,9 +16,9 @@ public:
 		loop_size=0;
 		access_pos=0;
 		add_pos=0;
-		number_of_samples=60000;
+		number_of_samples=64000;
 		samples=new double[number_of_samples];
-		k= ( 1 << 16 )-1;
+		conversion_coefficient= ( 1 << 16 )-1;
 		for(int i=0;i<number_of_samples;++i)
 		{
 			samples[i]=0;

@@ -13,7 +13,7 @@ void DataResponse::Destroy()
 
 void DataResponse::Add(double sample)
 {
-	samples[add_pos]=sample/k;
+	samples[add_pos]=sample/conversion_coefficient;
 	++add_pos;
 	if(add_pos==number_of_samples)
 	{

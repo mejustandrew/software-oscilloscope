@@ -3,121 +3,133 @@
 #include<thread>
 
 WorkingFrame::WorkingFrame( wxWindow* parent )
-:
-BuiltFrame( parent )
+	:
+	BuiltFrame( parent )
 {
-	spectrum=new SpectrumFrame(NULL);
-	vertical_value=0.05;
-	timeBase_value=0.001;
-	treshold_value=0.001;
-	grid_div=50;
+	Initialize();
+	spectrumLeft=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
+	spectrumRight=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
+
 	prev_seconds_selection=1;
 	prev_volt_selection=1;
-	m_panel1->GetSize(&panel_width,&panel_height);
-	panel_mid=panel_height*0.5;
-	isAntiAlise=false;
-	antiAlise_pen=new wxPen;
-	antiAlise_pen->SetColour(77,100,33);
-	wave_bitmap=new wxBitmap;
-	grid_bitmap=new wxBitmap;
-	antiAlise_bitmap=new wxBitmap;
-	back_mem=new wxMemoryDC;
-	grid_mem=new wxMemoryDC;
-	antiAlise_mem=new wxMemoryDC;
-	maxPanel_width=m_panel1->GetMaxSize().GetWidth();
-	antiAlise_bitmap->Create(maxPanel_width,panel_height);
-	wave_bitmap->Create(maxPanel_width,panel_height);
-	grid_bitmap->Create(maxPanel_width,panel_height);
+	prev_seconds_selection2=1;
+	prev_volt_selection2=1;
 
-	antiAlise_mem->SetPen(*antiAlise_pen);
-	antiAlise_mem->SetBackground(*wxBLACK_BRUSH);	
-	antiAlise_mem->SelectObject(*antiAlise_bitmap);
-	back_mem->SetPen(*wxGREEN_PEN);
-	back_mem->SetBackground(*wxBLACK_BRUSH);
-	back_mem->SelectObject(*wave_bitmap);
-	grid_mem->SetPen(*wxGREEN_PEN);
-	grid_mem->SetBackground(*wxBLACK_BRUSH);
-	grid_mem->SelectObject(*grid_bitmap);
-	DrawGrid();
-	back_mem->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
+	panel1_specs=new PanelSpecs(m_panel1,GetSignalLeftSamples);
+	panel2_specs=new PanelSpecs(m_panel2,GetSignalRightSamples);
+
+	Create(panel1_specs);
+	Create(panel2_specs);
 }
 
- //std::mutex WorkingFrame::mu;
+void WorkingFrame::VerifyValues( wxMouseEvent& event )
+{
+	wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
+	wxString s;
+	s<<panel1_specs->TimeBase*1000/panel1_specs->panel_width*current_position.x;
+	timeLabel->SetLabelText(s);
+	s="";
+	s<<(panel1_specs->VerticalSize*1000)/panel1_specs->panel_height*(panel1_specs->panel_mid-current_position.y);
+	amplitudeLabel->SetLabelText(s);
+}
 
- void WorkingFrame::VerifyValues( wxMouseEvent& event )
- {
-	 wxPoint current_position=m_panel1->ScreenToClient(wxGetMousePosition());
-	 wxString s;
-	 s<<GetTimeBase()*1000/panel_width*current_position.x;
-	 timeLabel->SetLabelText(s);
-	 s="";
-	 s<<(GetVerticalSize()*1000)/panel_height*(panel_mid-current_position.y);
-	 amplitudeLabel->SetLabelText(s);
- }
+void WorkingFrame::VerifyValues2( wxMouseEvent& event )
+{
+	wxPoint current_position=m_panel2->ScreenToClient(wxGetMousePosition());
+	wxString s;
+	s<<panel2_specs->TimeBase*1000/panel2_specs->panel_width*current_position.x;
+	timeLabel->SetLabelText(s);
+	s="";
+	s<<(panel2_specs->VerticalSize*1000)/panel2_specs->panel_height*(panel2_specs->panel_mid-current_position.y);
+	amplitudeLabel->SetLabelText(s);
+}
 
 void WorkingFrame::PanelLeave( wxMouseEvent& event )
 {
-	 timeLabel->SetLabelText("0.00");
-	 amplitudeLabel->SetLabelText("0.00");
+	timeLabel->SetLabelText("0.00");
+	amplitudeLabel->SetLabelText("0.00");
+}
+
+void WorkingFrame::PanelLeave2( wxMouseEvent& event )
+{
+	timeLabel->SetLabelText("0.00");
+	amplitudeLabel->SetLabelText("0.00");
+}
+
+void WorkingFrame::OnPanelPaint( wxPaintEvent& event )
+{
+	wxPaintDC paint(m_panel1);
+	paint.Blit(0,0,panel1_specs->panel_width,panel1_specs->panel_height,panel1_specs->back_mem,0,0);
+}
+
+void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
+{
+	wxPaintDC paint(m_panel2);
+	paint.Blit(0,0,panel2_specs->panel_width,panel2_specs->panel_height,panel2_specs->back_mem,0,0);
 }
 
 void WorkingFrame::OnAntiAliase( wxCommandEvent& event )
 {
-	isAntiAlise=!isAntiAlise;
+	panel1_specs->isAntiAlise=!panel1_specs->isAntiAlise;
 }
 
 void WorkingFrame::OnPositionChanged( wxSpinEvent& event )
 {
-	panel_mid=panel_height*0.5-5*PositionValue->GetValue();
+	panel1_specs->panel_mid=panel1_specs->panel_height*0.5-5*PositionValue->GetValue();
 }
 
- void WorkingFrame::DrawGrid()
- {
-	  grid_mem->Clear();
-	 for(int i=0;i<maxPanel_width;i+=5)
-	 {
-		 for(int j=0;j<maxPanel_width;j+=grid_div)
-		 {
-			 grid_mem->DrawLine(i,j,i,j+1);
-		 }
-	 }
-	 for(int i=0;i<maxPanel_width;i+=5)
-	 {
-		 for(int j=0;j<maxPanel_width;j+=grid_div)
-		 {
-			 grid_mem->DrawLine(j,i,j,i+1);
-		 }
-	 }
- }
+void WorkingFrame::OnPosition2Changed( wxSpinEvent& event )
+{
+	panel2_specs->panel_mid=panel2_specs->panel_height*0.5-5*PositionValueChannel2->GetValue();
+}
 
- void WorkingFrame::OnSpecterClick( wxCommandEvent& event )
- {
-	 if(spectrum->IsShown())
-	 {
-		 return;
-	 }
-	 else
-	 {
-		  spectrum->Show();
-		  spectrum->Start();
-	 }
- }
+void WorkingFrame::OnSpectrumClick( wxCommandEvent& event )
+{
+	if(spectrumLeft->IsShown())
+	{
+		return;
+	}
+	else
+	{
+		spectrumLeft->Show();
+		spectrumLeft->Start();
+	}
+}
+
+void WorkingFrame::OnSpectrumClickChannel2( wxCommandEvent& event )
+{
+	if(spectrumRight->IsShown())
+	{
+		return;
+	}
+	else
+	{
+		spectrumRight->Show();
+		spectrumRight->Start();
+	}
+}
 
 WorkingFrame::~WorkingFrame()
-	{ 
-		delete back_mem;
-		delete grid_mem;
-		delete grid_bitmap;
-		delete wave_bitmap;
-	}
+{ 
+
+}
 
 void WorkingFrame::VerticalSizeChanged(wxCommandEvent& event)
 {
-	 wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
-	 double converted;
-	 returned.ToDouble(&converted);
-	 if(voltSelection->GetSelection()==1)converted*=0.001;
-	 vertical_value=converted;
+	wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
+	double converted;
+	returned.ToDouble(&converted);
+	if(voltSelection->GetSelection()==1)converted*=0.001;
+	panel1_specs->VerticalSize=converted;
+}
+
+void WorkingFrame::VerticalSize2Changed(wxCommandEvent& event)
+{
+	wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
+	double converted;
+	returned.ToDouble(&converted);
+	if(voltSelection->GetSelection()==1)converted*=0.001;
+	panel2_specs->VerticalSize=converted;
 }
 
 void WorkingFrame::TimeBaseChanged( wxCommandEvent& event )
@@ -126,12 +138,26 @@ void WorkingFrame::TimeBaseChanged( wxCommandEvent& event )
 	double converted;
 	returned.ToDouble(&converted);
 	if(secondSelection->GetSelection()==1)converted*=0.001;
-	timeBase_value=converted;
+	panel1_specs->TimeBase=converted;
+}
+
+void WorkingFrame::TimeBase2Changed( wxCommandEvent& event )
+{
+	wxString returned = timeBaseChannel2->GetString(timeBaseChannel2->GetSelection());
+	double converted;
+	returned.ToDouble(&converted);
+	if(secondSelection->GetSelection()==1)converted*=0.001;
+	panel2_specs->TimeBase=converted;
 }
 
 void WorkingFrame::TresholdChanged( wxSpinEvent& event )
 {
-	treshold_value = Treshold->GetValue()*0.001;
+	panel1_specs->Treshold = Treshold->GetValue()*0.001;
+}
+
+void WorkingFrame::Treshold2Changed( wxSpinEvent& event )
+{
+	panel2_specs->Treshold = Treshold->GetValue()*0.001;
 }
 
 void WorkingFrame::OnSecondsChanged( wxCommandEvent& event )
@@ -165,6 +191,40 @@ void WorkingFrame::OnSecondsChanged( wxCommandEvent& event )
 			newSring="";
 		}
 		prev_seconds_selection=1;
+	}
+}
+
+void WorkingFrame::OnSeconds2Changed( wxCommandEvent& event )
+{
+	if(secondSelectionChannel2->GetSelection()==0 && prev_seconds_selection2!=0)
+	{
+		int selections_nuber=timeBaseChannel2->GetCount();
+		double newValue;
+		wxString newSring;
+		for(int i=0;i<selections_nuber;++i)
+		{
+			timeBaseChannel2->GetString(i).ToDouble(&newValue);
+			newValue*=0.001;
+			newSring<<newValue;
+			timeBaseChannel2->SetString(i,newSring);
+			newSring="";
+		}
+		prev_seconds_selection2=0;
+	}
+	else if(secondSelectionChannel2->GetSelection()==1 && prev_seconds_selection2!=1)
+	{
+		int selections_nuber=timeBaseChannel2->GetCount();
+		double newValue;
+		wxString newSring;
+		for(int i=0;i<selections_nuber;++i)
+		{
+			timeBaseChannel2->GetString(i).ToDouble(&newValue);
+			newValue*=1000;
+			newSring<<newValue;
+			timeBaseChannel2->SetString(i,newSring);
+			newSring="";
+		}
+		prev_seconds_selection2=1;
 	}
 }
 
@@ -202,103 +262,111 @@ void WorkingFrame::OnVoltsChanged( wxCommandEvent& event )
 	}
 }
 
-void WorkingFrame::OnPanelResized( wxSizeEvent& event )
+void WorkingFrame::OnVolts2Changed( wxCommandEvent& event )
 {
-	m_panel1->GetSize(&panel_width,&panel_height);
-	panel_mid=panel_height*0.5;
+	if(voltSelectionChannel2->GetSelection()==0 && prev_volt_selection2!=0)
+	{
+		int selections_nuber=VerticalSizeChannel2->GetCount();
+		double newValue;
+		wxString newSring;
+		for(int i=0;i<selections_nuber;++i)
+		{
+			VerticalSizeChannel2->GetString(i).ToDouble(&newValue);
+			newValue*=0.001;
+			newSring<<newValue;
+			VerticalSizeChannel2->SetString(i,newSring);
+			newSring="";
+		}
+		prev_volt_selection2=0;
+	}
+	else if(voltSelectionChannel2->GetSelection()==1 && prev_volt_selection2!=1)
+	{
+		int selections_nuber=VerticalSizeChannel2->GetCount();
+		double newValue;
+		wxString newSring;
+		for(int i=0;i<selections_nuber;++i)
+		{
+			VerticalSizeChannel2->GetString(i).ToDouble(&newValue);
+			newValue*=1000;
+			newSring<<newValue;
+			VerticalSizeChannel2->SetString(i,newSring);
+			newSring="";
+		}
+		prev_volt_selection2=1;
+	}
 }
 
-void WorkingFrame::DisplayFrequency(WorkingFrame*frame,IDataResponse *values)
+void WorkingFrame::OnPanelResized( wxSizeEvent& event )
 {
-	bool crescator=true,new_max=false,new_min=false;
-	double frequency=0,max,min,prag=0.005;
-	if(values==NULL)return;
-	int size=values->size()-1;
-	for(int i=0;i<size;i+=2)
-	{
-		if((*values)[i+1]>(*values)[i] && crescator==false)
-			{
-				crescator=true;
-				min=(*values)[i];
-				new_min=true;
-				if(new_max && new_min)
-				{
-					new_max=false;
-					new_min=false;
-					if(max-min>prag)
-						++frequency;
-				}
-			}
-			if((*values)[i+1]<(*values)[i] && crescator==true)
-			{
-				crescator=false;
-				max=(*values)[i];
-				new_max=true;
-				if(new_max && new_min)
-				{
-					new_max=false;
-					new_min=false;
-					if(max-min>prag)
-						++frequency;
-				}
-			}
-	}
-	frequency/=frame->timeBase_value;
-	frame->display_frequency<<(int)frequency;
-	frame->FrequencyDisplayText->SetLabel(frame->display_frequency);
-	frame->display_frequency="";
+	m_panel1->GetSize(&panel1_specs-> panel_width,&panel1_specs->panel_height);
+	panel1_specs->panel_mid=panel1_specs->panel_height*0.5;
+}
+
+void WorkingFrame::OnPanelResized2( wxSizeEvent& event )
+{
+	m_panel2->GetSize(&panel2_specs-> panel_width,&panel2_specs->panel_height);
+	panel2_specs->panel_mid=panel2_specs->panel_height*0.5;
 }
 
 void WorkingFrame::OnStateChanged( wxMouseEvent& event )
 {
-	if(active)
+	if(panel1_specs->active)
 	{
-		active=false;
+		panel1_specs->active=false;
 		state_button->SetLabel("On");
 	}
 	else
 	{
-		Create(this);
+		Create(panel1_specs);
 		state_button->SetLabel("Off");
 	}
 }
 
-void WorkingFrame::Create(WorkingFrame* frame)
+void WorkingFrame::OnStateChangedChannel2( wxMouseEvent& event )
+{
+	if(panel2_specs->active)
+	{
+		panel2_specs->active=false;
+		state_button2->SetLabel("On");
+	}
+	else
+	{
+		Create(panel2_specs);
+		state_button2->SetLabel("Off");
+	}
+}
+
+void WorkingFrame::Create(PanelSpecs* frame)
 {
 	if(Initialize())
 	{
 		frame->active=true;
-		std::thread refreshThread(Refresh,frame);
-		refreshThread.detach();
+		std::thread refreshLeftThread(Refresh,frame);
+		refreshLeftThread.detach();
 	}
 	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopen application after verify Recording Devices\nmay solve this problem");
 }
 
-void WorkingFrame::Refresh(WorkingFrame* frame)
+void WorkingFrame::Refresh(PanelSpecs* frame)
 {
-	frame->finished=false;
 	while(frame->active)
 	{
 		Draw(frame);
 		Sleep(1);
 	}
-	frame->finished=true;
 }
 
-void WorkingFrame::Draw(WorkingFrame* frame)
+void WorkingFrame::Draw(PanelSpecs* frame)
 {
 	if(!frame->active)return;
-	DataRequest req(frame->GetTimeBase(),frame->GetTreshold());
-	IDataResponse* response=GetSignalSamples(&req);
+	DataRequest req(frame->TimeBase,frame->Treshold);
+	IDataResponse* response=frame->GetSamples(&req);
 	if(response==NULL)return;
-	std::thread freqThread(frame->DisplayFrequency,frame,response);
-	freqThread.join();
 
 	float Y1,Y2;
 	float iteratii=response->size();
 	float pas;
 	//avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
-	
 	if(frame->isAntiAlise)
 	{
 		frame->antiAlise_mem->Blit(0, 0, frame->maxPanel_width,frame->panel_height, (frame->grid_mem), 0, 0);
@@ -307,8 +375,8 @@ void WorkingFrame::Draw(WorkingFrame* frame)
 	{
 		frame->back_mem->Blit(0, 0, frame->maxPanel_width,frame->panel_height, (frame->grid_mem), 0, 0);
 	}
-		
-	float k=frame->panel_height*0.5/frame->GetVerticalSize();
+
+	float k=frame->panel_height*0.5/frame->VerticalSize;
 	// vertical size represents maximum voltage to be displayed on the screen
 	// since the signal can go frm max voltage to -max voltage,
 	// the screen height represents 2 times the max voltage
@@ -378,33 +446,28 @@ void WorkingFrame::Draw(WorkingFrame* frame)
 		}
 	} 
 	response->Destroy();
-	wxClientDC client(frame->m_panel1);
+	wxClientDC client(frame->panel);
 	client.Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
-}
-
-void WorkingFrame::OnPanelPaint( wxPaintEvent& event )
-{
-	wxPaintDC paint(m_panel1);
-	paint.Blit(0,0,panel_width,panel_height,back_mem,0,0);
 }
 
 void WorkingFrame::Close( wxCloseEvent& event )
 {
-	active=false;
+	panel1_specs->active=false;
+	panel2_specs->active=false;
 	this->Hide();
-	 if(spectrum->IsShown())
-	 {
-		 spectrum->Hide();
-		 spectrum->Stop();
-	 }
-	int countClose=0;
-	while(!finished)
+
+	if(spectrumLeft->IsShown())
 	{
-		Sleep(150);
-		if(countClose==30)break;
-		//this is usefull because the program dosen't stop running this loop sometimes even if the 
-		//threads finished their working
-		++countClose;
+		spectrumLeft->Hide();
+		spectrumLeft->Stop();
 	}
+
+	if(spectrumRight->IsShown())
+	{
+		spectrumRight->Hide();
+		spectrumRight->Stop();
+	}
+
+	Sleep(500);
 	exit(0);
 }

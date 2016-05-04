@@ -2,51 +2,68 @@
 #include<chrono>
 #include<thread>
 
-static int Callback( const void *inputBuffer, void *outputBuffer,
-                             unsigned long framesPerBuffer,
-                             const PaStreamCallbackTimeInfo* timeInfo,
-                             PaStreamCallbackFlags statusFlags,
-                             void *userData )
-  {
-        SAMPLE *out = (SAMPLE*)outputBuffer;
-//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
-		short* in=(short*)inputBuffer;
-        unsigned long i;
-        (void) timeInfo; /* Prevent unused variable warnings. */
-        (void) statusFlags;
-       (void) userData;
-	   double to_export;
-	   ContainersManager *cont=Singletone::GetContainer();
-       if( inputBuffer != NULL )
-       {
-           for( i=0; i<framesPerBuffer; i++ )
-		   {
-				 to_export=(*in++);
-				 cont->Add(to_export);
-		   }
-       }
-       
-       return paContinue;
-   }
 
-IDataResponse* GetSignalSamples(IDataRequest* request)
+bool InitializeResult=false;
+
+static int Callback( const void *inputBuffer, void *outputBuffer,
+					unsigned long framesPerBuffer,
+					const PaStreamCallbackTimeInfo* timeInfo,
+					PaStreamCallbackFlags statusFlags,
+					void *userData )
+{
+	SAMPLE *out = (SAMPLE*)outputBuffer;
+	//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
+	short* in=(short*)inputBuffer;
+	unsigned long i;
+	(void) timeInfo; /* Prevent unused variable warnings. */
+	(void) statusFlags;
+	(void) userData;
+	ContainersManager *cont=Singletone::GetContainer();
+	if( inputBuffer != NULL )
+	{
+		for( i=0; i<framesPerBuffer; i+=2 )
+		{
+			cont->AddToLeftBuffer(*in++);//adding left sample
+			cont->AddToRightBuffer(*in++);//adding right sample
+		}
+	}
+
+	return paContinue;
+}
+
+IDataResponse* GetSignalLeftSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
-	return c->GetSamples(k,request->GetTreshold());
+	return c->GetLeftSamples(k,request->GetTreshold());
+}
+
+IDataResponse* GetSignalRightSamples(IDataRequest* request)
+{
+	ContainersManager *c=Singletone::GetContainer();
+	double k=(request->GetTimeBase());
+	return c->GetRightSamples(k,request->GetTreshold());
 }
 
 bool Initialize()
 {
-	ContainersManager *c=Singletone::GetContainer();
-	return c->succeded_initialize;
+	if(!InitializeResult)
+		return InternInitialize();
+	else return InitializeResult;
 }
 
-IDataResponse* GetSpectrumSamples(IDataRequest* request)
+IDataResponse* GetSpectrumRightSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
-	return c->GetSamples(k);
+	return c->GetRightSamples(k);
+}
+
+IDataResponse* GetSpectrumLeftSamples(IDataRequest* request)
+{
+	ContainersManager *c=Singletone::GetContainer();
+	double k=(request->GetTimeBase());
+	return c->GetRightSamples(k);
 }
 
 void StartVerify(PaStream * stream);
@@ -54,48 +71,58 @@ void StartVerify(PaStream * stream);
 bool InternInitialize()
 {
 	PaStreamParameters inputParameters;
-       PaStream *stream;
-       PaError err;
-	   
-       err = Pa_Initialize();
-	   if( err==paNoError )
-	   {
-       inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-       if (inputParameters.device != paNoDevice) 
-	   {
- 
-       inputParameters.channelCount = 1;       /* stereo input */
-       inputParameters.sampleFormat = PA_SAMPLE_TYPE;
-       inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
-       inputParameters.hostApiSpecificStreamInfo = NULL;
-	   double sample_rate=GetSampleRate(&inputParameters,nullptr);
-	   ContainersManager *c=Singletone::GetContainer();
-	   c->SetSampleRate(sample_rate);
+	PaStream *stream;
+	PaError err;
 
-       err = Pa_OpenStream(
-                 &stream,
-                 &inputParameters,
-                 nullptr,
-				 sample_rate,
-                 FRAMES_PER_BUFFER,
-                 0, /* paClipOff, */  /* we won't output out of range samples so don't bother clipping them */
-                 Callback,
-                 NULL );
-       if( err == paNoError )
-	   {
-		err = Pa_StartStream( stream );
-	   }
-       if( err != paNoError )return false;
-	   else
-	   {
-		   StartVerify(stream);
-		   return true;
-	   }
-		   }
-	   else return false;
-	   }
-	   else return false;
+	err = Pa_Initialize();
+	if( err==paNoError )
+	{
+		inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+		if (inputParameters.device != paNoDevice) 
+		{
 
+			inputParameters.channelCount = 1;       /* stereo input */
+			inputParameters.sampleFormat = PA_SAMPLE_TYPE;
+			inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
+			inputParameters.hostApiSpecificStreamInfo = NULL;
+			ContainersManager::SampleRate=GetSampleRate(&inputParameters,nullptr);
+
+			err = Pa_OpenStream(
+				&stream,
+				&inputParameters,
+				nullptr,
+				ContainersManager::SampleRate,
+				FRAMES_PER_BUFFER,
+				0, /* paClipOff, */  /* we won't output out of range samples so don't bother clipping them */
+				Callback,
+				NULL );
+			if( err == paNoError )
+			{
+				err = Pa_StartStream( stream );
+			}
+			if( err != paNoError )
+			{
+				InitializeResult=false;
+				return false;
+			}
+			else
+			{
+				StartVerify(stream);
+				InitializeResult=true;
+				return true;
+			}
+		}
+		else 
+		{
+			InitializeResult=false;
+			return false;
+		}
+	}
+	else 
+	{
+		InitializeResult=false;
+		return false;
+	}
 }
 
 double GetSampleRate( const PaStreamParameters *inputParameters , const PaStreamParameters * )
@@ -121,15 +148,13 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 
 double Get_sample_rate()
 {
-	return Singletone::GetContainer()->GetSampleRate();
+	return ContainersManager::SampleRate/2;
 }
-
-
 
 void Verify(PaStream * stream)
 {
 	bool is_working=true;
-	
+
 	while (is_working)
 	{
 		std::chrono::milliseconds m(100);

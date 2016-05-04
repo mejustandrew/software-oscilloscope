@@ -55,7 +55,7 @@ class GeneratedFrame : public wxFrame
 	
 	public:
 		
-		GeneratedFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Frequnecy Display"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GeneratedFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Frequnecy Display"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 713,406 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~GeneratedFrame();
 	
