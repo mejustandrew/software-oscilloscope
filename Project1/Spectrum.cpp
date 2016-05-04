@@ -237,7 +237,7 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 	int magnitude;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 
-	frame->four1(frame->converted_samples,frame->number_in_base2>>1);//divideing by 2
+	frame->four1(frame->converted_samples,frame->number_in_base2/2);
 	samples->Destroy();
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->grid_mem,0,0);
 
