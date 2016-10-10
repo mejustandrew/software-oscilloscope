@@ -11,7 +11,7 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 					PaStreamCallbackFlags statusFlags,
 					void *userData )
 {
-	SAMPLE *out = (SAMPLE*)outputBuffer;
+//	SAMPLE *out = (SAMPLE*)outputBuffer;
 	//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
 	short* in=(short*)inputBuffer;
 	unsigned long i;

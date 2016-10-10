@@ -24,10 +24,10 @@ public:
 			samples[i]=0;
 		}
 	}
-	int size();
-	double operator[] ( int index );
-	void Destroy();
-	void Add(double sample);
-	bool SetSamples(int number,double treshold);
-	bool SetLoopSize(int i);
+	_declspec(dllexport) int size();
+	_declspec(dllexport) double operator[] ( int index );
+	_declspec(dllexport) void Destroy();
+	_declspec(dllexport) void Add(double sample);
+	_declspec(dllexport) bool SetSamples(int number,double treshold);
+	_declspec(dllexport) bool SetLoopSize(int i);
 };

@@ -255,7 +255,7 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 {
 	bool crescator=true,new_max=false,new_min=false;
-	double frequency=0,max,min,prag=0.005;
+	double frequency=0,max=0,min=0,prag=0.005;
 	int size=values->size()-1;
 	for(int i=0;i<size;i+=2)
 	{
