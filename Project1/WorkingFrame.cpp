@@ -2,13 +2,15 @@
 #include "Imported.h"
 #include<thread>
 
+static std::mutex *mu = new std::mutex;
+
 WorkingFrame::WorkingFrame( wxWindow* parent )
 	:
 	BuiltFrame( parent )
 {
 	Initialize();
 	spectrumLeft=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
-	spectrumRight=new SpectrumFrame(nullptr,GetSpectrumLeftSamples);
+	spectrumRight=new SpectrumFrame(nullptr,GetSpectrumRightSamples);
 
 	prev_seconds_selection=1;
 	prev_volt_selection=1;
@@ -341,8 +343,8 @@ void WorkingFrame::Create(PanelSpecs* frame)
 	if(Initialize())
 	{
 		frame->active=true;
-		std::thread refreshLeftThread(Refresh,frame);
-		refreshLeftThread.detach();
+		std::thread refreshThread(Refresh,frame);
+		refreshThread.detach();
 	}
 	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopen application after verify Recording Devices\nmay solve this problem");
 }
@@ -361,10 +363,10 @@ void WorkingFrame::Draw(PanelSpecs* frame)
 	if(!frame->active)return;
 	DataRequest req(frame->TimeBase,frame->Treshold);
 	IDataResponse* response=frame->GetSamples(&req);
-	if(response==NULL)return;
+	if(!response)return;
 
 	float Y1,Y2;
-	float iteratii=response->size();
+	float iteratii = response->size();
 	float pas;
 	//avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
 	if(frame->isAntiAlise)
@@ -445,9 +447,14 @@ void WorkingFrame::Draw(PanelSpecs* frame)
 			}
 		}
 	} 
+
 	response->Destroy();
-	wxClientDC client(frame->panel);
-	client.Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
+	mu->lock();
+	{
+		wxClientDC client(frame->panel);
+		client.Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
+	}
+	mu->unlock();
 }
 
 void WorkingFrame::Close( wxCloseEvent& event )

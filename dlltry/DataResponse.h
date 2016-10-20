@@ -1,7 +1,7 @@
 #pragma once
 #include"IDataResponse.h"
 
-class DataResponse: public IDataResponse
+ class _declspec(dllexport) DataResponse: public IDataResponse
 {
 	double*samples,conversion_coefficient;
 	int number_of_samples,//used to initialize samples vector
@@ -24,10 +24,10 @@ public:
 			samples[i]=0;
 		}
 	}
-	_declspec(dllexport) int size();
-	_declspec(dllexport) double operator[] ( int index );
-	_declspec(dllexport) void Destroy();
-	_declspec(dllexport) void Add(double sample);
-	_declspec(dllexport) bool SetSamples(int number,double treshold);
-	_declspec(dllexport) bool SetLoopSize(int i);
+	 int size();
+	 double operator[] ( int index );
+	 void Destroy();
+	 void Add(double sample);
+	 bool SetSamples(int number,double treshold);
+	 bool SetLoopSize(int i);
 };

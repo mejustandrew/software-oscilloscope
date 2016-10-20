@@ -26,13 +26,13 @@ bool DataResponse::SetLoopSize(int i)
 {
 	if(over_buffer)
 	{
-		loop_size=i;
-		access_pos=add_pos+1;
+		loop_size = i;
+		access_pos = add_pos+1;
 		return true;
 	}
-	if(i<add_pos)
+	if(i < add_pos)
 	{
-		loop_size=i;
+		loop_size = i;
 		return true;	
 	}
 	return false;
