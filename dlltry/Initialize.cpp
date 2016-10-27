@@ -63,7 +63,7 @@ IDataResponse* GetSpectrumLeftSamples(IDataRequest* request)
 {
 	ContainersManager *c=Singletone::GetContainer();
 	double k=(request->GetTimeBase());
-	return c->GetRightSamples(k);
+	return c->GetLeftSamples(k);
 }
 
 void StartVerify(PaStream * stream);

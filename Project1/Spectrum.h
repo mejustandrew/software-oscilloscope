@@ -41,7 +41,7 @@ protected:
 	int GetPanelHeight(){ return panel_height; }
 	void RefreshContainers();
 	IDataResponse* (*GetSamples)(IDataRequest*);
-
+	void StartSpectrumDisplayThread(SpectrumFrame*frame);
 public:
 	SpectrumFrame( wxWindow* parent ,IDataResponse* (*GetSamples)(IDataRequest*));
 	void Start();

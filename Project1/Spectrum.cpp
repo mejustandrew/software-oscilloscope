@@ -6,8 +6,9 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(IDa
 	:
 	GeneratedFrame( parent ),GetSamples(GetSamples)
 {
-	this->Maximize();
-	this->SetMinSize(this->GetSize());
+	active=false;
+	Maximize();
+	SetMinSize(GetSize());
 	scaling_factor=1;
 	add_pos=0;
 	shown_pos=0;
@@ -17,17 +18,18 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(IDa
 	info_frequency->SetLabel("");
 	frequency_text->SetLabel("");
 	number_in_base2=1;
-	timeBase_value=0.25;
+	timeBase_value=0.1;
 	if(Initialize())
 	{
-		req=new DataRequest(timeBase_value,0.001);
+		req = new DataRequest(timeBase_value,0.001);
 		ComputeNumberInBase2();
 	}
 	converted_samples=new double[number_in_base2];
 	info_frequency->SetLabel("Frequency");
 	grid_mem.Clear();
+	StartSpectrumDisplayThread(this);
 }
-
+std::mutex guard;
 void SpectrumFrame::ComputeNumberInBase2()
 {
 	IDataResponse* samples=GetSamples(req);
@@ -92,16 +94,23 @@ void SpectrumFrame::OnClick( wxMouseEvent& event )
 void SpectrumFrame::Start()
 {
 	active=true;
+}
+
+void SpectrumFrame::StartSpectrumDisplayThread(SpectrumFrame*frame)
+{
 	std::thread Display(Refresh,this);
 	Display.detach();
 }
 
 void SpectrumFrame::Refresh(SpectrumFrame*frame)
 {
-	while(frame->active)
+	while(true)
 	{
-		if(frame->isFFT_spectrum)DrawFFT(frame);
-		else Draw(frame);
+		if(frame->active)
+		{
+			if(frame->isFFT_spectrum)DrawFFT(frame);
+			else Draw(frame);
+		}
 		Sleep(1);
 	}
 }
@@ -131,12 +140,12 @@ void SpectrumFrame::OnResize( wxSizeEvent& event )
 void SpectrumFrame::RefreshContainers()
 {
 	freq_container=new double[panel_width];
-		spectrum_container=new double[panel_width];
-		for(int i=0;i<panel_width;++i)
-		{
-			freq_container[i]=0;
-			spectrum_container[i]=i*sample_rate/number_in_base2;
-		}
+	spectrum_container=new double[panel_width];
+	for(int i=0;i<panel_width;++i)
+	{
+		freq_container[i]=0;
+		spectrum_container[i]=i*sample_rate/number_in_base2;
+	}
 }
 
 void SpectrumFrame::four1(double* data, unsigned long nn)
@@ -233,7 +242,6 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
 	IDataResponse* samples=frame->GetSamples(frame->req);
 	if(samples==nullptr)return;	
-	frame->mu.lock();
 	int magnitude;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 
@@ -246,10 +254,12 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 		magnitude=sqrt(frame->converted_samples[i]*frame->converted_samples[i]+frame->converted_samples[i+1]*frame->converted_samples[i+1]);
 		frame->back_mem.DrawLine(j,frame->panel_height,j,frame->panel_height-magnitude*frame->scaling_factor);
 	}
-
-	wxClientDC client(frame->m_panel1);
-	client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
-	frame->mu.unlock();
+	guard.lock();
+	{
+		wxClientDC client(frame->m_panel1);
+		client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	}
+	guard.unlock();
 }
 
 float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
@@ -299,13 +309,16 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 	double recieved_freq=frame->GetFrequency(frame,samples);
 
 	int frequency=pow(log(recieved_freq),2)*7;
-	wxClientDC client(frame->m_panel1);
 
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,1,0);
 	frame->back_mem.Blit(frame->panel_width-1,0,1,frame->panel_height,&frame->grid_mem,0,0);
 	frame->back_mem.DrawLine(frame->panel_width-1,frame->panel_height-frequency,frame->panel_width-1,frame->panel_height);
-
-	client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	guard.lock();
+	{
+		wxClientDC client(frame->m_panel1);
+		client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	}
+	guard.unlock();
 	frame->freq_container[frame->add_pos]=recieved_freq;
 
 	if(frame->add_pos+1==frame->panel_width)frame->add_pos=0;

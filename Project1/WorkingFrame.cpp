@@ -87,28 +87,16 @@ void WorkingFrame::OnPosition2Changed( wxSpinEvent& event )
 
 void WorkingFrame::OnSpectrumClick( wxCommandEvent& event )
 {
-	if(spectrumLeft->IsShown())
-	{
-		return;
-	}
-	else
-	{
-		spectrumLeft->Show();
-		spectrumLeft->Start();
-	}
+	if(spectrumLeft->IsShown()) return;
+	spectrumLeft->Show();
+	spectrumLeft->Start();
 }
 
 void WorkingFrame::OnSpectrumClickChannel2( wxCommandEvent& event )
 {
-	if(spectrumRight->IsShown())
-	{
-		return;
-	}
-	else
-	{
-		spectrumRight->Show();
-		spectrumRight->Start();
-	}
+	if(spectrumRight->IsShown()) return;
+	spectrumRight->Show();
+	spectrumRight->Start();
 }
 
 WorkingFrame::~WorkingFrame()
