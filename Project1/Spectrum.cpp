@@ -2,7 +2,7 @@
 #include"Imported.h"
 #include<thread>
 
-SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(IDataRequest*))
+SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(int numberOfSamples))
 	:
 	GeneratedFrame( parent ),GetSamples(GetSamples)
 {
@@ -12,39 +12,20 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(IDa
 	scaling_factor=1;
 	add_pos=0;
 	shown_pos=0;
-	active=true;
 	first_resized=true;
 	isFFT_spectrum=true;
 	info_frequency->SetLabel("");
 	frequency_text->SetLabel("");
-	number_in_base2=1;
+	number_in_base2=1024*16;
 	timeBase_value=0.1;
-	if(Initialize())
-	{
-		req = new DataRequest(timeBase_value,0.001);
-		ComputeNumberInBase2();
-	}
+	Initialize();
+
 	converted_samples=new double[number_in_base2];
 	info_frequency->SetLabel("Frequency");
 	grid_mem.Clear();
 	StartSpectrumDisplayThread(this);
 }
 std::mutex guard;
-void SpectrumFrame::ComputeNumberInBase2()
-{
-	IDataResponse* samples=GetSamples(req);
-	while(samples==nullptr)
-	{
-		samples=GetSamples(req);
-	}
-	number_in_base2=1;
-	while(number_in_base2<samples->size())
-	{
-		number_in_base2+=number_in_base2;
-	}
-	delete []converted_samples;
-	converted_samples=new double[number_in_base2];
-}
 
 void SpectrumFrame::MaxFrequencyChanged( wxCommandEvent& event )
 {
@@ -52,7 +33,6 @@ void SpectrumFrame::MaxFrequencyChanged( wxCommandEvent& event )
 	long converted_value;
 	string_value.ToLong(&converted_value);
 	req=new DataRequest((double)panel_width/((double)converted_value),0.001);
-	ComputeNumberInBase2();
 	RefreshContainers();
 }
 
@@ -227,20 +207,15 @@ void SpectrumFrame::VerifyFrequency( wxMouseEvent& event )
 
 void SpectrumFrame::ConvertSamples(IDataResponse *source,double *dest,int n)
 {
-	int iteratii=source->size();
-	for(int i=0;i<iteratii;++i)
+	for(int i=0;i<n;++i)
 	{
 		dest[i]=(*source)[i];
-	}
-	for(iteratii;iteratii<n;++iteratii)
-	{
-		dest[iteratii]=0;
 	}
 }
 
 void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
-	IDataResponse* samples=frame->GetSamples(frame->req);
+	IDataResponse* samples=frame->GetSamples(frame->number_in_base2);
 	if(samples==nullptr)return;	
 	int magnitude;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
@@ -303,7 +278,7 @@ float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 void SpectrumFrame::Draw(SpectrumFrame*frame)
 {
 
-	IDataResponse* samples=frame->GetSamples(frame->req);
+	IDataResponse* samples=frame->GetSamples(frame->number_in_base2);
 	if(samples==nullptr)return;
 
 	double recieved_freq=frame->GetFrequency(frame,samples);

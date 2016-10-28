@@ -40,12 +40,11 @@ protected:
 	int GetPanelWidth(){ return panel_width; }
 	int GetPanelHeight(){ return panel_height; }
 	void RefreshContainers();
-	IDataResponse* (*GetSamples)(IDataRequest*);
+	IDataResponse* (*GetSamples)(int numberOfSamples);
 	void StartSpectrumDisplayThread(SpectrumFrame*frame);
 public:
-	SpectrumFrame( wxWindow* parent ,IDataResponse* (*GetSamples)(IDataRequest*));
+	SpectrumFrame( wxWindow* parent ,IDataResponse* (*GetSamples)(int numberOfSamples));
 	void Start();
-	void ComputeNumberInBase2();
 	void Stop(){ active=false; }
 	bool IsRunning(){ return active; }
 };

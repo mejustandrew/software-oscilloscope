@@ -2,6 +2,45 @@
 
 int ContainersManager::SampleRate=0;
 
+void ContainersManager::AddSamplePair(double leftValue, double rightValue)
+{
+	if(isFLeft_used)
+	{
+		fLeft->Add(leftValue);
+	}
+	else
+	{
+		gLeft->Add(leftValue);
+	}
+
+	if(isFsimpleLeft_used)
+	{
+		fsimpleLeft->Add(leftValue);
+	}
+	else
+	{
+		gsimpleLeft->Add(leftValue);
+	}
+
+	if(isFRight_used)
+	{
+		fRight->Add(rightValue);
+	}
+	else
+	{
+		gRight->Add(rightValue);
+	}
+
+	if(isFsimpleRight_used)
+	{
+		fsimpleRight->Add(rightValue);
+	}
+	else
+	{
+		gsimpleRight->Add(rightValue);
+	}
+}
+
 void ContainersManager::AddToLeftBuffer(double value)
 {
 	if(isFLeft_used)
@@ -44,11 +83,11 @@ void ContainersManager::AddToRightBuffer(double value)
 	}
 }
 
-DataResponse* ContainersManager::GetRightSamples(double time_base)
+DataResponse* ContainersManager::GetRightSamples(int numberOfSamples)
 {
 	if(isFsimpleRight_used==true)
 	{
-		if(!fsimpleRight->SetLoopSize(time_base*SampleRate))return nullptr;
+		if(!fsimpleRight->SetLoopSize(numberOfSamples))return nullptr;
 		else
 		{
 			isFsimpleRight_used=false;
@@ -57,7 +96,7 @@ DataResponse* ContainersManager::GetRightSamples(double time_base)
 	}
 	else
 	{
-		if(!gsimpleRight->SetLoopSize(time_base*SampleRate))return nullptr;
+		if(!gsimpleRight->SetLoopSize(numberOfSamples))return nullptr;
 		else
 		{
 			isFsimpleRight_used=true;
@@ -88,11 +127,11 @@ DataResponse* ContainersManager::GetRightSamples(double time_base,double treshol
 	}
 }
 
-DataResponse* ContainersManager::GetLeftSamples(double time_base)
+DataResponse* ContainersManager::GetLeftSamples(int numberOfSamples)
 {
 	if(isFsimpleLeft_used==true)
 	{
-		if(!fsimpleLeft->SetLoopSize(time_base*SampleRate))return nullptr;
+		if(!fsimpleLeft->SetLoopSize(numberOfSamples))return nullptr;
 		else
 		{
 			isFsimpleLeft_used=false;
@@ -101,7 +140,7 @@ DataResponse* ContainersManager::GetLeftSamples(double time_base)
 	}
 	else
 	{
-		if(!gsimpleLeft->SetLoopSize(time_base*SampleRate))return nullptr;
+		if(!gsimpleLeft->SetLoopSize(numberOfSamples))return nullptr;
 		else
 		{
 			isFsimpleLeft_used=true;
