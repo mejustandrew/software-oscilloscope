@@ -61,13 +61,13 @@ void WorkingFrame::PanelLeave2( wxMouseEvent& event )
 void WorkingFrame::OnPanelPaint( wxPaintEvent& event )
 {
 	wxPaintDC paint(m_panel1);
-	paint.Blit(0,0,panel1_specs->panel_width,panel1_specs->panel_height,panel1_specs->back_mem,0,0);
+	paint.Blit(0,0,panel1_specs->panel_width,panel1_specs->panel_height,panel1_specs->paint_mem,0,0);
 }
 
 void WorkingFrame::OnPanelPaint2( wxPaintEvent& event )
 {
 	wxPaintDC paint(m_panel2);
-	paint.Blit(0,0,panel2_specs->panel_width,panel2_specs->panel_height,panel2_specs->back_mem,0,0);
+	paint.Blit(0,0,panel2_specs->panel_width,panel2_specs->panel_height,panel2_specs->paint_mem,0,0);
 }
 
 void WorkingFrame::OnAntiAliase( wxCommandEvent& event )
@@ -115,10 +115,10 @@ void WorkingFrame::VerticalSizeChanged(wxCommandEvent& event)
 
 void WorkingFrame::VerticalSize2Changed(wxCommandEvent& event)
 {
-	wxString returned = VerticalSize->GetString(VerticalSize->GetSelection());
+	wxString returned = VerticalSizeChannel2->GetString(VerticalSizeChannel2->GetSelection());
 	double converted;
 	returned.ToDouble(&converted);
-	if(voltSelection->GetSelection()==1)converted*=0.001;
+	if(voltSelectionChannel2->GetSelection()==1)converted*=0.001;
 	panel2_specs->VerticalSize=converted;
 }
 
@@ -334,7 +334,7 @@ void WorkingFrame::Create(PanelSpecs* frame)
 		std::thread refreshThread(Refresh,frame);
 		refreshThread.detach();
 	}
-	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopen application after verify Recording Devices\nmay solve this problem");
+	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopening application after verify Recording Devices\nmay solve this problem");
 }
 
 void WorkingFrame::Refresh(PanelSpecs* frame)
@@ -342,7 +342,7 @@ void WorkingFrame::Refresh(PanelSpecs* frame)
 	while(frame->active)
 	{
 		Draw(frame);
-		Sleep(1);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
@@ -437,12 +437,9 @@ void WorkingFrame::Draw(PanelSpecs* frame)
 	} 
 
 	response->Destroy();
-	mu->lock();
-	{
-		wxClientDC client(frame->panel);
-		client.Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
-	}
-	mu->unlock();
+
+	frame->paint_mem->Blit(0,0,frame->panel_width,frame->panel_height,frame->back_mem,0,0);
+	frame->Invalidate();
 }
 
 void WorkingFrame::Close( wxCloseEvent& event )
@@ -463,6 +460,6 @@ void WorkingFrame::Close( wxCloseEvent& event )
 		spectrumRight->Stop();
 	}
 
-	Sleep(500);
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	exit(0);
 }

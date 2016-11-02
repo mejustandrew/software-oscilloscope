@@ -16,7 +16,7 @@ protected:
 
 	int number_in_base2;
 	DataRequest*req;
-	wxMemoryDC back_mem,grid_mem;
+	wxMemoryDC back_mem,grid_mem,paint_mem;
 	wxBitmap specter_bmp,grid_bmp;
 	wxPen* pen;
 	wxString showFreq;
@@ -34,7 +34,7 @@ protected:
 	void OnScalingFactor( wxCommandEvent& event );
 	void MaxFrequencyChanged( wxCommandEvent& event );
 
-	float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values);
+	float GetFrequency(SpectrumFrame*frame,double *values, int size);
 	void ConvertSamples(IDataResponse *source,double *dest,int n);
 	void four1(double* data, unsigned long nn);
 	int GetPanelWidth(){ return panel_width; }

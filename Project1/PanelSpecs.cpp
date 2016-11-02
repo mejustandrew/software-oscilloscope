@@ -16,6 +16,7 @@ PanelSpecs::PanelSpecs(wxPanel*panel,IDataResponse* (*GetSamples)(IDataRequest*)
 	back_mem=new wxMemoryDC;
 	antiAlise_mem=new wxMemoryDC;
 	grid_mem=new wxMemoryDC;
+	paint_mem = new wxMemoryDC;
 	maxPanel_width=panel->GetMaxSize().GetWidth();
 	antiAlise_bitmap->Create(maxPanel_width,panel_height);
 	wave_bitmap->Create(maxPanel_width,panel_height);
@@ -29,6 +30,9 @@ PanelSpecs::PanelSpecs(wxPanel*panel,IDataResponse* (*GetSamples)(IDataRequest*)
 	grid_mem->SetPen(*wxGREEN_PEN);
 	grid_mem->SetBackground(*wxBLACK_BRUSH);
 	grid_mem->SelectObject(*grid_bitmap);
+	paint_mem->SetPen(*wxGREEN_PEN);
+	paint_mem->SetBackground(*wxBLACK_BRUSH);
+	paint_mem->SelectObject(*grid_bitmap);
 	DrawGridLines();
 	back_mem->Blit(0,0,panel_width,panel_height,grid_mem,0,0);
 }
@@ -51,4 +55,9 @@ void PanelSpecs::DrawGridLines()
 			 grid_mem->DrawLine(j,i,j,i+1);
 		 }
 	 }
+}
+
+void PanelSpecs::Invalidate()
+{
+	panel->Refresh(false);
 }

@@ -18,7 +18,6 @@ SpectrumFrame::SpectrumFrame( wxWindow* parent, IDataResponse* (*GetSamples)(int
 	frequency_text->SetLabel("");
 	number_in_base2=1024*16;
 	timeBase_value=0.1;
-	Initialize();
 
 	converted_samples=new double[number_in_base2];
 	info_frequency->SetLabel("Frequency");
@@ -91,7 +90,7 @@ void SpectrumFrame::Refresh(SpectrumFrame*frame)
 			if(frame->isFFT_spectrum)DrawFFT(frame);
 			else Draw(frame);
 		}
-		Sleep(1);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
@@ -111,6 +110,9 @@ void SpectrumFrame::OnResize( wxSizeEvent& event )
 		grid_mem.SelectObject(grid_bmp);
 		grid_mem.SetBackground(*wxBLACK_BRUSH);
 		grid_mem.Clear();
+		paint_mem.SelectObject(grid_bmp);
+		paint_mem.SetBackground(*wxBLACK_BRUSH);
+		paint_mem.Clear();
 		sample_rate=Get_sample_rate();
 		RefreshContainers();
 		first_resized=false;
@@ -216,7 +218,8 @@ void SpectrumFrame::ConvertSamples(IDataResponse *source,double *dest,int n)
 void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 {
 	IDataResponse* samples=frame->GetSamples(frame->number_in_base2);
-	if(samples==nullptr)return;	
+	if(samples==nullptr)
+		return;	
 	int magnitude;
 	frame->ConvertSamples(samples,frame->converted_samples,frame->number_in_base2);
 
@@ -229,25 +232,21 @@ void SpectrumFrame::DrawFFT(SpectrumFrame*frame)
 		magnitude=sqrt(frame->converted_samples[i]*frame->converted_samples[i]+frame->converted_samples[i+1]*frame->converted_samples[i+1]);
 		frame->back_mem.DrawLine(j,frame->panel_height,j,frame->panel_height-magnitude*frame->scaling_factor);
 	}
-	guard.lock();
-	{
-		wxClientDC client(frame->m_panel1);
-		client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
-	}
-	guard.unlock();
+	frame->paint_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	frame->m_panel1->Refresh(false);
 }
 
-float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
+float SpectrumFrame::GetFrequency(SpectrumFrame*frame,double *values, int size)
 {
 	bool crescator=true,new_max=false,new_min=false;
-	double frequency=0,max=0,min=0,prag=0.005;
-	int size=values->size()-1;
+	double max=0,min=0,prag=0.005;
+	float frequency=0;
 	for(int i=0;i<size;i+=2)
 	{
-		if((*values)[i+1]>(*values)[i] && crescator==false)
+		if(values[i+1]>values[i] && crescator==false)
 		{
 			crescator=true;
-			min=(*values)[i];
+			min=values[i];
 			new_min=true;
 			if(new_max && new_min)
 			{
@@ -257,10 +256,10 @@ float SpectrumFrame::GetFrequency(SpectrumFrame*frame,IDataResponse *values)
 					++frequency;
 			}
 		}
-		if((*values)[i+1]<(*values)[i] && crescator==true)
+		if(values[i+1]<values[i] && crescator==true)
 		{
 			crescator=false;
-			max=(*values)[i];
+			max=values[i];
 			new_max=true;
 			if(new_max && new_min)
 			{
@@ -279,21 +278,18 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 {
 
 	IDataResponse* samples=frame->GetSamples(frame->number_in_base2);
-	if(samples==nullptr)return;
+	if(samples==nullptr)
+		return;
+	frame->ConvertSamples(samples,frame->converted_samples,samples->size()-1);
+	double recieved_freq=frame->GetFrequency(frame, frame->converted_samples, samples->size()-1);
 
-	double recieved_freq=frame->GetFrequency(frame,samples);
-
-	int frequency=pow(log(recieved_freq),2)*7;
+	int frequency=recieved_freq/40;
 
 	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,1,0);
 	frame->back_mem.Blit(frame->panel_width-1,0,1,frame->panel_height,&frame->grid_mem,0,0);
 	frame->back_mem.DrawLine(frame->panel_width-1,frame->panel_height-frequency,frame->panel_width-1,frame->panel_height);
-	guard.lock();
-	{
-		wxClientDC client(frame->m_panel1);
-		client.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
-	}
-	guard.unlock();
+	frame->paint_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	frame->m_panel1->Refresh(false);
 	frame->freq_container[frame->add_pos]=recieved_freq;
 
 	if(frame->add_pos+1==frame->panel_width)frame->add_pos=0;
@@ -306,7 +302,7 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 void SpectrumFrame::OnPaint( wxPaintEvent& event )
 {
 	wxPaintDC panel(m_panel1);
-	panel.Blit(0,0,panel_width,panel_height,&back_mem,0,0);
+	panel.Blit(0,0,panel_width,panel_height,&paint_mem,0,0);
 }
 
 void SpectrumFrame::OnExit( wxCloseEvent& event )
