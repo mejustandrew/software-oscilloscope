@@ -43,7 +43,7 @@ protected:
 	int prev_seconds_selection, prev_seconds_selection2, prev_volt_selection,prev_volt_selection2;
 	wxString display_frequency;
 	PanelSpecs *panel1_specs,*panel2_specs;
-
+	
 public:
 	WorkingFrame( wxWindow* parent );
 	~WorkingFrame(); 

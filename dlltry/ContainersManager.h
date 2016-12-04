@@ -44,9 +44,10 @@ public:
 	}
 	void AddToLeftBuffer(double value);
 	void AddToRightBuffer(double value);
+	void AddSamplePair(double leftValue, double rightValue);
 	double GetSampleRate();
-	DataResponse * GetRightSamples(double time_base);
-	DataResponse * GetLeftSamples(double time_base);
+	DataResponse * GetRightSamples(int numberOfSamples);
+	DataResponse * GetLeftSamples(int numberOfSamples);
 	DataResponse * GetRightSamples(double time_base,double treshold);
 	DataResponse * GetLeftSamples(double time_base,double treshold);
 };
