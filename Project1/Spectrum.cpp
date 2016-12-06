@@ -276,19 +276,19 @@ float SpectrumFrame::GetFrequency(SpectrumFrame*frame,double *values, int size)
 
 void SpectrumFrame::Draw(SpectrumFrame*frame)
 {
-
 	IDataResponse* samples=frame->GetSamples(frame->number_in_base2);
 	if(samples==nullptr)
 		return;
 	frame->ConvertSamples(samples,frame->converted_samples,samples->size()-1);
 	double recieved_freq=frame->GetFrequency(frame, frame->converted_samples, samples->size()-1);
-
 	int frequency=recieved_freq/40;
+	int maximumFrequency = frame->GetMaximumFrequency();
+	int blitHeight = maximumFrequency > recieved_freq ? maximumFrequency / 40 : frequency;  
 
-	frame->back_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,1,0);
-	frame->back_mem.Blit(frame->panel_width-1,0,1,frame->panel_height,&frame->grid_mem,0,0);
+	frame->back_mem.Blit(0,frame->panel_height - blitHeight,frame->panel_width,blitHeight,&frame->back_mem,1,frame->panel_height - blitHeight);
+	frame->back_mem.Blit(frame->panel_width-1,frame->panel_height - blitHeight,1,blitHeight,&frame->grid_mem,0,frame->panel_height - blitHeight);
 	frame->back_mem.DrawLine(frame->panel_width-1,frame->panel_height-frequency,frame->panel_width-1,frame->panel_height);
-	frame->paint_mem.Blit(0,0,frame->panel_width,frame->panel_height,&frame->back_mem,0,0);
+	frame->paint_mem.Blit(0,frame->panel_height - blitHeight,frame->panel_width,blitHeight,&frame->back_mem,0,frame->panel_height - blitHeight);
 	frame->m_panel1->Refresh(false);
 	frame->freq_container[frame->add_pos]=recieved_freq;
 
@@ -297,6 +297,16 @@ void SpectrumFrame::Draw(SpectrumFrame*frame)
 	{
 		frame->add_pos++;
 	}
+}
+
+double SpectrumFrame::GetMaximumFrequency()
+{
+	double max = 0;
+	for(int i = 0; i < panel_width; ++i)
+	{
+		if(max < freq_container[i]) max = freq_container[i];
+	}
+	return max;
 }
 
 void SpectrumFrame::OnPaint( wxPaintEvent& event )

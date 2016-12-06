@@ -42,6 +42,7 @@ protected:
 	void RefreshContainers();
 	IDataResponse* (*GetSamples)(int numberOfSamples);
 	void StartSpectrumDisplayThread(SpectrumFrame*frame);
+	double GetMaximumFrequency();
 public:
 	SpectrumFrame( wxWindow* parent ,IDataResponse* (*GetSamples)(int numberOfSamples));
 	void Start();
