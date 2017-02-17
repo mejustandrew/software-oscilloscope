@@ -45,6 +45,7 @@ build/
 *.log
 *.scc
 *.lib
+*.VC.db
 
 ## Visual C++ cache files
 
