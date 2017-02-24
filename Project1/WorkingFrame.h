@@ -32,10 +32,6 @@ protected:
 	virtual void OnSeconds2Changed( wxCommandEvent& event );
 	virtual void Treshold2Changed( wxSpinEvent& event );
 	virtual void OnPosition2Changed( wxSpinEvent& event );
-	virtual void PanelLeave2( wxMouseEvent& event );
-	virtual void VerifyValues2( wxMouseEvent& event );
-	virtual void OnPanelPaint2( wxPaintEvent& event );
-	virtual void OnPanelResized2( wxSizeEvent& event );
 	void Close( wxCloseEvent& event );
 
 	SpectrumFrame* spectrumLeft,*spectrumRight;

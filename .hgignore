@@ -46,6 +46,7 @@ build/
 *.scc
 *.lib
 *.VC.db
+*.VC.opendb
 
 ## Visual C++ cache files
 
