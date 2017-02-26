@@ -7,6 +7,7 @@ class DataDrawer
 	PanelSpecs* panelSpecsLeftChannel, *panelSpecsRightChannel;
 
 	void Draw(PanelSpecs* panelSpecs, std::vector<float> buffer);
+	void ClearPanel();
 public:
 	DataDrawer(PanelSpecs* panelSpecsLeftChannel, PanelSpecs* panelSpecsRightChannel);
 	void DrawData(std::vector<float>leftBuffer, std::vector<float>rightBufer);

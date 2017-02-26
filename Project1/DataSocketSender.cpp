@@ -15,6 +15,7 @@ void DataSocketSender::StartSendingData(std::vector<float> &leftBufferSamples, s
 DataSocketSender::DataSocketSender()
 {
 	ch = new ConnectionHandler;
+	sendingDataFinished = true;
 }
 
 DataSocketSender::~DataSocketSender()

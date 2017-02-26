@@ -5,6 +5,7 @@
 class DataProvider
 {
 	DataContainer* container;
+	IDataResponse *leftBufferResponse, *rightBufferResponse;
 public:
 	DataProvider();
 	~DataProvider();

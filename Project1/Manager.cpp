@@ -46,6 +46,8 @@ void Manager::ProcessData()
 std::vector<float> Manager::ConvertToMaxSizedVector(IDataResponse * response, int maxSize)
 {
 	std::vector<float> result;
+	if (!response)
+		return result;
 	if(maxSize > response->size())
 	for (int i = 0; i < response->size(); i++)
 	{

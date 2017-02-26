@@ -6,16 +6,7 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 
 	float Y1, Y2;
 	float iteratii = buffer.size();
-	float pas;
-	//avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
-	if (panelSpecs->isAntiAlise)
-	{
-		panelSpecs->antiAlise_mem->Blit(0, 0, panelSpecs->maxPanel_width, panelSpecs->panel_height, (panelSpecs->grid_mem), 0, 0);
-	}
-	else
-	{
-		panelSpecs->back_mem->Blit(0, 0, panelSpecs->maxPanel_width, panelSpecs->panel_height, (panelSpecs->grid_mem), 0, 0);
-	}
+	float pas; //avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
 
 	float k = panelSpecs->panel_height * 0.5 / panelSpecs->VerticalSize;
 	// vertical size represents maximum voltage to be displayed on the screen
@@ -88,6 +79,18 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 	}
 }
 
+void DataDrawer::ClearPanel()
+{
+	if (panelSpecsLeftChannel->isAntiAlise)
+	{
+		panelSpecsLeftChannel->antiAlise_mem->Blit(0, 0, panelSpecsLeftChannel->maxPanel_width, panelSpecsLeftChannel->panel_height, (panelSpecsLeftChannel->grid_mem), 0, 0);
+	}
+	else
+	{
+		panelSpecsLeftChannel->back_mem->Blit(0, 0, panelSpecsLeftChannel->maxPanel_width, panelSpecsLeftChannel->panel_height, (panelSpecsLeftChannel->grid_mem), 0, 0);
+	}
+}
+
 DataDrawer::DataDrawer(PanelSpecs * panelSpecsLeftChannel, PanelSpecs * panelSpecsRightChannel)
 	: panelSpecsLeftChannel(panelSpecsLeftChannel), panelSpecsRightChannel(panelSpecsRightChannel)
 {
@@ -95,6 +98,7 @@ DataDrawer::DataDrawer(PanelSpecs * panelSpecsLeftChannel, PanelSpecs * panelSpe
 
 void DataDrawer::DrawData(std::vector<float> leftBuffer, std::vector<float> rightBufer)
 {
+	ClearPanel();
 	Draw(panelSpecsLeftChannel, leftBuffer);
 	Draw(panelSpecsRightChannel, rightBufer);
 	panelSpecsLeftChannel->paint_mem->Blit(0, 0, panelSpecsLeftChannel->panel_width, panelSpecsLeftChannel->panel_height, panelSpecsLeftChannel->back_mem, 0, 0);

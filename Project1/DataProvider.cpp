@@ -5,7 +5,8 @@ DataContainer * DataProvider::GetNewData(IDataRequest * leftChannelRequest, IDat
 	while (true)
 	{
 		container->LeftChannelData = GetSignalLeftSamples(leftChannelRequest);
-		container->RightChannelData = GetSignalLeftSamples(rightChannelRequest);
+		container->RightChannelData = GetSignalRightSamples(rightChannelRequest);
+
 		if (container->LeftChannelData || container->RightChannelData)
 			return container;
 	}
@@ -14,6 +15,9 @@ DataContainer * DataProvider::GetNewData(IDataRequest * leftChannelRequest, IDat
 
 DataProvider::DataProvider()
 {
+	leftBufferResponse = nullptr;
+	rightBufferResponse = nullptr;
+
 	container = new DataContainer;
 }
 
