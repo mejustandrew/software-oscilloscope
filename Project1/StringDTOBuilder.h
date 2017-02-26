@@ -11,13 +11,16 @@ class StringDTOBuilder
 		std::stringstream stream;
 		stream << "[";
 		int elementsNumber = elements.size() - 1;
-		for (int i = 0; i < elementsNumber; i++)
+		if (elementsNumber > 0)
 		{
-			stream << elements[i];
-			stream << ",";
+			for (int i = 0; i < elementsNumber; i++)
+			{
+				stream << elements[i];
+				stream << ",";
+			}
+			stream << elements[elementsNumber];
+			stream << "]";
 		}
-		stream << elements[elementsNumber];
-		stream << "]";
 
 		return stream.str();
 	}
@@ -27,6 +30,6 @@ public:
 	std::string BuildStringModel(const std::vector<T> &leftBuffer, const std::vector<T> &rightBuffer)
 	{
 		return "{\"LeftBuffer\":" + ConvertToStringValues(leftBuffer) + "," +
-			+"\"RightBuffer\":" + ConvertToStringValues(rightBuffer) + "}";
+			+"\"RightBuffer\":" + ConvertToStringValues(rightBuffer) + "}<EOF>";
 	}
 };

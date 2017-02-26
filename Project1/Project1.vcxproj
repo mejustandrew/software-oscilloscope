@@ -64,13 +64,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\wxWidgets\lib\vc_lib\mswu;C:\wxWidgets\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>kernel32.lib;D:\Users\Andrew\Documents\Visual Studio 2012\Projects\dlltry\Debug\Digital_Oscilloscope.lib;C:\wxWidgets\lib\vc_lib\wxbase30u.lib;C:\wxWidgets\lib\vc_lib\wxmsw30u_core.lib;C:\wxWidgets\lib\vc_lib\wxmsw30u_adv.lib;C:\wxWidgets\lib\vc_lib\wxpng.lib;C:\wxWidgets\lib\vc_lib\wxtiff.lib;C:\wxWidgets\lib\vc_lib\wxjpeg.lib;C:\wxWidgets\lib\vc_lib\wxzlib.lib;C:\wxWidgets\lib\vc_lib\wxregexu.lib;C:\wxWidgets\lib\vc_lib\wxexpat.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;$(SolutionDir)\Debug\Digital_Oscilloscope.lib;$(WXWIN)\lib\vc_lib\wxbase31u.lib;$(WXWIN)\lib\vc_lib\wxmsw31u_core.lib;$(WXWIN)\lib\vc_lib\wxmsw31u_adv.lib;$(WXWIN)\lib\vc_lib\wxpng.lib;$(WXWIN)\lib\vc_lib\wxtiff.lib;$(WXWIN)\lib\vc_lib\wxjpeg.lib;$(WXWIN)\lib\vc_lib\wxzlib.lib;$(WXWIN)\lib\vc_lib\wxregexu.lib;$(WXWIN)\lib\vc_lib\wxexpat.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
