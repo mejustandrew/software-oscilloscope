@@ -25,7 +25,6 @@ void Manager::StopProcessingData()
 void Manager::ProcessData()
 {
 	DataContainer * responseContainer;
-	int sizeOfSocketBuffer = 250;
 	while (isActive)
 	{
 		DataRequest leftBufferRequest(panelSpecsLeft->TimeBase, panelSpecsLeft->Treshold);
@@ -60,4 +59,5 @@ std::vector<float> Manager::ConvertToMaxSizedVector(IDataResponse * response, in
 			result.push_back((*response)[i * step]);
 		}
 	}
+	return result;
 }

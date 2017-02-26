@@ -1,3 +1,4 @@
+#pragma once
 #include <wx/dcclient.h>
 #include <wx/brush.h>
 #include <wx/colour.h>

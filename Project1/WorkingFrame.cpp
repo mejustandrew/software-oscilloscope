@@ -1,3 +1,4 @@
+#pragma once
 #include "WorkingFrame.h" 
 #include "Imported.h"
 #include<thread>
@@ -24,6 +25,8 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 
 	Create(panel1_specs);
 	Create(panel2_specs);
+	manager = new Manager(panel1_specs, panel2_specs);
+	manager->StartProcessingData();
 }
 
 std::string GetTruncatedDecimalsStringFromDouble(double value)
@@ -320,8 +323,8 @@ void WorkingFrame::Create(PanelSpecs* frame)
 	if (Initialize())
 	{
 		frame->active = true;
-		std::thread refreshThread(Refresh, frame);
-		refreshThread.detach();
+		/*std::thread refreshThread(Refresh, frame);
+		refreshThread.detach();*/
 	}
 	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopening application after verify Recording Devices\nmay solve this problem");
 }

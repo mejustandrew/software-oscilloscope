@@ -3,6 +3,7 @@
 #include "ConnectionHandler.h"
 #include "StringDTOBuilder.h"
 #include <string>
+#include "ConnectionHandler.h"
 
 void DataSocketSender::StartSendingData(std::vector<float> &leftBufferSamples, std::vector<float> &rightBufferSamples)
 {

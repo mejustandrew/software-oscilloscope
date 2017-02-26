@@ -1,8 +1,7 @@
 #pragma once
 #include<vector>
 #include "StringDTOBuilder.h"
-#include "ConnectionHandler.h"
-
+class ConnectionHandler;
 class DataSocketSender
 {
 	bool sendingDataFinished;

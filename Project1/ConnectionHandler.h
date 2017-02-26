@@ -8,9 +8,9 @@
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "11000"
 
-#include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <windows.h>
 #include <string>
 
 class ConnectionHandler
