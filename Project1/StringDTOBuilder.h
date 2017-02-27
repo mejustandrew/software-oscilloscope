@@ -9,18 +9,19 @@ class StringDTOBuilder
 	std::string ConvertToStringValues(const std::vector<T> &elements)
 	{
 		std::stringstream stream;
-		stream << "[";
 		int elementsNumber = elements.size() - 1;
+		stream << "[";
 		if (elementsNumber > 0)
 		{
+			
 			for (int i = 0; i < elementsNumber; i++)
 			{
 				stream << elements[i];
 				stream << ",";
 			}
 			stream << elements[elementsNumber];
-			stream << "]";
 		}
+		stream << "]";
 
 		return stream.str();
 	}

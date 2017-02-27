@@ -62,6 +62,8 @@ ConnectionHandler::ConnectionHandler()
 void ConnectionHandler::Send(std::string input)
 {
 	std::string responseString;
+	char recvbuf[DEFAULT_BUFLEN];
+
 	input += "<EOF>";
 
 	iResult = send(ConnectSocket, input.c_str(), input.length(), 0);
@@ -69,6 +71,17 @@ void ConnectionHandler::Send(std::string input)
 		closesocket(ConnectSocket);
 		WSACleanup();
 		throw "send failed with error: " + WSAGetLastError();
+	}
+
+
+	// Receive the server status response
+	iResult = recv(ConnectSocket, recvbuf, DEFAULT_BUFLEN, 0);
+	if (iResult > 0)
+	{
+		for (int i = 0; i < iResult; i++)
+		{
+			responseString += recvbuf[i];
+		}
 	}
 }
 
