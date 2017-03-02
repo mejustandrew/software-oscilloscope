@@ -28,7 +28,7 @@ class StringDTOBuilder
 
 public:
 	template<typename T>
-	std::string BuildStringModel(const std::vector<T> &leftBuffer, const std::vector<T> &rightBuffer)
+	_declspec(dllexport) std::string BuildStringModel(const std::vector<T> &leftBuffer, const std::vector<T> &rightBuffer)
 	{
 		return "{\"LeftBuffer\":" + ConvertToStringValues(leftBuffer) + "," +
 			+"\"RightBuffer\":" + ConvertToStringValues(rightBuffer) + "}<EOF>";
