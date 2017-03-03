@@ -32,8 +32,10 @@ void Manager::ProcessData()
 
 		responseContainer = dataProvider->GetNewData(&leftBufferRequest, &rightBufferRequest);
 
-		std::vector<float> leftBuffer = ConvertToMaxSizedVector(responseContainer->LeftChannelData, panelSpecsLeft->panel_width);
-		std::vector<float> rightBuffer = ConvertToMaxSizedVector(responseContainer->RightChannelData, panelSpecsLeft->panel_width);
+		float leftScalingFactor = panelSpecsLeft->panel_height * 0.5 / panelSpecsLeft->VerticalSize;
+		float rightScalingFactor = panelSpecsRight->panel_height * 0.5 / panelSpecsRight->VerticalSize;
+		std::vector<float> leftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft->panel_width, leftScalingFactor, panelSpecsLeft->panel_mid);
+		std::vector<float> rightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsLeft->panel_width, rightScalingFactor, panelSpecsRight->panel_mid);
 
 		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
@@ -44,7 +46,7 @@ void Manager::ProcessData()
 	}
 }
 
-std::vector<float> Manager::ConvertToMaxSizedVector(IDataResponse * response, int maxSize)
+std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset)
 {
 	std::vector<float> result;
 	if (!response)
@@ -52,14 +54,14 @@ std::vector<float> Manager::ConvertToMaxSizedVector(IDataResponse * response, in
 	if(maxSize > response->size())
 	for (int i = 0; i < response->size(); i++)
 	{
-		result.push_back((*response)[i]);
+		result.push_back(offset - (*response)[i] / scalingFactor);
 	}
 	else
 	{
 		float step = response->size() / maxSize;
 		for (int i = 0; i < response->size(); i++)
 		{
-			result.push_back((*response)[i * step]);
+			result.push_back(offset - (*response)[i * step] / scalingFactor);
 		}
 	}
 	return result;

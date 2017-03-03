@@ -13,7 +13,7 @@ class Manager
 	DataDrawer * dataDrawer;
 	bool isActive;
 	void ProcessData();
-	std::vector<float> ConvertToMaxSizedVector(IDataResponse *response, int maxSize);
+	std::vector<float> ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset);
 
 public:
 	Manager(PanelSpecs *panelSpecsLeft, PanelSpecs *panelSpecsRight);

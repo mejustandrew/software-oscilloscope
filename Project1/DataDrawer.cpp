@@ -8,7 +8,7 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 	float iteratii = buffer.size();
 	float pas; //avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
 
-	float k = panelSpecs->panel_height * 0.5 / panelSpecs->VerticalSize;
+	float k = panelSpecs->panel_height;
 	// vertical size represents maximum voltage to be displayed on the screen
 	// since the signal can go frm max voltage to -max voltage,
 	// the screen height represents 2 times the max voltage
@@ -40,8 +40,8 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 		{
 			for (int i = 0; i < iteratii; ++i)
 			{
-				Y1 = panelSpecs->panel_mid - buffer[i] * k;
-				Y2 = panelSpecs->panel_mid - buffer[i + 1] * k;
+				Y1 = buffer[i];
+				Y2 = buffer[i + 1];
 				panelSpecs->back_mem->DrawLine(i*pas, Y1, (i + 1)*pas, Y2);
 			}
 		}
@@ -71,8 +71,8 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 		{
 			for (float i = 0; i < prag; ++i)
 			{
-				Y1 = panelSpecs->panel_mid - buffer[i*pas] * k;
-				Y2 = panelSpecs->panel_mid - buffer[(i + 1)*pas] * k;
+				Y1 = buffer[i*pas];
+				Y2 = buffer[(i + 1)*pas];
 				panelSpecs->back_mem->DrawLine(i, Y1, (i + 1), Y2);
 			}
 		}
