@@ -5,32 +5,31 @@
 
 class StringDTOBuilder
 {
-	template <typename T>
-	std::string ConvertToStringValues(const std::vector<T> &elements)
+	void ConvertToStringValues(const std::vector<float> &elements, std::string *result)
 	{
-		std::stringstream stream;
 		int elementsNumber = elements.size() - 1;
-		stream << "[";
+		*result += "[";
 		if (elementsNumber > 0)
 		{
-			
 			for (int i = 0; i < elementsNumber; i++)
 			{
-				stream << elements[i];
-				stream << ",";
+				*result += std::to_string(elements[i]) + ",";
 			}
-			stream << elements[elementsNumber];
+			*result += std::to_string(elements[elementsNumber]);
 		}
-		stream << "]";
-
-		return stream.str();
+		*result += "]";
 	}
 
 public:
-	template<typename T>
-	_declspec(dllexport) std::string BuildStringModel(const std::vector<T> &leftBuffer, const std::vector<T> &rightBuffer)
+	_declspec(dllexport) std::string BuildStringModel(const std::vector<float> &leftBuffer, const std::vector<float> &rightBuffer)
 	{
-		return "{\"LeftBuffer\":" + ConvertToStringValues(leftBuffer) + "," +
-			+"\"RightBuffer\":" + ConvertToStringValues(rightBuffer) + "}<EOF>";
+		std::string model;
+		model.reserve(leftBuffer.size() + rightBuffer.size());
+		model += "{\"LeftBuffer\":";
+		ConvertToStringValues(leftBuffer, &model); 
+		model += ",\"RightBuffer\":";
+		ConvertToStringValues(rightBuffer, &model);
+		model += "}<EOF>";
+		return model;
 	}
 };

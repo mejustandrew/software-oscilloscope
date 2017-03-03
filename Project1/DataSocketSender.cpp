@@ -7,6 +7,7 @@
 
 void DataSocketSender::StartSendingData(std::vector<float> &leftBufferSamples, std::vector<float> &rightBufferSamples)
 {
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	std::string stringDTOModel = sb.BuildStringModel(leftBufferSamples, rightBufferSamples);
 	ch->Send(stringDTOModel);
 	sendingDataFinished = true;

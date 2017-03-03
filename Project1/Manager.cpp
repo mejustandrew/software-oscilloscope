@@ -32,14 +32,14 @@ void Manager::ProcessData()
 
 		responseContainer = dataProvider->GetNewData(&leftBufferRequest, &rightBufferRequest);
 
-		float leftScalingFactor = panelSpecsLeft->panel_height * 0.5 / panelSpecsLeft->VerticalSize;
-		float rightScalingFactor = panelSpecsRight->panel_height * 0.5 / panelSpecsRight->VerticalSize;
+		float leftScalingFactor = panelSpecsLeft->panel_height / 2 / panelSpecsLeft->VerticalSize;
+		float rightScalingFactor = panelSpecsRight->panel_height / 2 / panelSpecsRight->VerticalSize;
 		std::vector<float> leftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft->panel_width, leftScalingFactor, panelSpecsLeft->panel_mid);
 		std::vector<float> rightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsLeft->panel_width, rightScalingFactor, panelSpecsRight->panel_mid);
 
-		dataDrawer->DrawData(leftBuffer, rightBuffer);
-
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
 		if (dataSocketSender->HasFinishedSendingData())
 			dataSocketSender->SendData(leftBuffer, rightBuffer);
