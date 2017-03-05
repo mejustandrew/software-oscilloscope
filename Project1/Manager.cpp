@@ -63,7 +63,7 @@ std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * r
 	else
 	{
 		float step = response->size() / maxSize;
-		for (int i = 0; i < response->size(); i++)
+		for (int i = 0; i < maxSize; i++)
 		{
 			result.push_back(offset - (*response)[i * step] * scalingFactor);
 		}
