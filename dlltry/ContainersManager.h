@@ -42,6 +42,7 @@ public:
 		delete fsimpleLeft;
 		delete gsimpleLeft;
 	}
+
 	void AddToLeftBuffer(double value);
 	void AddToRightBuffer(double value);
 	void AddSamplePair(double leftValue, double rightValue);

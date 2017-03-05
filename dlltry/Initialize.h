@@ -1,7 +1,7 @@
   
 #include <math.h>
   #include "portaudio.h"
-  #include"Singletone.h"
+  #include"BufferManagerSingleton.h"
   #include"Exported.h"
 
 

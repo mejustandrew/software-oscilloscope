@@ -3,31 +3,31 @@
 #include<thread>
 
 
-bool InitializeResult=false;
+bool InitializeResult = false;
 
-static int Callback( const void *inputBuffer, void *outputBuffer,
-					unsigned long framesPerBuffer,
-					const PaStreamCallbackTimeInfo* timeInfo,
-					PaStreamCallbackFlags statusFlags,
-					void *userData )
+static int SampleRate = 0;
+
+static int Callback(const void *inputBuffer, void *outputBuffer,
+	unsigned long framesPerBuffer,
+	const PaStreamCallbackTimeInfo* timeInfo,
+	PaStreamCallbackFlags statusFlags,
+	void *userData)
 {
-//	SAMPLE *out = (SAMPLE*)outputBuffer;
-	//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
-	short* in=(short*)inputBuffer;
+	//	SAMPLE *out = (SAMPLE*)outputBuffer;
+		//        const SAMPLE *in = (const SAMPLE*)inputBuffer;
+	short* in = (short*)inputBuffer;
 	unsigned long i;
-	(void) timeInfo; /* Prevent unused variable warnings. */
-	(void) statusFlags;
-	(void) userData;
-	if( inputBuffer != NULL )
+	(void)timeInfo; /* Prevent unused variable warnings. */
+	(void)statusFlags;
+	(void)userData;
+	if (inputBuffer != NULL)
 	{
-	    ContainersManager *cont=Singletone::GetContainer();
-		int leftValue, rightValue;
+		ISamplesHolder *holder = BufferManagerSingleton::GetSamplesHolder();
 
-		for( i=0; i<framesPerBuffer; i+=2 )
+		for (i = 0; i < framesPerBuffer; i += 2)
 		{
-			leftValue = *in++;
-			rightValue = *in++;
-			cont->AddSamplePair(leftValue, rightValue);
+			holder->AddLeftSample(*in++);
+			holder->AddRightSampele(*in++);
 		}
 	}
 
@@ -36,35 +36,33 @@ static int Callback( const void *inputBuffer, void *outputBuffer,
 
 IDataResponse* GetSignalLeftSamples(IDataRequest* request)
 {
-	ContainersManager *c=Singletone::GetContainer();
-	double k=(request->GetTimeBase());
-	return c->GetLeftSamples(k,request->GetTreshold());
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	return provider->GetSignalLeftSamples(request->GetTimeBase(), request->GetTreshold());
 }
 
 IDataResponse* GetSignalRightSamples(IDataRequest* request)
 {
-	ContainersManager *c=Singletone::GetContainer();
-	double k=(request->GetTimeBase());
-	return c->GetRightSamples(k,request->GetTreshold());
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	return provider->GetSignalRightSamples(request->GetTimeBase(), request->GetTreshold());
 }
 
 bool Initialize()
 {
-	if(!InitializeResult)
+	if (!InitializeResult)
 		return InternInitialize();
 	else return InitializeResult;
 }
 
 IDataResponse* GetSpectrumRightSamples(int numberOfSamples)
 {
-	ContainersManager *c=Singletone::GetContainer();
-	return c->GetRightSamples(numberOfSamples);
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	return provider->GetSpectrumRightSamples(numberOfSamples);
 }
 
 IDataResponse* GetSpectrumLeftSamples(int numberOfSamples)
 {
-	ContainersManager *c=Singletone::GetContainer();
-	return c->GetLeftSamples(numberOfSamples);
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	return provider->GetSpectrumLeftSamples(numberOfSamples);
 }
 
 void StartVerify(PaStream * stream);
@@ -76,57 +74,57 @@ bool InternInitialize()
 	PaError err;
 
 	err = Pa_Initialize();
-	if( err==paNoError )
+	if (err == paNoError)
 	{
 		inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-		if (inputParameters.device != paNoDevice) 
+		if (inputParameters.device != paNoDevice)
 		{
 
 			inputParameters.channelCount = 1;       /* stereo input */
 			inputParameters.sampleFormat = PA_SAMPLE_TYPE;
-			inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
+			inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultLowInputLatency;
 			inputParameters.hostApiSpecificStreamInfo = NULL;
-			ContainersManager::SampleRate=GetSampleRate(&inputParameters,nullptr);
+			SampleRate = GetSampleRate(&inputParameters, nullptr);
 
 			err = Pa_OpenStream(
 				&stream,
 				&inputParameters,
 				nullptr,
-				ContainersManager::SampleRate,
+				SampleRate,
 				FRAMES_PER_BUFFER,
 				0, /* paClipOff, */  /* we won't output out of range samples so don't bother clipping them */
 				Callback,
-				NULL );
-			if( err == paNoError )
+				NULL);
+			if (err == paNoError)
 			{
-				err = Pa_StartStream( stream );
+				err = Pa_StartStream(stream);
 			}
-			if( err != paNoError )
+			if (err != paNoError)
 			{
-				InitializeResult=false;
+				InitializeResult = false;
 				return false;
 			}
 			else
 			{
 				StartVerify(stream);
-				InitializeResult=true;
+				InitializeResult = true;
 				return true;
 			}
 		}
-		else 
+		else
 		{
-			InitializeResult=false;
+			InitializeResult = false;
 			return false;
 		}
 	}
-	else 
+	else
 	{
-		InitializeResult=false;
+		InitializeResult = false;
 		return false;
 	}
 }
 
-double GetSampleRate( const PaStreamParameters *inputParameters , const PaStreamParameters * )
+double GetSampleRate(const PaStreamParameters *inputParameters, const PaStreamParameters *)
 {
 	PaError err;
 	double standardSampleRates[] = {
@@ -134,10 +132,10 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 		44100.0, 48000.0, 88200.0, 96000.0, 192000.0, -1 /* negative terminated  list */
 	};
 	double sampleRate;
-	for( int i = 0; standardSampleRates[i] > 0; i++ )
+	for (int i = 0; standardSampleRates[i] > 0; i++)
 	{
-		err = Pa_IsFormatSupported( inputParameters, NULL, standardSampleRates[i] );
-		if( err == paFormatIsSupported )
+		err = Pa_IsFormatSupported(inputParameters, NULL, standardSampleRates[i]);
+		if (err == paFormatIsSupported)
 		{
 			sampleRate = standardSampleRates[i];
 		}
@@ -149,20 +147,20 @@ double GetSampleRate( const PaStreamParameters *inputParameters , const PaStream
 
 double Get_sample_rate()
 {
-	return ContainersManager::SampleRate/2;
+	return SampleRate / 2;
 }
 
 void Verify(PaStream * stream)
 {
-	bool is_working=true;
+	bool is_working = true;
 
 	while (is_working)
 	{
 		std::chrono::milliseconds m(100);
 		std::this_thread::sleep_for(m);
-		if(Pa_IsStreamStopped(stream)==1 || Pa_IsStreamStopped(stream)<0|| Pa_IsStreamActive(stream)==0)
+		if (Pa_IsStreamStopped(stream) == 1 || Pa_IsStreamStopped(stream) < 0 || Pa_IsStreamActive(stream) == 0)
 		{
-			is_working=false;
+			is_working = false;
 			Pa_StopStream(stream);
 			InternInitialize();
 		}
@@ -171,6 +169,6 @@ void Verify(PaStream * stream)
 
 void StartVerify(PaStream * stream)
 {
-	std::thread t(Verify,stream);
+	std::thread t(Verify, stream);
 	t.detach();
 }
