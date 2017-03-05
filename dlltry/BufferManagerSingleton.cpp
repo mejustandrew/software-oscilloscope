@@ -14,7 +14,7 @@ ISamplesHolder * BufferManagerSingleton::GetSamplesHolder()
 
 BuffersManager * BufferManagerSingleton::GetInitialisedBuffersManager()
 {
-	if (bufferManager = nullptr)
+	if (!bufferManager)
 		bufferManager = new BuffersManager;
 	return bufferManager;
 }

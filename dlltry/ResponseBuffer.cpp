@@ -34,7 +34,13 @@ void ResponseBuffer::AddValue(float value)
 
 IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples)
 {
-	return circularBuffer->GetNumberOfAvaiableValues() >= numberOfSamples ? this : nullptr;
+	int avaiableSamples = circularBuffer->GetNumberOfAvaiableValues();
+	if (avaiableSamples >= numberOfSamples)
+	{
+		desiredSize = numberOfSamples;
+		return this;
+	}
+	return nullptr;
 }
 
 IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float threshold)
@@ -46,6 +52,7 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 	if (foundPosition + numberOfSamples < avaiableSamples)
 	{
 		accessPosition = foundPosition;
+		desiredSize = numberOfSamples;
 		return this;
 	}
 	return nullptr;
@@ -53,9 +60,12 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 
 int ResponseBuffer::GetPositionOverTreshold(float threshold)
 {
+	float iValue, IPlusOneValue;
 	for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues(); i++)
 	{
-		if ((*circularBuffer)[i] < threshold && threshold < (*circularBuffer)[i + 1]) return i + 1;
+		iValue = (*circularBuffer)[i];
+		IPlusOneValue = (*circularBuffer)[i + 1];
+		if (iValue < threshold && threshold <= IPlusOneValue) return i + 1;
 	}
 	return -1;
 }

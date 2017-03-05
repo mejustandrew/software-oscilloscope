@@ -43,5 +43,5 @@ void CircularBuffer::ResetBuffer()
 
 double CircularBuffer::operator[](int index)
 {
-	return overBuffer ? buffer[addingPosition - desiredLoopSize + index] : buffer [index];
+	return overBuffer ? buffer[(addingPosition + index)%bufferSize] : buffer [index];
 }

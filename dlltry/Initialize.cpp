@@ -6,6 +6,7 @@
 bool InitializeResult = false;
 
 static int SampleRate = 0;
+static float ConversionFactor = (1 << 16) - 1;
 
 static int Callback(const void *inputBuffer, void *outputBuffer,
 	unsigned long framesPerBuffer,
@@ -26,8 +27,8 @@ static int Callback(const void *inputBuffer, void *outputBuffer,
 
 		for (i = 0; i < framesPerBuffer; i += 2)
 		{
-			holder->AddLeftSample(*in++);
-			holder->AddRightSampele(*in++);
+			holder->AddLeftSample((*in++) / ConversionFactor);
+			holder->AddRightSampele((*in++) / ConversionFactor);
 		}
 	}
 
@@ -37,13 +38,13 @@ static int Callback(const void *inputBuffer, void *outputBuffer,
 IDataResponse* GetSignalLeftSamples(IDataRequest* request)
 {
 	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
-	return provider->GetSignalLeftSamples(request->GetTimeBase(), request->GetTreshold());
+	return provider->GetSignalLeftSamples(request->GetTimeBase() * Get_sample_rate(), request->GetTreshold());
 }
 
 IDataResponse* GetSignalRightSamples(IDataRequest* request)
 {
 	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
-	return provider->GetSignalRightSamples(request->GetTimeBase(), request->GetTreshold());
+	return provider->GetSignalRightSamples(request->GetTimeBase() * Get_sample_rate(), request->GetTreshold());
 }
 
 bool Initialize()
