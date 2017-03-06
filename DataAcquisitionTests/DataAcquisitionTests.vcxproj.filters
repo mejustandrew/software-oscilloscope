@@ -29,7 +29,7 @@
     <ClCompile Include="CircularBufferTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResponseBuffer.cpp">
+    <ClCompile Include="ResponseBufferTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

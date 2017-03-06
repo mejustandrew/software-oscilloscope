@@ -6,6 +6,12 @@ ResponseBuffer::ResponseBuffer()
 	accessPosition = 0;
 }
 
+ResponseBuffer::ResponseBuffer(int bufferSize)
+{
+	circularBuffer = new CircularBuffer(bufferSize);
+	accessPosition = 0;
+}
+
 ResponseBuffer::~ResponseBuffer()
 {
 	delete circularBuffer;
@@ -49,6 +55,7 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 	if (avaiableSamples < numberOfSamples)return nullptr;
 
 	int foundPosition = GetPositionOverTreshold(threshold);
+	if (foundPosition == -1) return nullptr;
 	if (foundPosition + numberOfSamples < avaiableSamples)
 	{
 		accessPosition = foundPosition;
@@ -60,9 +67,12 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 
 int ResponseBuffer::GetPositionOverTreshold(float threshold)
 {
-	for (int i = 1; i < circularBuffer->GetNumberOfAvaiableValues() - 2; i++)
+	float a, b;
+	for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues() - 1; i++)
 	{
-		if ((*circularBuffer)[i - 1] < threshold && (*circularBuffer)[i]) return i;
+		a = (*circularBuffer)[i];
+		b = (*circularBuffer)[i + 1];
+		if (a < threshold && threshold <= b) return i+1;
 	}
 	return -1;
 }

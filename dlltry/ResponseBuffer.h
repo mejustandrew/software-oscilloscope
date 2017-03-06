@@ -2,7 +2,7 @@
 #include "CircularBuffer.h"
 #include "IDataResponse.h"
 
-class ResponseBuffer : IDataResponse
+class _declspec(dllexport) ResponseBuffer : IDataResponse
 {
 	int desiredSize;
 	int accessPosition;
@@ -11,6 +11,7 @@ class ResponseBuffer : IDataResponse
 	int GetPositionOverTreshold(float threshold);
 public:
 	ResponseBuffer();
+	ResponseBuffer(int bufferSize);
 	~ResponseBuffer();
 	virtual int size() override;
 	virtual double operator[] (int index) override;

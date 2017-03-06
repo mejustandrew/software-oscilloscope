@@ -12,6 +12,7 @@ class DoubleBufferHandler
 
 public:
 	DoubleBufferHandler();
+	DoubleBufferHandler(int bufferSize);
 	~DoubleBufferHandler();
 	void AddValue(float value);
 	IDataResponse* GetBufferWithSizeOf(int size);

@@ -7,6 +7,11 @@ DoubleBufferHandler::DoubleBufferHandler()
 	isBuffer1Inserting = true;
 }
 
+DoubleBufferHandler::DoubleBufferHandler(int bufferSize)
+{
+
+}
+
 DoubleBufferHandler::~DoubleBufferHandler()
 {
 	delete responseBuffer1;
