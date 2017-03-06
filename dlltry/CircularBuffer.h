@@ -1,6 +1,6 @@
 #pragma once
 
-class CircularBuffer 
+class _declspec(dllexport) CircularBuffer
 {
 	float *buffer;
 	int bufferSize;
