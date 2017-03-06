@@ -75,7 +75,7 @@ DataDrawer::DataDrawer(PanelSpecs * panelSpecsLeftChannel, PanelSpecs * panelSpe
 {
 }
 
-void DataDrawer::DrawData(std::vector<float> leftBuffer, std::vector<float> rightBufer, wxPanel * panel)
+void DataDrawer::DrawData(std::vector<float> leftBuffer, std::vector<float> rightBufer)
 {
 	ClearPanel();
 	if (leftBuffer.size() == rightBufer.size())

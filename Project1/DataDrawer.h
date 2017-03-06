@@ -11,5 +11,5 @@ class DataDrawer
 	void ClearPanel();
 public:
 	DataDrawer(PanelSpecs* panelSpecsLeftChannel, PanelSpecs* panelSpecsRightChannel);
-	void DrawData(std::vector<float>leftBuffer, std::vector<float>rightBufer, wxPanel * panel);
+	void DrawData(std::vector<float>leftBuffer, std::vector<float>rightBufer);
 };

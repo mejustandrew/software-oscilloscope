@@ -22,18 +22,25 @@ void DoubleBufferHandler::AddValue(float value)
 IDataResponse * DoubleBufferHandler::GetBufferWithSizeOf(int size)
 {
 	IDataResponse * response = GetInsertingBuffer()->GetBufferWithLoopSize(size);
-	if (response) isBuffer1Inserting = !isBuffer1Inserting;
+	if (response) SwapBuffers();
 	return response;
 }
 
 IDataResponse * DoubleBufferHandler::GetBufferWithSizeOf(int size, float treshold)
 {
 	IDataResponse * response = GetInsertingBuffer()->GetBufferWithLoopSize(size, treshold);
-	if (response) isBuffer1Inserting = !isBuffer1Inserting;
+	if (response) SwapBuffers();
 	return response;
 }
 
 ResponseBuffer * DoubleBufferHandler::GetInsertingBuffer()
 {
 	return isBuffer1Inserting ? responseBuffer1 : responseBuffer2;
+}
+
+void DoubleBufferHandler::SwapBuffers()
+{
+	isBuffer1Inserting = !isBuffer1Inserting;
+	if (isBuffer1Inserting)responseBuffer1->Destroy();
+	else responseBuffer2->Destroy();
 }

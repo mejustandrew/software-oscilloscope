@@ -14,9 +14,12 @@ class Manager
 	bool isActive;
 	void ProcessData();
 	std::vector<float> ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset);
-	wxPanel *panel;
+
+	DataContainer * oldResponse;
+	DataContainer * MakeCallForData();	
 public:
-	Manager(PanelSpecs *panelSpecsLeft, PanelSpecs *panelSpecsRight, wxPanel *panel);
+	Manager(PanelSpecs *panelSpecsLeft, PanelSpecs *panelSpecsRight);
+	~Manager();
 	void StartProcessingData();
 	void StopProcessingData();
 };

@@ -8,6 +8,7 @@ class DoubleBufferHandler
 	bool isBuffer1Inserting;
 
 	ResponseBuffer* GetInsertingBuffer();
+	void SwapBuffers();
 
 public:
 	DoubleBufferHandler();

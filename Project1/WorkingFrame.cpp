@@ -27,7 +27,7 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	Create(panel2_specs);
 	delete panel2_specs->back_mem;
 	panel2_specs->back_mem = panel1_specs->back_mem;
-	manager = new Manager(panel1_specs, panel2_specs, m_panel1);
+	manager = new Manager(panel1_specs, panel2_specs);
 	manager->StartProcessingData();
 }
 

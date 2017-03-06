@@ -73,7 +73,6 @@ bool InternInitialize()
 	PaStreamParameters inputParameters;
 	PaStream *stream;
 	PaError err;
-
 	err = Pa_Initialize();
 	if (err == paNoError)
 	{
@@ -81,7 +80,7 @@ bool InternInitialize()
 		if (inputParameters.device != paNoDevice)
 		{
 
-			inputParameters.channelCount = 1;       /* stereo input */
+			inputParameters.channelCount = 2;       /* stereo input */
 			inputParameters.sampleFormat = PA_SAMPLE_TYPE;
 			inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultLowInputLatency;
 			inputParameters.hostApiSpecificStreamInfo = NULL;
