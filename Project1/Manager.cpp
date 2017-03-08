@@ -35,11 +35,11 @@ void Manager::ProcessData()
 {
 	DataContainer * responseContainer = new DataContainer;
 	DataContainer * newResponseContainer;
-
+	
 	while (isActive)
 	{
 		responseContainer = MakeCallForData();
-
+		std::vector<float> leftBuffer, rightBuffer;
 		/*if (!newResponseContainer->LeftChannelData) responseContainer->LeftChannelData = oldResponse->LeftChannelData;
 		else
 		{
@@ -56,8 +56,11 @@ void Manager::ProcessData()
 		float leftScalingFactor = panelSpecsLeft->panel_height / 2 / panelSpecsLeft->VerticalSize;
 		float rightScalingFactor = panelSpecsRight->panel_height / 2 / panelSpecsRight->VerticalSize;
 
-		std::vector<float> leftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft->panel_width, leftScalingFactor, panelSpecsLeft->panel_mid);
-		std::vector<float> rightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsLeft->panel_width, rightScalingFactor, panelSpecsRight->panel_mid);
+		std::vector<float> newLeftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft->panel_width, leftScalingFactor, panelSpecsLeft->panel_mid);
+		std::vector<float> newRightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsLeft->panel_width, rightScalingFactor, panelSpecsRight->panel_mid);
+
+		if (newLeftBuffer.size())leftBuffer = newLeftBuffer;
+		if (newRightBuffer.size())rightBuffer = newRightBuffer;
 
 		if(responseContainer->LeftChannelData)responseContainer->LeftChannelData->Destroy();
 		if(responseContainer->RightChannelData)responseContainer->RightChannelData->Destroy();
