@@ -35,11 +35,11 @@ void Manager::ProcessData()
 {
 	DataContainer * responseContainer = new DataContainer;
 	DataContainer * newResponseContainer;
-	
+	std::vector<float> leftBuffer, rightBuffer;
+
 	while (isActive)
 	{
 		responseContainer = MakeCallForData();
-		std::vector<float> leftBuffer, rightBuffer;
 		/*if (!newResponseContainer->LeftChannelData) responseContainer->LeftChannelData = oldResponse->LeftChannelData;
 		else
 		{
