@@ -1,6 +1,6 @@
 #include "DataDrawer.h"
 
-void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
+void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> &buffer)
 {
 	if (!panelSpecs->active)return;
 
@@ -32,7 +32,7 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> buffer)
 	}
 }
 
-void DataDrawer::DrawBothBuffersSameTime(PanelSpecs * panelSpecs, std::vector<float> leftBuffer, std::vector<float> rightBuffer)
+void DataDrawer::DrawBothBuffersSameTime(PanelSpecs * panelSpecs, std::vector<float> &leftBuffer, std::vector<float> &rightBuffer)
 {
 	if (!panelSpecs->active)return;
 
@@ -67,14 +67,7 @@ void DataDrawer::DrawBothBuffersSameTime(PanelSpecs * panelSpecs, std::vector<fl
 
 void DataDrawer::ClearPanel()
 {
-	if (panelSpecsLeftChannel->isAntiAlise)
-	{
-		panelSpecsLeftChannel->antiAlise_mem->Blit(0, 0, panelSpecsLeftChannel->maxPanel_width, panelSpecsLeftChannel->panel_height, (panelSpecsLeftChannel->grid_mem), 0, 0);
-	}
-	else
-	{
-		panelSpecsLeftChannel->back_mem->Blit(0, 0, panelSpecsLeftChannel->maxPanel_width, panelSpecsLeftChannel->panel_height, (panelSpecsLeftChannel->grid_mem), 0, 0);
-	}
+	panelSpecsLeftChannel->back_mem->Blit(0, 0, panelSpecsLeftChannel->maxPanel_width, panelSpecsLeftChannel->panel_height, (panelSpecsLeftChannel->grid_mem), 0, 0);
 }
 
 DataDrawer::DataDrawer(PanelSpecs * panelSpecsLeftChannel, PanelSpecs * panelSpecsRightChannel)

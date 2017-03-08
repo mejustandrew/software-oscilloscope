@@ -15,8 +15,11 @@ class Manager
 	void ProcessData();
 	std::vector<float> ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset);
 
+	DataContainer * oldResponse;
+	DataContainer * MakeCallForData();	
 public:
 	Manager(PanelSpecs *panelSpecsLeft, PanelSpecs *panelSpecsRight);
+	~Manager();
 	void StartProcessingData();
 	void StopProcessingData();
 };

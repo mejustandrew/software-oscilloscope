@@ -1,12 +1,12 @@
   
 #include <math.h>
   #include "portaudio.h"
-  #include"Singletone.h"
+  #include"BufferManagerSingleton.h"
   #include"Exported.h"
 
 
   #define PA_SAMPLE_TYPE      paInt16
-  #define FRAMES_PER_BUFFER   (64)
+  #define FRAMES_PER_BUFFER   (8)
   
   typedef float SAMPLE;
 

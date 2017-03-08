@@ -82,17 +82,27 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BufferManagerSingleton.h" />
+    <ClInclude Include="BuffersManager.h" />
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ContainersManager.h" />
     <ClInclude Include="DataResponse.h" />
+    <ClInclude Include="DoubleBufferHandler.h" />
     <ClInclude Include="Exported.h" />
     <ClInclude Include="IDataRequest.h" />
     <ClInclude Include="IDataResponse.h" />
     <ClInclude Include="Initialize.h" />
+    <ClInclude Include="ISampleBuffersProvider.h" />
+    <ClInclude Include="ISamplesHolder.h" />
+    <ClInclude Include="ResponseBuffer.h" />
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BufferManagerSingleton.cpp" />
+    <ClCompile Include="BuffersManager.cpp" />
+    <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="ContainersManager.cpp" />
     <ClCompile Include="DataResponse.cpp" />
     <ClCompile Include="dllmain.cpp">
@@ -104,7 +114,9 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="dlltry.cpp" />
+    <ClCompile Include="DoubleBufferHandler.cpp" />
     <ClCompile Include="Initialize.cpp" />
+    <ClCompile Include="ResponseBuffer.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

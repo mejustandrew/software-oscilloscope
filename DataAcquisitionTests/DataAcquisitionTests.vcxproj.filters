@@ -26,7 +26,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataResponseTest.cpp">
+    <ClCompile Include="CircularBufferTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResponseBufferTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleBufferHandlerTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
