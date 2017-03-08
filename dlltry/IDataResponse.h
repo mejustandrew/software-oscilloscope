@@ -8,5 +8,4 @@ public:
 	virtual double operator[] ( int index )=0;
 
 	virtual void Destroy() = 0;
-
 };

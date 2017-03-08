@@ -43,7 +43,7 @@ void ContainersManager::AddSamplePair(double leftValue, double rightValue)
 
 void ContainersManager::AddToLeftBuffer(double value)
 {
-	if(isFLeft_used)
+	if (isFLeft_used)
 	{
 		fLeft->Add(value);
 	}
@@ -52,7 +52,7 @@ void ContainersManager::AddToLeftBuffer(double value)
 		gLeft->Add(value);
 	}
 
-	if(isFsimpleLeft_used)
+	if (isFsimpleLeft_used)
 	{
 		fsimpleLeft->Add(value);
 	}
@@ -64,7 +64,7 @@ void ContainersManager::AddToLeftBuffer(double value)
 
 void ContainersManager::AddToRightBuffer(double value)
 {
-	if(isFRight_used)
+	if (isFRight_used)
 	{
 		fRight->Add(value);
 	}
@@ -73,7 +73,7 @@ void ContainersManager::AddToRightBuffer(double value)
 		gRight->Add(value);
 	}
 
-	if(isFsimpleRight_used)
+	if (isFsimpleRight_used)
 	{
 		fsimpleRight->Add(value);
 	}
@@ -83,9 +83,10 @@ void ContainersManager::AddToRightBuffer(double value)
 	}
 }
 
+
 DataResponse* ContainersManager::GetRightSamples(int numberOfSamples)
 {
-	if(isFsimpleRight_used==true)
+	if(isFsimpleRight_used)
 	{
 		if(!fsimpleRight->SetLoopSize(numberOfSamples))return nullptr;
 		else
@@ -107,7 +108,7 @@ DataResponse* ContainersManager::GetRightSamples(int numberOfSamples)
 
 DataResponse* ContainersManager::GetRightSamples(double time_base,double treshold)
 {
-	if(isFRight_used==true)
+	if(isFRight_used)
 	{
 		if(!fRight->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else
@@ -129,7 +130,7 @@ DataResponse* ContainersManager::GetRightSamples(double time_base,double treshol
 
 DataResponse* ContainersManager::GetLeftSamples(int numberOfSamples)
 {
-	if(isFsimpleLeft_used==true)
+	if(isFsimpleLeft_used)
 	{
 		if(!fsimpleLeft->SetLoopSize(numberOfSamples))return nullptr;
 		else
@@ -151,7 +152,7 @@ DataResponse* ContainersManager::GetLeftSamples(int numberOfSamples)
 
 DataResponse* ContainersManager::GetLeftSamples(double time_base,double treshold)
 {
-	if(isFLeft_used==true)
+	if(isFLeft_used)
 	{
 		if(!fLeft->SetSamples(time_base*SampleRate,treshold))return nullptr;
 		else

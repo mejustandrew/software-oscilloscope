@@ -27,13 +27,19 @@ void DataResponse::Add(double sample)
 
 bool DataResponse::SetLoopSize(int i)
 {
-	loop_size = i;
 	if (over_buffer)
 	{
-		access_pos = add_pos;
+		loop_size = i;
+		access_pos = add_pos + 1;
 		return true;
 	}
-	return i < add_pos;
+	if (i<add_pos)
+	{
+		loop_size = i;
+		return true;
+	}
+	return false;
+
 }
 
 bool DataResponse::SetSamples(int number, double treshold)

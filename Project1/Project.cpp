@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  5 2014)
+// C++ code generated with wxFormBuilder (version Jun 17 2015)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -155,17 +155,11 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 	
-	m_panel1 = new wxPanel( this, wxID_ANY, wxPoint( 0,0 ), wxSize( 400,200 ), wxTAB_TRAVERSAL );
-	m_panel1->SetMinSize( wxSize( 400,200 ) );
-	m_panel1->SetMaxSize( wxSize( 1350,200 ) );
+	m_panel1 = new wxPanel( this, wxID_ANY, wxPoint( 0,0 ), wxSize( 400,450 ), wxTAB_TRAVERSAL );
+	m_panel1->SetMinSize( wxSize( 400,450 ) );
+	m_panel1->SetMaxSize( wxSize( 1350,450 ) );
 	
 	bSizer2->Add( m_panel1, 1, wxALL|wxEXPAND, 5 );
-	
-	m_panel2 = new wxPanel( this, wxID_ANY, wxPoint( 0,0 ), wxSize( 400,200 ), wxTAB_TRAVERSAL );
-	m_panel2->SetMinSize( wxSize( 400,200 ) );
-	m_panel2->SetMaxSize( wxSize( 1350,200 ) );
-	
-	bSizer2->Add( m_panel2, 1, wxEXPAND | wxALL, 5 );
 	
 	
 	bSizer1->Add( bSizer2, 1, wxEXPAND, 5 );
@@ -178,33 +172,45 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	antiAliseCheckBox = new wxCheckBox( this, wxID_ANY, wxT("Anti Aliasing"), wxDefaultPosition, wxDefaultSize, 0 );
 	gbSizer4->Add( antiAliseCheckBox, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALIGN_BOTTOM|wxALL, 5 );
 	
-	textFrequency = new wxStaticText( this, wxID_ANY, wxT("Frequency:"), wxDefaultPosition, wxDefaultSize, 0 );
-	textFrequency->Wrap( -1 );
-	gbSizer4->Add( textFrequency, wxGBPosition( 2, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	wxGridBagSizer* gbSizer5;
+	gbSizer5 = new wxGridBagSizer( 0, 0 );
+	gbSizer5->SetFlexibleDirection( wxBOTH );
+	gbSizer5->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	FrequencyDisplayText = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	FrequencyDisplayText->Wrap( -1 );
-	gbSizer4->Add( FrequencyDisplayText, wxGBPosition( 2, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	msText1 = new wxStaticText( this, wxID_ANY, wxT("ms:"), wxPoint( -1,-1 ), wxDefaultSize, 0 );
+	msText1->Wrap( -1 );
+	gbSizer5->Add( msText1, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	HzUnitsText = new wxStaticText( this, wxID_ANY, wxT("Hz"), wxDefaultPosition, wxDefaultSize, 0 );
-	HzUnitsText->Wrap( -1 );
-	gbSizer4->Add( HzUnitsText, wxGBPosition( 2, 5 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	timeLeftChannel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
+	timeLeftChannel->Wrap( -1 );
+	gbSizer5->Add( timeLeftChannel, wxGBPosition( 0, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	mvText28 = new wxStaticText( this, wxID_ANY, wxT("mv:"), wxDefaultPosition, wxDefaultSize, 0 );
+	mvText28->Wrap( -1 );
+	gbSizer5->Add( mvText28, wxGBPosition( 0, 4 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	amplitudeLabelLeftChannel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
+	amplitudeLabelLeftChannel->Wrap( -1 );
+	gbSizer5->Add( amplitudeLabelLeftChannel, wxGBPosition( 0, 8 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	
+	gbSizer4->Add( gbSizer5, wxGBPosition( 1, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
 	
 	timeLabel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
 	timeLabel->Wrap( -1 );
-	gbSizer4->Add( timeLabel, wxGBPosition( 0, 40 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( timeLabel, wxGBPosition( 1, 45 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	amplitudeLabel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
 	amplitudeLabel->Wrap( -1 );
-	gbSizer4->Add( amplitudeLabel, wxGBPosition( 0, 45 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( amplitudeLabel, wxGBPosition( 1, 53 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	msText = new wxStaticText( this, wxID_ANY, wxT("ms:"), wxPoint( -1,-1 ), wxDefaultSize, 0 );
 	msText->Wrap( -1 );
-	gbSizer4->Add( msText, wxGBPosition( 0, 37 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( msText, wxGBPosition( 1, 42 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	mvText = new wxStaticText( this, wxID_ANY, wxT("mv:"), wxDefaultPosition, wxDefaultSize, 0 );
 	mvText->Wrap( -1 );
-	gbSizer4->Add( mvText, wxGBPosition( 0, 44 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( mvText, wxGBPosition( 1, 48 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
 	bSizer1->Add( gbSizer4, 1, wxEXPAND, 5 );
@@ -237,10 +243,6 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_panel1->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
-	m_panel2->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
-	m_panel2->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
-	m_panel2->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
-	m_panel2->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized2 ), NULL, this );
 	antiAliseCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 }
 
@@ -268,10 +270,6 @@ BuiltFrame::~BuiltFrame()
 	m_panel1->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
-	m_panel2->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave2 ), NULL, this );
-	m_panel2->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues2 ), NULL, this );
-	m_panel2->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint2 ), NULL, this );
-	m_panel2->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized2 ), NULL, this );
 	antiAliseCheckBox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 	
 }
