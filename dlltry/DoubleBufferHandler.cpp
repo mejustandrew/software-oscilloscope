@@ -9,7 +9,9 @@ DoubleBufferHandler::DoubleBufferHandler()
 
 DoubleBufferHandler::DoubleBufferHandler(int bufferSize)
 {
-
+	responseBuffer1 = new ResponseBuffer(bufferSize);
+	responseBuffer2 = new ResponseBuffer(bufferSize);
+	isBuffer1Inserting = true;
 }
 
 DoubleBufferHandler::~DoubleBufferHandler()

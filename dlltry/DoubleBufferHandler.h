@@ -2,7 +2,7 @@
 #include "IDataResponse.h"
 #include "ResponseBuffer.h"
 
-class DoubleBufferHandler
+class _declspec(dllexport) DoubleBufferHandler
 {
 	ResponseBuffer *responseBuffer1, *responseBuffer2;
 	bool isBuffer1Inserting;
