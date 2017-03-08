@@ -48,6 +48,6 @@ ResponseBuffer * DoubleBufferHandler::GetInsertingBuffer()
 void DoubleBufferHandler::SwapBuffers()
 {
 	isBuffer1Inserting = !isBuffer1Inserting;
-	if (isBuffer1Inserting)responseBuffer1->Destroy();
-	else responseBuffer2->Destroy();
+	/*if (isBuffer1Inserting)responseBuffer1->Destroy();
+	else responseBuffer2->Destroy();*/
 }

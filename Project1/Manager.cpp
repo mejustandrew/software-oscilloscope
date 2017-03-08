@@ -38,9 +38,9 @@ void Manager::ProcessData()
 
 	while (isActive)
 	{
-		newResponseContainer = MakeCallForData();
+		responseContainer = MakeCallForData();
 
-		if (!newResponseContainer->LeftChannelData) responseContainer->LeftChannelData = oldResponse->LeftChannelData;
+		/*if (!newResponseContainer->LeftChannelData) responseContainer->LeftChannelData = oldResponse->LeftChannelData;
 		else
 		{
 			oldResponse->LeftChannelData = newResponseContainer->LeftChannelData;
@@ -51,7 +51,7 @@ void Manager::ProcessData()
 		{
 			oldResponse->RightChannelData = newResponseContainer->RightChannelData;
 			responseContainer->RightChannelData = newResponseContainer->RightChannelData;
-		}
+		}*/
 
 		float leftScalingFactor = panelSpecsLeft->panel_height / 2 / panelSpecsLeft->VerticalSize;
 		float rightScalingFactor = panelSpecsRight->panel_height / 2 / panelSpecsRight->VerticalSize;
@@ -77,6 +77,10 @@ std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * r
 	std::vector<float> result;
 	if (!response)
 		return result;
+
+	float da;
+	da = (*response)[0];
+
 	if(maxSize > response->size())
 	for (int i = 0; i < response->size(); i++)
 	{

@@ -1,5 +1,5 @@
 #include "CircularBuffer.h"
-
+#include <assert.h> 
 
 CircularBuffer::CircularBuffer(int bufferSize) 
 {
@@ -43,5 +43,8 @@ void CircularBuffer::ResetBuffer()
 
 double CircularBuffer::operator[](int index)
 {
+	int avaiableSamples = GetNumberOfAvaiableValues();
+	if(!(index <= avaiableSamples))
+	assert(false);
 	return overBuffer ? buffer[(addingPosition + index) % bufferSize] : buffer [index];
 }
