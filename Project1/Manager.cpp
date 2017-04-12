@@ -6,7 +6,7 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
 	dataProvider = new DataProvider;
-	//dataSocketSender = new DataSocketSender;
+	dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
 	oldResponse = new DataContainer;
 }
@@ -40,18 +40,6 @@ void Manager::ProcessData()
 	while (isActive)
 	{
 		responseContainer = MakeCallForData();
-		/*if (!newResponseContainer->LeftChannelData) responseContainer->LeftChannelData = oldResponse->LeftChannelData;
-		else
-		{
-			oldResponse->LeftChannelData = newResponseContainer->LeftChannelData;
-			responseContainer->LeftChannelData = newResponseContainer->LeftChannelData;
-		}
-		if (!newResponseContainer->RightChannelData) responseContainer->RightChannelData = oldResponse->RightChannelData;
-		else
-		{
-			oldResponse->RightChannelData = newResponseContainer->RightChannelData;
-			responseContainer->RightChannelData = newResponseContainer->RightChannelData;
-		}*/
 
 		float leftScalingFactor = panelSpecsLeft->panel_height / 2 / panelSpecsLeft->VerticalSize;
 		float rightScalingFactor = panelSpecsRight->panel_height / 2 / panelSpecsRight->VerticalSize;
@@ -69,8 +57,8 @@ void Manager::ProcessData()
 
 		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
-		/*if (dataSocketSender->HasFinishedSendingData())
-			dataSocketSender->SendData(leftBuffer, rightBuffer);*/
+		if (dataSocketSender->HasFinishedSendingData())
+			dataSocketSender->SendData(leftBuffer, rightBuffer);
 	}
 	delete responseContainer;
 }
@@ -80,9 +68,6 @@ std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * r
 	std::vector<float> result;
 	if (!response)
 		return result;
-
-	float da;
-	da = (*response)[0];
 
 	if(maxSize > response->size())
 	for (int i = 0; i < response->size(); i++)

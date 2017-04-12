@@ -78,7 +78,7 @@ namespace GUILogicTests
 	private:
 		void PopulateBuffer(std::vector<float> &buffer)
 		{
-			for (int i = 0.000000; i < buffer.size(); i++)
+			for (unsigned int i = 0; i < buffer.size(); i++)
 			{
 				buffer[i] = 0;
 			}

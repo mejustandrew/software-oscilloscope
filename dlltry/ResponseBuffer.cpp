@@ -67,12 +67,9 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 
 int ResponseBuffer::GetPositionOverTreshold(float threshold)
 {
-	float a, b;
 	for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues(); i++)
 	{
-		a = (*circularBuffer)[i];
-		b = (*circularBuffer)[i + 1];
-		if (a < threshold && threshold <= b) return i+1;
+		if ((*circularBuffer)[i] < threshold && threshold <= (*circularBuffer)[i + 1]) return i+1;
 	}
 	return -1;
 }
