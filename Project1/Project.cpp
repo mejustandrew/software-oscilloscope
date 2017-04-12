@@ -169,9 +169,6 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	gbSizer4->SetFlexibleDirection( wxHORIZONTAL );
 	gbSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	antiAliseCheckBox = new wxCheckBox( this, wxID_ANY, wxT("Anti Aliasing"), wxDefaultPosition, wxDefaultSize, 0 );
-	gbSizer4->Add( antiAliseCheckBox, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALIGN_BOTTOM|wxALL, 5 );
-	
 	wxGridBagSizer* gbSizer5;
 	gbSizer5 = new wxGridBagSizer( 0, 0 );
 	gbSizer5->SetFlexibleDirection( wxBOTH );
@@ -194,23 +191,23 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	gbSizer5->Add( amplitudeLabelLeftChannel, wxGBPosition( 0, 8 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
-	gbSizer4->Add( gbSizer5, wxGBPosition( 1, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
+	gbSizer4->Add( gbSizer5, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
 	
 	timeLabel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
 	timeLabel->Wrap( -1 );
-	gbSizer4->Add( timeLabel, wxGBPosition( 1, 45 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( timeLabel, wxGBPosition( 0, 45 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	amplitudeLabel = new wxStaticText( this, wxID_ANY, wxT("0.00"), wxDefaultPosition, wxDefaultSize, 0 );
 	amplitudeLabel->Wrap( -1 );
-	gbSizer4->Add( amplitudeLabel, wxGBPosition( 1, 53 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( amplitudeLabel, wxGBPosition( 0, 53 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	msText = new wxStaticText( this, wxID_ANY, wxT("ms:"), wxPoint( -1,-1 ), wxDefaultSize, 0 );
 	msText->Wrap( -1 );
-	gbSizer4->Add( msText, wxGBPosition( 1, 42 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( msText, wxGBPosition( 0, 42 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	mvText = new wxStaticText( this, wxID_ANY, wxT("mv:"), wxDefaultPosition, wxDefaultSize, 0 );
 	mvText->Wrap( -1 );
-	gbSizer4->Add( mvText, wxGBPosition( 1, 48 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( mvText, wxGBPosition( 0, 48 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
 	bSizer1->Add( gbSizer4, 1, wxEXPAND, 5 );
@@ -218,6 +215,9 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	this->SetSizer( bSizer1 );
 	this->Layout();
+	m_menubar1 = new wxMenuBar( 0 );
+	this->SetMenuBar( m_menubar1 );
+	
 	
 	this->Centre( wxBOTH );
 	
@@ -243,7 +243,6 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_panel1->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
-	antiAliseCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 }
 
 BuiltFrame::~BuiltFrame()
@@ -270,6 +269,5 @@ BuiltFrame::~BuiltFrame()
 	m_panel1->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
-	antiAliseCheckBox->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( BuiltFrame::OnAntiAliase ), NULL, this );
 	
 }

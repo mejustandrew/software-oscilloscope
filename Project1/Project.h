@@ -22,7 +22,7 @@
 #include <wx/gbsizer.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
-#include <wx/checkbox.h>
+#include <wx/menu.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,6 @@ class BuiltFrame : public wxFrame
 		wxButton* SpectrumButton2;
 		wxButton* state_button2;
 		wxPanel* m_panel1;
-		wxCheckBox* antiAliseCheckBox;
 		wxStaticText* msText1;
 		wxStaticText* timeLeftChannel;
 		wxStaticText* mvText28;
@@ -72,6 +71,7 @@ class BuiltFrame : public wxFrame
 		wxStaticText* amplitudeLabel;
 		wxStaticText* msText;
 		wxStaticText* mvText;
+		wxMenuBar* m_menubar1;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void Close( wxCloseEvent& event ) { event.Skip(); }
@@ -95,12 +95,11 @@ class BuiltFrame : public wxFrame
 		virtual void VerifyValues( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPanelPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnPanelResized( wxSizeEvent& event ) { event.Skip(); }
-		virtual void OnAntiAliase( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 927,798 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 927,760 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~BuiltFrame();
 	
