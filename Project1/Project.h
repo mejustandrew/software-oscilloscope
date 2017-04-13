@@ -22,6 +22,9 @@
 #include <wx/gbsizer.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 
@@ -71,7 +74,8 @@ class BuiltFrame : public wxFrame
 		wxStaticText* amplitudeLabel;
 		wxStaticText* msText;
 		wxStaticText* mvText;
-		wxMenuBar* m_menubar1;
+		wxMenuBar* m_menubar2;
+		wxMenu* m_menu1;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void Close( wxCloseEvent& event ) { event.Skip(); }
@@ -95,6 +99,7 @@ class BuiltFrame : public wxFrame
 		virtual void VerifyValues( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPanelPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnPanelResized( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnSignalSource( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

@@ -25,9 +25,9 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class MyDialog1
+/// Class SignalSourceForm
 ///////////////////////////////////////////////////////////////////////////////
-class MyDialog1 : public wxDialog 
+class SignalSourceForm : public wxDialog 
 {
 	private:
 	
@@ -55,8 +55,8 @@ class MyDialog1 : public wxDialog
 	
 	public:
 		
-		MyDialog1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 476,302 ), long style = wxDEFAULT_DIALOG_STYLE ); 
-		~MyDialog1();
+		SignalSourceForm( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 476,302 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		~SignalSourceForm();
 	
 };
 

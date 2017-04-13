@@ -29,6 +29,7 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	panel2_specs->back_mem = panel1_specs->back_mem;
 	manager = new Manager(panel1_specs, panel2_specs);
 	manager->StartProcessingData();
+	signalSourceForm = new SignalSourceFormLogic(this);
 }
 
 std::string GetTruncatedDecimalsStringFromDouble(double value)
@@ -80,6 +81,11 @@ void WorkingFrame::OnPositionChanged(wxSpinEvent& event)
 void WorkingFrame::OnPosition2Changed(wxSpinEvent& event)
 {
 	panel2_specs->panel_mid = panel2_specs->panel_height*0.5 - 5 * PositionValueChannel2->GetValue();
+}
+
+void WorkingFrame::OnSignalSource(wxCommandEvent & event)
+{
+	signalSourceForm->ShowModal();
 }
 
 void WorkingFrame::OnSpectrumClick(wxCommandEvent& event)

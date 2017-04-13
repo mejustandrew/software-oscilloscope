@@ -215,8 +215,15 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	this->SetSizer( bSizer1 );
 	this->Layout();
-	m_menubar1 = new wxMenuBar( 0 );
-	this->SetMenuBar( m_menubar1 );
+	m_menubar2 = new wxMenuBar( 0 );
+	m_menu1 = new wxMenu();
+	wxMenuItem* signalSourceMenuItem;
+	signalSourceMenuItem = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("MyMenuItem") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu1->Append( signalSourceMenuItem );
+	
+	m_menubar2->Append( m_menu1, wxT("Menu") ); 
+	
+	this->SetMenuBar( m_menubar2 );
 	
 	
 	this->Centre( wxBOTH );
@@ -243,6 +250,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_panel1->Connect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Connect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Connect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
+	this->Connect( signalSourceMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BuiltFrame::OnSignalSource ) );
 }
 
 BuiltFrame::~BuiltFrame()
@@ -269,5 +277,6 @@ BuiltFrame::~BuiltFrame()
 	m_panel1->Disconnect( wxEVT_MOTION, wxMouseEventHandler( BuiltFrame::VerifyValues ), NULL, this );
 	m_panel1->Disconnect( wxEVT_PAINT, wxPaintEventHandler( BuiltFrame::OnPanelPaint ), NULL, this );
 	m_panel1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( BuiltFrame::OnPanelResized ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( BuiltFrame::OnSignalSource ) );
 	
 }

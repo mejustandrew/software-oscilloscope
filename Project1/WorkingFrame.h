@@ -8,6 +8,7 @@
 #include "Spectrum.h"
 #include <atomic>
 #include "Manager.h"
+#include "SignalSourceFormLogic.h"
 
 class WorkingFrame : public BuiltFrame
 {
@@ -34,6 +35,7 @@ protected:
 	virtual void OnSeconds2Changed( wxCommandEvent& event );
 	virtual void Treshold2Changed( wxSpinEvent& event );
 	virtual void OnPosition2Changed( wxSpinEvent& event );
+	virtual void OnSignalSource(wxCommandEvent& event);
 	void Close( wxCloseEvent& event );
 
 	SpectrumFrame* spectrumLeft,*spectrumRight;
@@ -42,6 +44,7 @@ protected:
 	wxString display_frequency;
 	PanelSpecs *panel1_specs,*panel2_specs;
 	Manager *manager;
+	SignalSourceFormLogic* signalSourceForm;
 
 public:
 	WorkingFrame( wxWindow* parent );

@@ -6,7 +6,7 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
 	dataProvider = new DataProvider;
-	dataSocketSender = new DataSocketSender;
+	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
 	oldResponse = new DataContainer;
 }
@@ -57,8 +57,8 @@ void Manager::ProcessData()
 
 		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
-		if (dataSocketSender->HasFinishedSendingData())
-			dataSocketSender->SendData(leftBuffer, rightBuffer);
+		/*if (dataSocketSender->HasFinishedSendingData())
+			dataSocketSender->SendData(leftBuffer, rightBuffer);*/
 	}
 	delete responseContainer;
 }

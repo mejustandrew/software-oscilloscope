@@ -9,7 +9,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-MyDialog1::MyDialog1( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
@@ -79,24 +79,24 @@ MyDialog1::MyDialog1( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	signalChoiceRadioBox->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( MyDialog1::OnRadioBoxButtonClicked ), NULL, this );
-	signalTypeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnSignalTypeChoice ), NULL, this );
-	amplitudeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnAmplitudeChoice ), NULL, this );
-	varianceChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnVarianceChoice ), NULL, this );
-	countinousValueChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnContinousValueChoice ), NULL, this );
-	frequencyChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnFrequencyChoice ), NULL, this );
-	meanChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnMeanChoice ), NULL, this );
+	signalChoiceRadioBox->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
+	signalTypeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
+	amplitudeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
+	varianceChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnVarianceChoice ), NULL, this );
+	countinousValueChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
+	frequencyChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
+	meanChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
 }
 
-MyDialog1::~MyDialog1()
+SignalSourceForm::~SignalSourceForm()
 {
 	// Disconnect Events
-	signalChoiceRadioBox->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( MyDialog1::OnRadioBoxButtonClicked ), NULL, this );
-	signalTypeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnSignalTypeChoice ), NULL, this );
-	amplitudeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnAmplitudeChoice ), NULL, this );
-	varianceChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnVarianceChoice ), NULL, this );
-	countinousValueChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnContinousValueChoice ), NULL, this );
-	frequencyChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnFrequencyChoice ), NULL, this );
-	meanChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MyDialog1::OnMeanChoice ), NULL, this );
+	signalChoiceRadioBox->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
+	signalTypeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
+	amplitudeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
+	varianceChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnVarianceChoice ), NULL, this );
+	countinousValueChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
+	frequencyChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
+	meanChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
 	
 }
