@@ -18,6 +18,7 @@
 #include <wx/settings.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
+#include <wx/button.h>
 #include <wx/gbsizer.h>
 #include <wx/dialog.h>
 
@@ -42,8 +43,10 @@ class SignalSourceForm : public wxDialog
 		wxStaticText* frequencyLabel;
 		wxChoice* frequencyChoice;
 		wxChoice* meanChoice;
+		wxButton* applyButton;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnRadioBoxButtonClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSignalTypeChoice( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAmplitudeChoice( wxCommandEvent& event ) { event.Skip(); }
@@ -51,6 +54,7 @@ class SignalSourceForm : public wxDialog
 		virtual void OnContinousValueChoice( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFrequencyChoice( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMeanChoice( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnApplyClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

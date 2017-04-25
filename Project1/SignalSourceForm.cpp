@@ -72,6 +72,9 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	meanChoice->SetSelection( 0 );
 	gbSizer6->Add( meanChoice, wxGBPosition( 4, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
+	applyButton = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	gbSizer6->Add( applyButton, wxGBPosition( 5, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
 	
 	this->SetSizer( gbSizer6 );
 	this->Layout();
@@ -79,6 +82,7 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SignalSourceForm::OnClose ) );
 	signalChoiceRadioBox->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
 	signalTypeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
 	amplitudeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
@@ -86,11 +90,13 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	countinousValueChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
 	frequencyChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
 	meanChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
+	applyButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnApplyClick ), NULL, this );
 }
 
 SignalSourceForm::~SignalSourceForm()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SignalSourceForm::OnClose ) );
 	signalChoiceRadioBox->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
 	signalTypeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
 	amplitudeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
@@ -98,5 +104,6 @@ SignalSourceForm::~SignalSourceForm()
 	countinousValueChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
 	frequencyChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
 	meanChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
+	applyButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnApplyClick ), NULL, this );
 	
 }
