@@ -88,6 +88,7 @@
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="SignalSourceForm.cpp" />
     <ClCompile Include="SignalSourceFormLogic.cpp" />
+    <ClCompile Include="SignalTypesAvaiableProperties.cpp" />
     <ClCompile Include="Spectrum.cpp" />
     <ClCompile Include="WorkingFrame.cpp" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <ClInclude Include="DataRequest.h" />
     <ClInclude Include="SignalSourceForm.h" />
     <ClInclude Include="SignalSourceFormLogic.h" />
+    <ClInclude Include="SignalTypesAvaiableProperties.h" />
     <ClInclude Include="Spectrum.h" />
     <ClInclude Include="StringDTOBuilder.h" />
     <ClInclude Include="WorkingFrame.h" />

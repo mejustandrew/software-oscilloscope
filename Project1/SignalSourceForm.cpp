@@ -18,62 +18,69 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	gbSizer6->SetFlexibleDirection( wxBOTH );
 	gbSizer6->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
+	wxGridBagSizer* gbSizer4;
+	gbSizer4 = new wxGridBagSizer( 0, 0 );
+	gbSizer4->SetFlexibleDirection( wxBOTH );
+	gbSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
 	wxString signalChoiceRadioBoxChoices[] = { wxT("Audio"), wxT("Custom") };
 	int signalChoiceRadioBoxNChoices = sizeof( signalChoiceRadioBoxChoices ) / sizeof( wxString );
 	signalChoiceRadioBox = new wxRadioBox( this, wxID_ANY, wxT("Signal Choice"), wxDefaultPosition, wxDefaultSize, signalChoiceRadioBoxNChoices, signalChoiceRadioBoxChoices, 1, wxRA_SPECIFY_COLS );
 	signalChoiceRadioBox->SetSelection( 0 );
-	gbSizer6->Add( signalChoiceRadioBox, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer4->Add( signalChoiceRadioBox, wxGBPosition( 2, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	signalTypeLabel = new wxStaticText( this, wxID_ANY, wxT("Signal type"), wxDefaultPosition, wxDefaultSize, 0 );
-	signalTypeLabel->Wrap( -1 );
-	gbSizer6->Add( signalTypeLabel, wxGBPosition( 2, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	wxString signalTypeChoiceChoices[] = { wxT("Sinusoidal"), wxT("Noise"), wxT("DC") };
-	int signalTypeChoiceNChoices = sizeof( signalTypeChoiceChoices ) / sizeof( wxString );
-	signalTypeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, signalTypeChoiceNChoices, signalTypeChoiceChoices, 0 );
-	signalTypeChoice->SetSelection( 0 );
-	gbSizer6->Add( signalTypeChoice, wxGBPosition( 2, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer6->Add( gbSizer4, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
 	
-	amplitudeLabel = new wxStaticText( this, wxID_ANY, wxT("Amplitude"), wxDefaultPosition, wxDefaultSize, 0 );
-	amplitudeLabel->Wrap( -1 );
-	gbSizer6->Add( amplitudeLabel, wxGBPosition( 3, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	wxGridBagSizer* gbSizer2;
+	gbSizer2 = new wxGridBagSizer( 0, 0 );
+	gbSizer2->SetFlexibleDirection( wxBOTH );
+	gbSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	wxString amplitudeChoiceChoices[] = { wxT("1"), wxT("2"), wxT("5"), wxT("10") };
-	int amplitudeChoiceNChoices = sizeof( amplitudeChoiceChoices ) / sizeof( wxString );
-	amplitudeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 82,-1 ), amplitudeChoiceNChoices, amplitudeChoiceChoices, 0 );
-	amplitudeChoice->SetSelection( 0 );
-	gbSizer6->Add( amplitudeChoice, wxGBPosition( 3, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	okayButton = new wxButton( this, wxID_ANY, wxT("Okay"), wxDefaultPosition, wxDefaultSize, 0 );
+	gbSizer2->Add( okayButton, wxGBPosition( 1, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	wxString varianceChoiceChoices[] = { wxT("0.1"), wxT("0.2"), wxT("0.5"), wxT("1.0"), wxT("1") };
-	int varianceChoiceNChoices = sizeof( varianceChoiceChoices ) / sizeof( wxString );
-	varianceChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 82,-1 ), varianceChoiceNChoices, varianceChoiceChoices, 0 );
-	varianceChoice->SetSelection( 0 );
-	gbSizer6->Add( varianceChoice, wxGBPosition( 3, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	cancelButton = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	gbSizer2->Add( cancelButton, wxGBPosition( 1, 4 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	wxString countinousValueChoiceChoices[] = { wxT("-50"), wxT("-10"), wxT("0"), wxT("10"), wxT("50") };
-	int countinousValueChoiceNChoices = sizeof( countinousValueChoiceChoices ) / sizeof( wxString );
-	countinousValueChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 82,-1 ), countinousValueChoiceNChoices, countinousValueChoiceChoices, 0 );
-	countinousValueChoice->SetSelection( 0 );
-	gbSizer6->Add( countinousValueChoice, wxGBPosition( 3, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	gbSizer6->Add( gbSizer2, wxGBPosition( 4, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
+	
+	wxGridBagSizer* gbSizer3;
+	gbSizer3 = new wxGridBagSizer( 0, 0 );
+	gbSizer3->SetFlexibleDirection( wxBOTH );
+	gbSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	frequencyLabel = new wxStaticText( this, wxID_ANY, wxT("Frequncy"), wxDefaultPosition, wxDefaultSize, 0 );
 	frequencyLabel->Wrap( -1 );
-	gbSizer6->Add( frequencyLabel, wxGBPosition( 4, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer3->Add( frequencyLabel, wxGBPosition( 2, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	wxString frequencyChoiceChoices[] = { wxT("1"), wxT("2"), wxT("5"), wxT("10"), wxT("50") };
-	int frequencyChoiceNChoices = sizeof( frequencyChoiceChoices ) / sizeof( wxString );
-	frequencyChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 82,-1 ), frequencyChoiceNChoices, frequencyChoiceChoices, 0 );
-	frequencyChoice->SetSelection( 0 );
-	gbSizer6->Add( frequencyChoice, wxGBPosition( 4, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	amplitudeLabel = new wxStaticText( this, wxID_ANY, wxT("Amplitude"), wxDefaultPosition, wxDefaultSize, 0 );
+	amplitudeLabel->Wrap( -1 );
+	gbSizer3->Add( amplitudeLabel, wxGBPosition( 1, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	wxString meanChoiceChoices[] = { wxT("-2"), wxT("-1"), wxT("  0"), wxT("  1"), wxT("  2") };
-	int meanChoiceNChoices = sizeof( meanChoiceChoices ) / sizeof( wxString );
-	meanChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 82,-1 ), meanChoiceNChoices, meanChoiceChoices, 0 );
-	meanChoice->SetSelection( 0 );
-	gbSizer6->Add( meanChoice, wxGBPosition( 4, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	wxArrayString secondSignalOptionChoiceChoices;
+	secondSignalOptionChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, secondSignalOptionChoiceChoices, 0 );
+	secondSignalOptionChoice->SetSelection( 0 );
+	gbSizer3->Add( secondSignalOptionChoice, wxGBPosition( 2, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
-	applyButton = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	gbSizer6->Add( applyButton, wxGBPosition( 5, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	wxArrayString firstSignalOptionChoiceChoices;
+	firstSignalOptionChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, firstSignalOptionChoiceChoices, 0 );
+	firstSignalOptionChoice->SetSelection( 0 );
+	gbSizer3->Add( firstSignalOptionChoice, wxGBPosition( 1, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	signalTypeText = new wxStaticText( this, wxID_ANY, wxT("Signal Type"), wxDefaultPosition, wxDefaultSize, 0 );
+	signalTypeText->Wrap( -1 );
+	gbSizer3->Add( signalTypeText, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	wxString signalTypeChoiceChoices[] = { wxT("Sinusoidal"), wxT("Gaussian Noise"), wxT("PWM") };
+	int signalTypeChoiceNChoices = sizeof( signalTypeChoiceChoices ) / sizeof( wxString );
+	signalTypeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, signalTypeChoiceNChoices, signalTypeChoiceChoices, 0 );
+	signalTypeChoice->SetSelection( 0 );
+	gbSizer3->Add( signalTypeChoice, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	
+	gbSizer6->Add( gbSizer3, wxGBPosition( 2, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
 	
 	
 	this->SetSizer( gbSizer6 );
@@ -82,28 +89,28 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( SignalSourceForm::OnActivateDialog ) );
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SignalSourceForm::OnClose ) );
+	this->Connect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( SignalSourceForm::OnInitializeDialog ) );
 	signalChoiceRadioBox->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
+	okayButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnOkayClick ), NULL, this );
+	cancelButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnCancelClick ), NULL, this );
+	secondSignalOptionChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSecondSignalOptionChoice ), NULL, this );
+	firstSignalOptionChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFirstSignalOptionChoice ), NULL, this );
 	signalTypeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
-	amplitudeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
-	varianceChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnVarianceChoice ), NULL, this );
-	countinousValueChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
-	frequencyChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
-	meanChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
-	applyButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnApplyClick ), NULL, this );
 }
 
 SignalSourceForm::~SignalSourceForm()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( SignalSourceForm::OnActivateDialog ) );
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SignalSourceForm::OnClose ) );
+	this->Disconnect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( SignalSourceForm::OnInitializeDialog ) );
 	signalChoiceRadioBox->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( SignalSourceForm::OnRadioBoxButtonClicked ), NULL, this );
+	okayButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnOkayClick ), NULL, this );
+	cancelButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnCancelClick ), NULL, this );
+	secondSignalOptionChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSecondSignalOptionChoice ), NULL, this );
+	firstSignalOptionChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFirstSignalOptionChoice ), NULL, this );
 	signalTypeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnSignalTypeChoice ), NULL, this );
-	amplitudeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnAmplitudeChoice ), NULL, this );
-	varianceChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnVarianceChoice ), NULL, this );
-	countinousValueChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnContinousValueChoice ), NULL, this );
-	frequencyChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnFrequencyChoice ), NULL, this );
-	meanChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( SignalSourceForm::OnMeanChoice ), NULL, this );
-	applyButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SignalSourceForm::OnApplyClick ), NULL, this );
 	
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "SignalSourceForm.h"
+#include "SignalTypesAvaiableProperties.h"
 
 enum SignalSource 
 {
@@ -11,7 +12,7 @@ enum SignalType
 {
 	Sinusoidal,
 	Noise,
-	DC
+	PWM
 };
 
 struct SignalSettings
@@ -29,28 +30,33 @@ class SignalSourceFormLogic : public SignalSourceForm
 {
 	virtual void OnRadioBoxButtonClicked(wxCommandEvent& event);
 	virtual void OnSignalTypeChoice(wxCommandEvent& event);
-	virtual void OnAmplitudeChoice(wxCommandEvent& event);
-	virtual void OnVarianceChoice(wxCommandEvent& event);
-	virtual void OnContinousValueChoice(wxCommandEvent& event);
-	virtual void OnFrequencyChoice(wxCommandEvent& event);
-	virtual void OnMeanChoice(wxCommandEvent& event);
-	virtual void OnApplyClick(wxCommandEvent& event);
+	virtual void OnSecondSignalOptionChoice(wxCommandEvent& event);
+	virtual void OnFirstSignalOptionChoice(wxCommandEvent& event);
+	virtual void OnOkayClick(wxCommandEvent& event);
 	virtual void OnClose(wxCloseEvent& event);
+	virtual void OnInitializeDialog(wxInitDialogEvent& event);
+	virtual void OnActivateDialog(wxActivateEvent& event);
+	virtual void OnCancelClick(wxCommandEvent& event);
 
 	void ProcessSignalSourceChoice();
 	void ProcessSignalTypeChoice();
-	void InitializePositionsOfElements();
 	void InitializeLabels();
 	void SetLabelsForSelection(int selection);
 	void DisableControls();
 	void EnableControls();
-	void ShowControlsForSinusoidalSignal();
-	void ShowControlsForNoiseSignal();
-	void ShowControlsForDCSignal();
+	void PopulateControlsForSinusoidalSignal();
+	void PopulateControlsForNoiseSignal();
+	void PopulateControlsForPWMSignal();
 	void CopySignalSettingsFromDialog();
 	void CopySignalSettingsToDialog();
+	void PopulateChoiceOptions(wxChoice* choice, std::vector<std::string> source);
+	void Cancel();
 
 	SignalSettings signalSettings;
+	SinusoidalTypeAvaiableProperties sinusoidalProperties;
+	GaussianNoiseTypeAvaiableProperties gaussianNoiseProperties;
+	PWMTypeAvaiableProperties pwmPeoperties;
+
 	std::string firstColumnLabels[3];
 	std::string secondColumnLabels[3];
 

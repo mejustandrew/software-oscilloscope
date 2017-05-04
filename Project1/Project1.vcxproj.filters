@@ -57,6 +57,9 @@
     <ClCompile Include="SignalSourceFormLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SignalTypesAvaiableProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Imported.h">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SignalSourceFormLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignalTypesAvaiableProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,9 +4,6 @@
 SignalSourceFormLogic::SignalSourceFormLogic(wxWindow * parent) : SignalSourceForm(parent)
 {
 	InitializeLabels();
-	InitializePositionsOfElements();
-	ProcessSignalSourceChoice();
-	ProcessSignalTypeChoice();
 }
 
 SignalSourceFormLogic::~SignalSourceFormLogic()
@@ -16,40 +13,49 @@ SignalSourceFormLogic::~SignalSourceFormLogic()
 void SignalSourceFormLogic::OnRadioBoxButtonClicked(wxCommandEvent & event)
 {
 	ProcessSignalSourceChoice();
+	okayButton->Enable();
 }
 
 void SignalSourceFormLogic::OnSignalTypeChoice(wxCommandEvent & event)
 {
 	ProcessSignalTypeChoice();
+	okayButton->Enable();
 }
 
-void SignalSourceFormLogic::OnAmplitudeChoice(wxCommandEvent & event)
+void SignalSourceFormLogic::OnSecondSignalOptionChoice(wxCommandEvent & event)
 {
 }
 
-void SignalSourceFormLogic::OnVarianceChoice(wxCommandEvent & event)
+void SignalSourceFormLogic::OnFirstSignalOptionChoice(wxCommandEvent & event)
 {
 }
 
-void SignalSourceFormLogic::OnContinousValueChoice(wxCommandEvent & event)
+void SignalSourceFormLogic::OnOkayClick(wxCommandEvent & event)
 {
-}
-
-void SignalSourceFormLogic::OnFrequencyChoice(wxCommandEvent & event)
-{
-}
-
-void SignalSourceFormLogic::OnMeanChoice(wxCommandEvent & event)
-{
-}
-
-void SignalSourceFormLogic::OnApplyClick(wxCommandEvent & event)
-{
+	CopySignalSettingsFromDialog();
+	this->EndModal(true);
 }
 
 void SignalSourceFormLogic::OnClose(wxCloseEvent & event)
 {
-	this->EndModal(true);
+	Cancel();
+}
+
+void SignalSourceFormLogic::OnCancelClick(wxCommandEvent & event)
+{
+	Cancel();
+}
+
+void SignalSourceFormLogic::OnInitializeDialog(wxInitDialogEvent & event)
+{
+	CopySignalSettingsFromDialog();
+	ProcessSignalSourceChoice();
+	ProcessSignalTypeChoice();
+	okayButton->Disable();
+}
+
+void SignalSourceFormLogic::OnActivateDialog(wxActivateEvent & event)
+{
 }
 
 void SignalSourceFormLogic::ProcessSignalSourceChoice()
@@ -63,6 +69,7 @@ void SignalSourceFormLogic::ProcessSignalSourceChoice()
 	{
 		EnableControls();
 	}
+
 }
 
 void SignalSourceFormLogic::ProcessSignalTypeChoice()
@@ -72,23 +79,18 @@ void SignalSourceFormLogic::ProcessSignalTypeChoice()
 
 	if (selection == 0)
 	{
-		ShowControlsForSinusoidalSignal();
+		PopulateControlsForSinusoidalSignal();
 	}
 	else if (selection == 1)
 	{
-		ShowControlsForNoiseSignal();
+		PopulateControlsForNoiseSignal();
 	}
 	else if (selection == 2)
 	{
-		ShowControlsForDCSignal();
+		PopulateControlsForPWMSignal();
 	}
-}
-
-void SignalSourceFormLogic::InitializePositionsOfElements()
-{
-	varianceChoice->Move(amplitudeChoice->GetPosition());
-	meanChoice->Move(frequencyChoice->GetPosition());
-	countinousValueChoice->Move(amplitudeChoice->GetPosition());
+	firstSignalOptionChoice->SetSelection(1);
+	secondSignalOptionChoice->SetSelection(1);
 }
 
 void SignalSourceFormLogic::InitializeLabels()
@@ -99,7 +101,7 @@ void SignalSourceFormLogic::InitializeLabels()
 
 	secondColumnLabels[0] = "Frequency";
 	secondColumnLabels[1] = "Mean";
-	secondColumnLabels[2] = "";
+	secondColumnLabels[2] = "Duty Cycle";
 }
 
 void SignalSourceFormLogic::SetLabelsForSelection(int selection)
@@ -111,68 +113,58 @@ void SignalSourceFormLogic::SetLabelsForSelection(int selection)
 void SignalSourceFormLogic::DisableControls()
 {
 	signalTypeChoice->Disable();
-	amplitudeChoice->Disable();
-	varianceChoice->Disable();
-	countinousValueChoice->Disable();
-	frequencyChoice->Disable();
-	meanChoice->Disable();
+	firstSignalOptionChoice->Disable();
+	secondSignalOptionChoice->Disable();
 }
 
 void SignalSourceFormLogic::EnableControls()
 {
 	signalTypeChoice->Enable();
-	amplitudeChoice->Enable();
-	varianceChoice->Enable();
-	countinousValueChoice->Enable();
-	frequencyChoice->Enable();
-	meanChoice->Enable();
+	firstSignalOptionChoice->Enable();
+	secondSignalOptionChoice->Enable();
 }
 
-void SignalSourceFormLogic::ShowControlsForSinusoidalSignal()
+void SignalSourceFormLogic::PopulateControlsForSinusoidalSignal()
 {
-	amplitudeChoice->Show();
-	frequencyChoice->Show();
-	varianceChoice->Hide();
-	meanChoice->Hide();
-	countinousValueChoice->Hide();
+	PopulateChoiceOptions(firstSignalOptionChoice, sinusoidalProperties.amplitudeLevels);
+	PopulateChoiceOptions(secondSignalOptionChoice, sinusoidalProperties.frequencyLevels);
 }
 
-void SignalSourceFormLogic::ShowControlsForNoiseSignal()
+void SignalSourceFormLogic::PopulateControlsForNoiseSignal()
 {
-	varianceChoice->Show();
-	meanChoice->Show();
-	amplitudeChoice->Hide();
-	frequencyChoice->Hide();
-	countinousValueChoice->Hide();
+	PopulateChoiceOptions(firstSignalOptionChoice, gaussianNoiseProperties.varianceLevels);
+	PopulateChoiceOptions(secondSignalOptionChoice, gaussianNoiseProperties.meanLevels);
 }
 
-void SignalSourceFormLogic::ShowControlsForDCSignal()
+void SignalSourceFormLogic::PopulateControlsForPWMSignal()
 {
-	countinousValueChoice->Show();
-	amplitudeChoice->Hide();
-	frequencyChoice->Hide();
-	varianceChoice->Hide();
-	meanChoice->Hide();
+	PopulateChoiceOptions(firstSignalOptionChoice, pwmPeoperties.amplitudeLevels);
+	PopulateChoiceOptions(secondSignalOptionChoice, pwmPeoperties.dutyCycleLevels);
 }
 
 void SignalSourceFormLogic::CopySignalSettingsFromDialog()
 {
 	signalSettings.Source = (SignalSource)signalChoiceRadioBox->GetSelection();
 	signalSettings.Type = (SignalType)signalTypeChoice->GetSelection();
-	signalSettings.SinusoidalAmplitudeChoice = amplitudeChoice->GetSelection();
-	signalSettings.FrequencyChoice = frequencyChoice->GetSelection();
-	signalSettings.VarianceChoice = varianceChoice->GetSelection();
-	signalSettings.MeanChoice = meanChoice->GetSelection();
-	signalSettings.DCAmplitudeChoice = countinousValueChoice->GetSelection();
 }
 
 void SignalSourceFormLogic::CopySignalSettingsToDialog()
 {
 	signalChoiceRadioBox->SetSelection(signalSettings.Source);
 	signalTypeChoice->SetSelection(signalSettings.Type);
-	amplitudeChoice->SetSelection(signalSettings.SinusoidalAmplitudeChoice);
-	frequencyChoice->SetSelection(signalSettings.FrequencyChoice);
-	varianceChoice->SetSelection(signalSettings.VarianceChoice);
-	meanChoice->SetSelection(signalSettings.MeanChoice);
-	countinousValueChoice->SetSelection(signalSettings.DCAmplitudeChoice);
+}
+
+void SignalSourceFormLogic::PopulateChoiceOptions(wxChoice * choice, std::vector<string> source)
+{
+	choice->Clear();
+	for (int i = 0; i < source.size(); i++)
+	{
+		choice->Append(source[i]);
+	}
+}
+
+void SignalSourceFormLogic::Cancel()
+{
+	CopySignalSettingsToDialog();
+	this->EndModal(true);
 }

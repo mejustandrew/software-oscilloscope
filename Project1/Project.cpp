@@ -218,7 +218,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_menubar2 = new wxMenuBar( 0 );
 	m_menu1 = new wxMenu();
 	wxMenuItem* signalSourceMenuItem;
-	signalSourceMenuItem = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("MyMenuItem") ) , wxEmptyString, wxITEM_NORMAL );
+	signalSourceMenuItem = new wxMenuItem( m_menu1, wxID_ANY, wxString( wxT("Signal Source") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu1->Append( signalSourceMenuItem );
 	
 	m_menubar2->Append( m_menu1, wxT("Menu") ); 
