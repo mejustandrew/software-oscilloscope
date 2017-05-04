@@ -62,11 +62,15 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	wxArrayString secondSignalOptionChoiceChoices;
 	secondSignalOptionChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, secondSignalOptionChoiceChoices, 0 );
 	secondSignalOptionChoice->SetSelection( 0 );
+	secondSignalOptionChoice->SetMinSize( wxSize( 110,-1 ) );
+	
 	gbSizer3->Add( secondSignalOptionChoice, wxGBPosition( 2, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	wxArrayString firstSignalOptionChoiceChoices;
 	firstSignalOptionChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, firstSignalOptionChoiceChoices, 0 );
 	firstSignalOptionChoice->SetSelection( 0 );
+	firstSignalOptionChoice->SetMinSize( wxSize( 110,-1 ) );
+	
 	gbSizer3->Add( firstSignalOptionChoice, wxGBPosition( 1, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	signalTypeText = new wxStaticText( this, wxID_ANY, wxT("Signal Type"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -77,6 +81,8 @@ SignalSourceForm::SignalSourceForm( wxWindow* parent, wxWindowID id, const wxStr
 	int signalTypeChoiceNChoices = sizeof( signalTypeChoiceChoices ) / sizeof( wxString );
 	signalTypeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, signalTypeChoiceNChoices, signalTypeChoiceChoices, 0 );
 	signalTypeChoice->SetSelection( 0 );
+	signalTypeChoice->SetMinSize( wxSize( 110,-1 ) );
+	
 	gbSizer3->Add( signalTypeChoice, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	

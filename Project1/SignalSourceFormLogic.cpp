@@ -24,10 +24,12 @@ void SignalSourceFormLogic::OnSignalTypeChoice(wxCommandEvent & event)
 
 void SignalSourceFormLogic::OnSecondSignalOptionChoice(wxCommandEvent & event)
 {
+	okayButton->Enable();
 }
 
 void SignalSourceFormLogic::OnFirstSignalOptionChoice(wxCommandEvent & event)
 {
+	okayButton->Enable();
 }
 
 void SignalSourceFormLogic::OnOkayClick(wxCommandEvent & event)
