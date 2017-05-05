@@ -50,9 +50,9 @@ void SignalSourceFormLogic::OnCancelClick(wxCommandEvent & event)
 
 void SignalSourceFormLogic::OnInitializeDialog(wxInitDialogEvent & event)
 {
-	CopySignalSettingsFromDialog();
-	ProcessSignalSourceChoice();
 	ProcessSignalTypeChoice();
+	CopySignalSettingsToDialog();
+	ProcessSignalSourceChoice();
 	okayButton->Disable();
 }
 
@@ -91,8 +91,8 @@ void SignalSourceFormLogic::ProcessSignalTypeChoice()
 	{
 		PopulateControlsForPWMSignal();
 	}
-	firstSignalOptionChoice->SetSelection(1);
-	secondSignalOptionChoice->SetSelection(1);
+	firstSignalOptionChoice->SetSelection(0);
+	secondSignalOptionChoice->SetSelection(0);
 }
 
 void SignalSourceFormLogic::InitializeLabels()
@@ -144,18 +144,6 @@ void SignalSourceFormLogic::PopulateControlsForPWMSignal()
 	PopulateChoiceOptions(secondSignalOptionChoice, pwmPeoperties.dutyCycleLevels);
 }
 
-void SignalSourceFormLogic::CopySignalSettingsFromDialog()
-{
-	signalSettings.Source = (SignalSource)signalChoiceRadioBox->GetSelection();
-	signalSettings.Type = (SignalType)signalTypeChoice->GetSelection();
-}
-
-void SignalSourceFormLogic::CopySignalSettingsToDialog()
-{
-	signalChoiceRadioBox->SetSelection(signalSettings.Source);
-	signalTypeChoice->SetSelection(signalSettings.Type);
-}
-
 void SignalSourceFormLogic::PopulateChoiceOptions(wxChoice * choice, std::vector<string> source)
 {
 	choice->Clear();
@@ -169,4 +157,48 @@ void SignalSourceFormLogic::Cancel()
 {
 	CopySignalSettingsToDialog();
 	this->EndModal(true);
+}
+
+void SignalSourceFormLogic::CopySignalSettingsToDialog()
+{
+	signalChoiceRadioBox->SetSelection(signalSettings.Source);
+	signalTypeChoice->SetSelection(signalSettings.Type);
+	if (signalSettings.Type == 0)
+	{
+		firstSignalOptionChoice->SetSelection(signalSettings.SinusoidalAmplitudeChoice);
+		secondSignalOptionChoice->SetSelection(signalSettings.FrequencyChoice);
+	}
+	else if (signalSettings.Type == 1)
+	{
+		firstSignalOptionChoice->SetSelection(signalSettings.VarianceChoice);
+		secondSignalOptionChoice->SetSelection(signalSettings.MeanChoice);
+	}
+	else if (signalSettings.Type == 2)
+	{
+		firstSignalOptionChoice->SetSelection(signalSettings.PwmAmplitudeChoice);
+		secondSignalOptionChoice->SetSelection(signalSettings.DutyCycleChoice);
+	}
+	firstSignalOptionChoice->Refresh();
+	secondSignalOptionChoice->Refresh();
+}
+
+void SignalSourceFormLogic::CopySignalSettingsFromDialog()
+{
+	signalSettings.Source = (SignalSource)signalChoiceRadioBox->GetSelection();
+	signalSettings.Type = (SignalType)signalTypeChoice->GetSelection();
+	if (signalSettings.Type == 0)
+	{
+		signalSettings.SinusoidalAmplitudeChoice = firstSignalOptionChoice->GetSelection();
+		signalSettings.FrequencyChoice = secondSignalOptionChoice->GetSelection();
+	}
+	else if (signalSettings.Type == 1)
+	{
+		signalSettings.VarianceChoice = firstSignalOptionChoice->GetSelection();
+		signalSettings.MeanChoice = secondSignalOptionChoice->GetSelection();
+	}
+	else if (signalSettings.Type == 2)
+	{
+		signalSettings.PwmAmplitudeChoice = firstSignalOptionChoice->GetSelection();
+		signalSettings.DutyCycleChoice = secondSignalOptionChoice->GetSelection();
+	}
 }

@@ -23,7 +23,8 @@ struct SignalSettings
 	int FrequencyChoice;
 	int VarianceChoice;
 	int MeanChoice;
-	int DCAmplitudeChoice;
+	int PwmAmplitudeChoice;
+	int DutyCycleChoice;
 };
 
 class SignalSourceFormLogic : public SignalSourceForm
