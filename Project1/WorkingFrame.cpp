@@ -150,7 +150,7 @@ void WorkingFrame::TresholdChanged(wxSpinEvent& event)
 
 void WorkingFrame::Treshold2Changed(wxSpinEvent& event)
 {
-	panel2_specs->Treshold = Treshold->GetValue()*0.001;
+	panel2_specs->Treshold = TresholdChannel2->GetValue()*0.001;
 }
 
 void WorkingFrame::OnSecondsChanged(wxCommandEvent& event)

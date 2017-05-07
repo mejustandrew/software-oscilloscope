@@ -1,5 +1,5 @@
 #pragma once
-#include "DataProvider.h"
+#include "AudioDataProvider.h"
 #include "DataSocketSender.h"
 #include "DataDrawer.h"
 #include "PanelSpecs.h"
@@ -8,7 +8,8 @@
 class Manager
 {
 	PanelSpecs *panelSpecsLeft, *panelSpecsRight;
-	DataProvider* dataProvider;
+	AudioDataProvider* audioDataProvider;
+	IDataProvider* dataProvider;
 	DataSocketSender * dataSocketSender;
 	DataDrawer * dataDrawer;
 	bool isActive;

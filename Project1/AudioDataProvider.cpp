@@ -1,8 +1,8 @@
-#include "DataProvider.h"
+#include "AudioDataProvider.h"
 #include "Imported.h"
 #include <thread>
 
-DataContainer * DataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
+DataContainer * AudioDataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
 {
 	while (true)
 	{
@@ -13,18 +13,4 @@ DataContainer * DataProvider::GetNewData(IDataRequest * leftChannelRequest, IDat
 			return container;
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
-}
-
-
-DataProvider::DataProvider()
-{
-	leftBufferResponse = nullptr;
-	rightBufferResponse = nullptr;
-
-	container = new DataContainer;
-}
-
-DataProvider::~DataProvider()
-{
-	delete container;
 }

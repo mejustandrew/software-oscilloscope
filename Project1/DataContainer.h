@@ -1,5 +1,5 @@
 #pragma once
-#include"IDataResponse.h"
+#include "../dlltry/IDataResponse.h"
 
 struct DataContainer
 {

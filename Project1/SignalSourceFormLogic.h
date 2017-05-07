@@ -1,5 +1,6 @@
 #pragma once
 #include "SignalSourceForm.h"
+#include "SignalModels.h"
 #include "SignalTypesAvaiableProperties.h"
 
 enum SignalSource 
@@ -56,7 +57,7 @@ class SignalSourceFormLogic : public SignalSourceForm
 	SignalSettings signalSettings;
 	SinusoidalTypeAvaiableProperties sinusoidalProperties;
 	GaussianNoiseTypeAvaiableProperties gaussianNoiseProperties;
-	PWMTypeAvaiableProperties pwmPeoperties;
+	PWMTypeAvaiableProperties pwmProperties;
 
 	std::string firstColumnLabels[3];
 	std::string secondColumnLabels[3];
@@ -64,4 +65,9 @@ class SignalSourceFormLogic : public SignalSourceForm
 public:
 	SignalSourceFormLogic(wxWindow* parent);
 	~SignalSourceFormLogic();
+	SignalSource GetChosenSignalSource();
+	SignalType GetChosenSignalType();
+	SinusoidalSignal GetSinusoidalSignalProperties();
+	GaussianNoise GetGaussianNoiseProperties();
+	PwmSignal GetPwmSignalProperties();
 };

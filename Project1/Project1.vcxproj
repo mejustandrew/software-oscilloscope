@@ -77,28 +77,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConnectionHandler.cpp" />
+    <ClCompile Include="CustomDataProvider.cpp" />
     <ClCompile Include="DataDrawer.cpp" />
-    <ClCompile Include="DataProvider.cpp" />
+    <ClCompile Include="AudioDataProvider.cpp" />
     <ClCompile Include="DataRequest.cpp" />
     <ClCompile Include="DataSocketSender.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="IDataProvider.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="PanelSpecs.cpp" />
     <ClCompile Include="Project.cpp" />
+    <ClCompile Include="SignalModels.cpp" />
     <ClCompile Include="SignalSourceForm.cpp" />
     <ClCompile Include="SignalSourceFormLogic.cpp" />
     <ClCompile Include="SignalTypesAvaiableProperties.cpp" />
+    <ClCompile Include="SinusoidalSignalGenerator.cpp" />
     <ClCompile Include="Spectrum.cpp" />
     <ClCompile Include="WorkingFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConnectionHandler.h" />
+    <ClInclude Include="CustomDataProvider.h" />
     <ClInclude Include="DataContainer.h" />
     <ClInclude Include="DataDrawer.h" />
-    <ClInclude Include="DataProvider.h" />
+    <ClInclude Include="AudioDataProvider.h" />
     <ClInclude Include="DataSocketSender.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="IDataProvider.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="PanelSpecs.h" />
     <ClInclude Include="IDataRequest.h" />
@@ -106,9 +112,12 @@
     <ClInclude Include="Imported.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="DataRequest.h" />
+    <ClInclude Include="SignalGenerator.h" />
+    <ClInclude Include="SignalModels.h" />
     <ClInclude Include="SignalSourceForm.h" />
     <ClInclude Include="SignalSourceFormLogic.h" />
     <ClInclude Include="SignalTypesAvaiableProperties.h" />
+    <ClInclude Include="SinusoidalSignalGenerator.h" />
     <ClInclude Include="Spectrum.h" />
     <ClInclude Include="StringDTOBuilder.h" />
     <ClInclude Include="WorkingFrame.h" />

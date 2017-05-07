@@ -10,6 +10,55 @@ SignalSourceFormLogic::~SignalSourceFormLogic()
 {
 }
 
+SignalSource SignalSourceFormLogic::GetChosenSignalSource()
+{
+	return signalSettings.Source;
+}
+
+SignalType SignalSourceFormLogic::GetChosenSignalType()
+{
+	return signalSettings.Type;
+}
+
+SinusoidalSignal SignalSourceFormLogic::GetSinusoidalSignalProperties()
+{
+	int amplitudeSelection = signalSettings.SinusoidalAmplitudeChoice;
+	string amplitudeText = sinusoidalProperties.amplitudeLevels[amplitudeSelection];
+	double amplitudeValue = stod(amplitudeText);
+
+	int frequencySelection = signalSettings.FrequencyChoice;
+	string frequencyText = sinusoidalProperties.frequencyLevels[frequencySelection];
+	double frequencyValue = stod(frequencyText);
+
+	return SinusoidalSignal(amplitudeValue, frequencyValue);
+}
+
+GaussianNoise SignalSourceFormLogic::GetGaussianNoiseProperties()
+{
+	int varianceSelection = signalSettings.SinusoidalAmplitudeChoice;
+	string varianceText = gaussianNoiseProperties.varianceLevels[varianceSelection];
+	double varianceValue = stod(varianceText);
+
+	int meanSelection = signalSettings.FrequencyChoice;
+	string meanText = gaussianNoiseProperties.meanLevels[meanSelection];
+	double meanValue = stod(meanText);
+
+	return GaussianNoise(varianceValue, meanValue);
+}
+
+PwmSignal SignalSourceFormLogic::GetPwmSignalProperties()
+{
+	int amplitudeSelection = signalSettings.PwmAmplitudeChoice;
+	string amplitudeText = pwmProperties.amplitudeLevels[amplitudeSelection];
+	double amplitudeValue = stod(amplitudeText);
+
+	int dutyCycleSelection = signalSettings.FrequencyChoice;
+	string dutyCycleText = pwmProperties.dutyCycleLevels[dutyCycleSelection];
+	double dutyCycleValue = stod(dutyCycleText);
+
+	return PwmSignal(amplitudeValue, dutyCycleValue);
+}
+
 void SignalSourceFormLogic::OnRadioBoxButtonClicked(wxCommandEvent & event)
 {
 	ProcessSignalSourceChoice();
@@ -140,8 +189,8 @@ void SignalSourceFormLogic::PopulateControlsForNoiseSignal()
 
 void SignalSourceFormLogic::PopulateControlsForPWMSignal()
 {
-	PopulateChoiceOptions(firstSignalOptionChoice, pwmPeoperties.amplitudeLevels);
-	PopulateChoiceOptions(secondSignalOptionChoice, pwmPeoperties.dutyCycleLevels);
+	PopulateChoiceOptions(firstSignalOptionChoice, pwmProperties.amplitudeLevels);
+	PopulateChoiceOptions(secondSignalOptionChoice, pwmProperties.dutyCycleLevels);
 }
 
 void SignalSourceFormLogic::PopulateChoiceOptions(wxChoice * choice, std::vector<string> source)

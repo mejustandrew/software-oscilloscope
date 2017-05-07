@@ -3,7 +3,7 @@
 #pragma once
 #include"PanelSpecs.h"
 #include "IDataRequest.h"
-#include "IDataResponse.h"
+#include "../dlltry/IDataResponse.h"
 #include "Project.h"
 #include "Spectrum.h"
 #include <atomic>

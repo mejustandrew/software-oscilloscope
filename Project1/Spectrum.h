@@ -3,7 +3,7 @@
 #include <wx/utils.h> 
 #include<atomic>
 #include"DataRequest.h"
-#include "IDataResponse.h"
+#include "../dlltry/IDataResponse.h"
 #include<mutex>
 
 class SpectrumFrame: public GeneratedFrame

@@ -5,7 +5,8 @@
 Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
-	dataProvider = new DataProvider;
+	audioDataProvider = new AudioDataProvider;
+	dataProvider = audioDataProvider;
 	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
 	oldResponse = new DataContainer;
@@ -13,7 +14,7 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 
 Manager::~Manager()
 {
-	delete dataProvider ;
+	delete audioDataProvider;
 	delete dataSocketSender;
 	delete dataDrawer;
 	delete oldResponse;
@@ -34,7 +35,6 @@ void Manager::StopProcessingData()
 void Manager::ProcessData()
 {
 	DataContainer * responseContainer = new DataContainer;
-	DataContainer * newResponseContainer;
 	std::vector<float> leftBuffer, rightBuffer;
 
 	while (isActive)

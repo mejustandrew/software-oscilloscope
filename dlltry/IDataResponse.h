@@ -1,6 +1,6 @@
 #pragma once 
 
-class IDataResponse
+class _declspec(dllexport) IDataResponse
 {
 public:
 	virtual int size()=0;
