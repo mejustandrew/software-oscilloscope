@@ -6,6 +6,16 @@ SinusoidalSignalGenerator::SinusoidalSignalGenerator(float sampleRate, float amp
 {
 }
 
+void SinusoidalSignalGenerator::SetAmplitude(float amplitude)
+{
+	this->amplitude = amplitude;
+}
+
+void SinusoidalSignalGenerator::SetFrequency(float frequency)
+{
+	this->frequency = frequency;
+}
+
 IDataResponse * SinusoidalSignalGenerator::GetSignal(IDataRequest * request)
 {
 	response->Destroy();

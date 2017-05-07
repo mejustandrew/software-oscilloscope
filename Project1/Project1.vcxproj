@@ -108,7 +108,6 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="PanelSpecs.h" />
     <ClInclude Include="IDataRequest.h" />
-    <ClInclude Include="IDataResponse.h" />
     <ClInclude Include="Imported.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="DataRequest.h" />

@@ -5,8 +5,12 @@
 Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
+	float sampleRate = 192000;
 	audioDataProvider = new AudioDataProvider;
 	dataProvider = audioDataProvider;
+	sinusoidalSignalGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
+	customDataProvider = new CustomDataProvider(sinusoidalSignalGenerator);
+
 	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
 	oldResponse = new DataContainer;
@@ -30,6 +34,27 @@ void Manager::StartProcessingData()
 void Manager::StopProcessingData()
 {
 	isActive = false;
+}
+
+void Manager::SwitchSignalSourceToAudio()
+{
+	dataProvider = audioDataProvider;
+}
+
+void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalSignal)
+{
+	sinusoidalSignalGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude());
+	sinusoidalSignalGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
+	customDataProvider->ChangeSignalGenerator(sinusoidalSignalGenerator);
+	dataProvider = customDataProvider;
+}
+
+void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise)
+{
+}
+
+void Manager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)
+{
 }
 
 void Manager::ProcessData()

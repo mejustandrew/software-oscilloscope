@@ -8,5 +8,7 @@ private:
 	double frequency;
 public:
 	SinusoidalSignalGenerator(float sampleRate, float amplitude, float frequency);
+	void SetAmplitude(float amplitude);
+	void SetFrequency(float frequency);
 	virtual IDataResponse * GetSignal(IDataRequest * request) override;
 };

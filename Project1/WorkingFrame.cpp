@@ -86,6 +86,28 @@ void WorkingFrame::OnPosition2Changed(wxSpinEvent& event)
 void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 {
 	signalSourceForm->ShowModal();
+	SignalSource signalSource = signalSourceForm->GetChosenSignalSource();
+	SignalType signalType = signalSourceForm->GetChosenSignalType();
+	if (signalSource == SignalSource::Audio)
+	{
+		manager->SwitchSignalSourceToAudio();
+	}
+	else
+	{
+		if (signalType == SignalType::Sinusoidal)
+		{
+			SinusoidalSignal sinusoidalSignalModel = signalSourceForm->GetSinusoidalSignalProperties();
+			manager->SwitchSignalSourceToCustomSinusoidal(sinusoidalSignalModel);
+		}
+		else if (signalType == SignalType::Noise)
+		{
+
+		}
+		else if (signalType == SignalType::PWM)
+		{
+
+		}
+	}
 }
 
 void WorkingFrame::OnSpectrumClick(wxCommandEvent& event)
