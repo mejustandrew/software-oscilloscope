@@ -43,7 +43,7 @@ void Manager::SwitchSignalSourceToAudio()
 
 void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalSignal)
 {
-	sinusoidalSignalGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude());
+	sinusoidalSignalGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
 	sinusoidalSignalGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
 	customDataProvider->ChangeSignalGenerator(sinusoidalSignalGenerator);
 	dataProvider = customDataProvider;
