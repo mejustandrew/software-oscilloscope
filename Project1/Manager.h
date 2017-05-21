@@ -13,7 +13,9 @@ class Manager
 	PanelSpecs *panelSpecsLeft, *panelSpecsRight;
 	AudioDataProvider *audioDataProvider;
 	CustomDataProvider *customDataProvider;
-	SinusoidalSignalGenerator *sinusoidalSignalGenerator;
+	SinusoidalSignalGenerator *sinusoidalSignalLeftChannelGenerator;
+	SinusoidalSignalGenerator *sinusoidalSignalRightChannelGenerator;
+
 	IDataProvider *dataProvider;
 	DataSocketSender *dataSocketSender;
 	DataDrawer *dataDrawer;

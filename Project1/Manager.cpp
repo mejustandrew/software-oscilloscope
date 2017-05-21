@@ -8,8 +8,9 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	float sampleRate = 192000;
 	audioDataProvider = new AudioDataProvider;
 	dataProvider = audioDataProvider;
-	sinusoidalSignalGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
-	customDataProvider = new CustomDataProvider(sinusoidalSignalGenerator);
+	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
+	sinusoidalSignalRightChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
+	customDataProvider = new CustomDataProvider(sinusoidalSignalLeftChannelGenerator, sinusoidalSignalRightChannelGenerator);
 
 	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
@@ -43,9 +44,13 @@ void Manager::SwitchSignalSourceToAudio()
 
 void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalSignal)
 {
-	sinusoidalSignalGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
-	sinusoidalSignalGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
-	customDataProvider->ChangeSignalGenerator(sinusoidalSignalGenerator);
+	sinusoidalSignalLeftChannelGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
+	sinusoidalSignalLeftChannelGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
+	sinusoidalSignalRightChannelGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
+	sinusoidalSignalRightChannelGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
+	customDataProvider->ChangeLeftChannelGenerator(sinusoidalSignalLeftChannelGenerator);
+	customDataProvider->ChangeRightChannelGenerator(sinusoidalSignalRightChannelGenerator);
+
 	dataProvider = customDataProvider;
 }
 

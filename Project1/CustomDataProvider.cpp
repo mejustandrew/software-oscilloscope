@@ -1,18 +1,24 @@
 #include "CustomDataProvider.h"
 
-CustomDataProvider::CustomDataProvider(SignalGenerator * signalGenerator) : signalGenerator(signalGenerator)
+CustomDataProvider::CustomDataProvider(SignalGenerator * leftChannelGenerator, SignalGenerator * rightChannelGenerator) : 
+	leftChannelGenerator(leftChannelGenerator), rightChannelGenerator(rightChannelGenerator)
 {
 }
 
-void CustomDataProvider::ChangeSignalGenerator(SignalGenerator * signalGenerator)
+void CustomDataProvider::ChangeLeftChannelGenerator(SignalGenerator * signalGenerator)
 {
-	this->signalGenerator = signalGenerator;
+	this->leftChannelGenerator = signalGenerator;
+}
+
+void CustomDataProvider::ChangeRightChannelGenerator(SignalGenerator * signalGenerator)
+{
+	this->rightChannelGenerator = signalGenerator;
 }
 
 DataContainer * CustomDataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
 {
-	container->LeftChannelData = signalGenerator->GetSignal(leftChannelRequest);
-	container->RightChannelData = signalGenerator->GetSignal(rightChannelRequest);
+	container->LeftChannelData = leftChannelGenerator->GetSignal(leftChannelRequest);
+	container->RightChannelData = rightChannelGenerator->GetSignal(rightChannelRequest);
 
 	return container;
 }
