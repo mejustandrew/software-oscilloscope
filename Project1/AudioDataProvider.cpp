@@ -1,9 +1,13 @@
 #include "AudioDataProvider.h"
 #include "Imported.h"
 #include <thread>
+#include"WorkingFrame.h"
 
 DataContainer * AudioDataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
 {
+	if (!WorkingFrame::IsAudioStreamInitialized())
+		return container;
+
 	while (true)
 	{
 		container->LeftChannelData = GetSignalLeftSamples(leftChannelRequest);

@@ -5,7 +5,8 @@
 #include <iomanip>
 #include <sstream>
 
-static std::mutex *mu = new std::mutex;
+bool WorkingFrame::audioStreamInitializedSuccessfully = false;
+
 
 WorkingFrame::WorkingFrame(wxWindow* parent)
 	:
@@ -23,8 +24,8 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	panel1_specs = new PanelSpecs(m_panel1, GetSignalLeftSamples);
 	panel2_specs = new PanelSpecs(m_panel1, GetSignalRightSamples);
 
-	bool initializeSucceed = InitializeAudioStream();
-	if (initializeSucceed)
+	audioStreamInitializedSuccessfully = InitializeAudioStream();
+	if (audioStreamInitializedSuccessfully)
 	{
 		panel1_specs->active = true;
 		panel2_specs->active = true;
@@ -41,6 +42,12 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	manager->StartProcessingData();
 	signalSourceForm = new SignalSourceFormLogic(this);
 }
+
+bool WorkingFrame::IsAudioStreamInitialized()
+{
+	return audioStreamInitializedSuccessfully;
+}
+
 
 std::string GetTruncatedDecimalsStringFromDouble(double value)
 {

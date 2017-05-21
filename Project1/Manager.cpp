@@ -6,7 +6,7 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
 	float sampleRate = 192000;
-	audioDataProvider = new AudioDataProvider;
+	audioDataProvider = new AudioDataProvider;//TODO: Ensure that audio data provider is successfuly initialized and can provide data
 	dataProvider = audioDataProvider;
 	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
 	sinusoidalSignalRightChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);

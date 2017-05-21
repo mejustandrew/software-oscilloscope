@@ -5,4 +5,9 @@ struct DataContainer
 {
 	IDataResponse *LeftChannelData;
 	IDataResponse *RightChannelData;
+	DataContainer()
+	{
+		LeftChannelData = nullptr;
+		RightChannelData = nullptr;
+	}
 };
