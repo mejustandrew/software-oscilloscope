@@ -66,11 +66,8 @@ void Manager::ProcessData()
 	{
 		responseContainer = MakeCallForData();
 
-		float leftScalingFactor = panelSpecsLeft->panel_height / 2 / panelSpecsLeft->VerticalSize;
-		float rightScalingFactor = panelSpecsRight->panel_height / 2 / panelSpecsRight->VerticalSize;
-
-		std::vector<float> newLeftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft->panel_width, leftScalingFactor, panelSpecsLeft->panel_mid);
-		std::vector<float> newRightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsLeft->panel_width, rightScalingFactor, panelSpecsRight->panel_mid);
+		std::vector<float> newLeftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft);
+		std::vector<float> newRightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsRight);
 
 		if (newLeftBuffer.size())leftBuffer = newLeftBuffer;
 		if (newRightBuffer.size())rightBuffer = newRightBuffer;
@@ -88,23 +85,24 @@ void Manager::ProcessData()
 	delete responseContainer;
 }
 
-std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset)
+std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * response, PanelSpecs * panelSpecs)
 {
+	float scalingFactor = panelSpecs->panel_height / 2 / panelSpecs->VerticalSize;
 	std::vector<float> result;
 	if (!response)
 		return result;
 
-	if(maxSize > response->size())
+	if(panelSpecs->panel_width > response->size())
 	for (int i = 0; i < response->size(); i++)
 	{
-		result.push_back(offset - (*response)[i] * scalingFactor);
+		result.push_back(panelSpecs->panel_mid - (*response)[i] * scalingFactor);
 	}
 	else
 	{
-		float step = response->size() / maxSize;
-		for (int i = 0; i < maxSize; i++)
+		float step = response->size() / panelSpecs->panel_width;
+		for (int i = 0; i < panelSpecs->panel_width; i++)
 		{
-			result.push_back(offset - (*response)[i * step] * scalingFactor);
+			result.push_back(panelSpecs->panel_mid - (*response)[i * step] * scalingFactor);
 		}
 	}
 	return result;

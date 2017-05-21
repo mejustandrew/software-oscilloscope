@@ -19,7 +19,7 @@ class Manager
 	DataDrawer *dataDrawer;
 	bool isActive;
 	void ProcessData();
-	std::vector<float> ConvertToMaxSizedVectorWithScaling(IDataResponse * response, int maxSize, float scalingFactor, int offset);
+	std::vector<float> ConvertToMaxSizedVectorWithScaling(IDataResponse * response, PanelSpecs * panelSpecs);
 
 	DataContainer * oldResponse;
 	DataContainer * MakeCallForData();
