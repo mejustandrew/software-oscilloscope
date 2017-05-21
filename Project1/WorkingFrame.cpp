@@ -380,6 +380,16 @@ bool WorkingFrame::InitializeAudioStream()
 	return Initialize();
 }
 
+void WorkingFrame::OnHorizontalPositionChanged(wxSpinEvent & event)
+{
+	panel1_specs->horizontalPosition = horizontalPosition->GetValue();
+}
+
+void WorkingFrame::OnHorizontalPosition2Changed(wxSpinEvent & event)
+{
+	panel2_specs->horizontalPosition = horizontalPositionChannell2->GetValue();
+}
+
 void WorkingFrame::Close(wxCloseEvent& event)
 {
 	panel1_specs->active = false;

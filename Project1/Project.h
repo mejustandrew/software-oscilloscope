@@ -52,6 +52,8 @@ class BuiltFrame : public wxFrame
 		wxStaticText* positionText;
 		wxButton* SpectrumButton;
 		wxButton* state_button;
+		wxSpinCtrl* horizontalPosition;
+		wxStaticText* m_staticText19;
 		wxChoice* VerticalSizeChannel2;
 		wxChoice* voltSelectionChannel2;
 		wxStaticText* m_staticText13;
@@ -62,6 +64,8 @@ class BuiltFrame : public wxFrame
 		wxStaticText* m_staticText15;
 		wxStaticText* m_staticText16;
 		wxSpinCtrl* PositionValueChannel2;
+		wxSpinCtrl* horizontalPositionChannell2;
+		wxStaticText* m_staticText20;
 		wxStaticText* m_staticText17;
 		wxButton* SpectrumButton2;
 		wxButton* state_button2;
@@ -87,12 +91,14 @@ class BuiltFrame : public wxFrame
 		virtual void OnPositionChanged( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnSpectrumClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStateChanged( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnHorizontalPositionChanged( wxSpinEvent& event ) { event.Skip(); }
 		virtual void VerticalSize2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnVolts2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void TimeBase2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSeconds2Changed( wxCommandEvent& event ) { event.Skip(); }
 		virtual void Treshold2Changed( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnPosition2Changed( wxSpinEvent& event ) { event.Skip(); }
+		virtual void OnHorizontalPosition2Changed( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnSpectrumClickChannel2( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStateChangedChannel2( wxMouseEvent& event ) { event.Skip(); }
 		virtual void PanelLeave( wxMouseEvent& event ) { event.Skip(); }
@@ -104,7 +110,7 @@ class BuiltFrame : public wxFrame
 	
 	public:
 		
-		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 927,760 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1000,760 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~BuiltFrame();
 	

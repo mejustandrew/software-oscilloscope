@@ -9,7 +9,7 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> &buffer)
 	if (!iteratii)return;
 
 	float step;
-
+	int xOffset = panelSpecs->horizontalPosition;
 	if (iteratii < panelSpecs->panel_width)
 	{
 		step = panelSpecs->panel_width / iteratii;
@@ -17,7 +17,7 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> &buffer)
 
 		for (int i = 0; i < iteratii; ++i)
 		{
-			panelSpecs->back_mem->DrawLine(i*step, buffer[i], (i + 1)*step, buffer[i + 1]);
+			panelSpecs->back_mem->DrawLine(i*step + xOffset, buffer[i], (i + 1)*step + xOffset, buffer[i + 1]);
 		}
 	}
 	else
@@ -27,40 +27,42 @@ void DataDrawer::Draw(PanelSpecs * panelSpecs, std::vector<float> &buffer)
 
 		for (float i = 0; i < prag; ++i)
 		{
-			panelSpecs->back_mem->DrawLine(i, buffer[i*step], (i + 1), buffer[(i + 1)*step]);
+			panelSpecs->back_mem->DrawLine(i + xOffset, buffer[i*step], i + 1 + xOffset, buffer[(i + 1)*step]);
 		}
 	}
 }
 
-void DataDrawer::DrawBothBuffersSameTime(PanelSpecs * panelSpecs, std::vector<float> &leftBuffer, std::vector<float> &rightBuffer)
+void DataDrawer::DrawBothBuffersSameTime(std::vector<float> &leftBuffer, std::vector<float> &rightBuffer)
 {
-	if (!panelSpecs->active)return;
+	if (!panelSpecsLeftChannel->active)return;
 
 	float Y1, Y2;
 	float iteratii = leftBuffer.size();
 	if (!iteratii)return;
 	float step;
+	int xLeftSignalOffset = panelSpecsLeftChannel->horizontalPosition;
+	int xRightSignalOffset = panelSpecsRightChannel->horizontalPosition;
 
-	if (iteratii < panelSpecs->panel_width)
+	if (iteratii < panelSpecsLeftChannel->panel_width)
 	{
-		step = panelSpecs->panel_width / iteratii;
+		step = panelSpecsLeftChannel->panel_width / iteratii;
 		--iteratii;
 
 		for (int i = 0; i < iteratii; ++i)
 		{
-			panelSpecs->back_mem->DrawLine(i*step, leftBuffer[i], (i + 1)*step, leftBuffer[i + 1]);
-			panelSpecs->back_mem->DrawLine(i*step, rightBuffer[i], (i + 1)*step, rightBuffer[i + 1]);
+			panelSpecsLeftChannel->back_mem->DrawLine(i*step + xLeftSignalOffset, leftBuffer[i], (i + 1)*step + xLeftSignalOffset, leftBuffer[i + 1]);
+			panelSpecsRightChannel->back_mem->DrawLine(i*step + xRightSignalOffset, rightBuffer[i], (i + 1)*step + xRightSignalOffset, rightBuffer[i + 1]);
 		}
 	}
 	else
 	{
-		step = iteratii / panelSpecs->panel_width;
-		float prag = panelSpecs->panel_width - 1;
+		step = iteratii / panelSpecsLeftChannel->panel_width;
+		float prag = panelSpecsLeftChannel->panel_width - 1;
 
 		for (float i = 0; i < prag; ++i)
 		{
-			panelSpecs->back_mem->DrawLine(i, leftBuffer[i*step], (i + 1), leftBuffer[(i + 1)*step]);
-			panelSpecs->back_mem->DrawLine(i, rightBuffer[i*step], (i + 1), rightBuffer[(i + 1)*step]);
+			panelSpecsLeftChannel->back_mem->DrawLine(i + xLeftSignalOffset, leftBuffer[i*step], i + 1 + xLeftSignalOffset, leftBuffer[(i + 1)*step]);
+			panelSpecsRightChannel->back_mem->DrawLine(i + xRightSignalOffset, rightBuffer[i*step], i + 1 + xRightSignalOffset, rightBuffer[(i + 1)*step]);
 		}
 	}
 }
@@ -80,7 +82,7 @@ void DataDrawer::DrawData(std::vector<float> leftBuffer, std::vector<float> righ
 	ClearPanel();
 	if (leftBuffer.size() == rightBufer.size())
 	{
-		DrawBothBuffersSameTime(panelSpecsLeftChannel, leftBuffer, rightBufer);
+		DrawBothBuffersSameTime(leftBuffer, rightBufer);
 	}
 	else
 	{

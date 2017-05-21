@@ -5,6 +5,7 @@ PanelSpecs::PanelSpecs(wxPanel*panel,IDataResponse* (*GetSamples)(IDataRequest*)
 	TimeBase=0.001;
 	Treshold=0.001;
 	VerticalSize=0.05;
+	horizontalPosition = 0;
 	panel->GetSize(&panel_width,&panel_height);
 	panel_mid=panel_height*0.5;
 	antiAlise_pen=new wxPen;

@@ -36,6 +36,8 @@ protected:
 	virtual void Treshold2Changed( wxSpinEvent& event );
 	virtual void OnPosition2Changed( wxSpinEvent& event );
 	virtual void OnSignalSource(wxCommandEvent& event);
+	virtual void OnHorizontalPositionChanged(wxSpinEvent& event);
+	virtual void OnHorizontalPosition2Changed(wxSpinEvent& event);
 	void Close( wxCloseEvent& event );
 
 	void WorkingFrame::DisplayInitializeErrorMessage();
