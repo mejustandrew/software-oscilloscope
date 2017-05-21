@@ -31,7 +31,7 @@ public:
 	void StartProcessingData();
 	void StopProcessingData();
 	void SwitchSignalSourceToAudio();
-	void SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalSignal);
+	void SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal);
 	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise);
 	void SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal);
 };

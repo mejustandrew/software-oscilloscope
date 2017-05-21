@@ -23,8 +23,18 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	panel1_specs = new PanelSpecs(m_panel1, GetSignalLeftSamples);
 	panel2_specs = new PanelSpecs(m_panel1, GetSignalRightSamples);
 
-	Create(panel1_specs);
-	Create(panel2_specs);
+	bool initializeSucceed = InitializeAudioStream();
+	if (initializeSucceed)
+	{
+		panel1_specs->active = true;
+		panel2_specs->active = true;
+	}
+	else
+	{
+		DisplayInitializeErrorMessage();
+	}
+
+
 	delete panel2_specs->back_mem;
 	panel2_specs->back_mem = panel1_specs->back_mem;
 	manager = new Manager(panel1_specs, panel2_specs);
@@ -94,10 +104,15 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 	}
 	else
 	{
+		panel1_specs->active = true;
+		panel2_specs->active = true;
+
 		if (signalType == SignalType::Sinusoidal)
 		{
-			SinusoidalSignal sinusoidalSignalModel = signalSourceForm->GetSinusoidalSignalProperties();
-			manager->SwitchSignalSourceToCustomSinusoidal(sinusoidalSignalModel);
+			SinusoidalSignal sinusoidalLeftSignalModel = signalSourceForm->GetSinusoidalSignalProperties();
+			SinusoidalSignal sinusoidalRightSignalModel = signalSourceForm->GetSinusoidalSignalProperties();
+
+			manager->SwitchSignalSourceToCustomSinusoidal(sinusoidalLeftSignalModel, sinusoidalRightSignalModel);
 		}
 		else if (signalType == SignalType::Noise)
 		{
@@ -329,7 +344,7 @@ void WorkingFrame::OnStateChanged(wxMouseEvent& event)
 	}
 	else
 	{
-		Create(panel1_specs);
+		panel1_specs->active = true;
 		state_button->SetLabel("Off");
 	}
 }
@@ -343,125 +358,19 @@ void WorkingFrame::OnStateChangedChannel2(wxMouseEvent& event)
 	}
 	else
 	{
-		Create(panel2_specs);
+		panel2_specs->active = true;
 		state_button2->SetLabel("Off");
 	}
 }
 
-void WorkingFrame::Create(PanelSpecs* frame)
+void WorkingFrame::DisplayInitializeErrorMessage()
 {
-	if (Initialize())
-	{
-		frame->active = true;
-		/*std::thread refreshThread(Refresh, frame);
-		refreshThread.detach();*/
-	}
-	else wxMessageBox("Opening PortAudio stream did not succeed,\nreopening application after verify Recording Devices\nmay solve this problem");
+	wxMessageBox("Opening PortAudio stream did not succeed,\nreopening application after verify Recording Devices\nmay solve this problem");
 }
 
-void WorkingFrame::Refresh(PanelSpecs* frame)
+bool WorkingFrame::InitializeAudioStream()
 {
-	while (frame->active)
-	{
-		Draw(frame);
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
-	}
-}
-
-void WorkingFrame::Draw(PanelSpecs* frame)
-{
-	if (!frame->active)return;
-	DataRequest req(frame->TimeBase, frame->Treshold);
-	IDataResponse* response = frame->GetSamples(&req);
-	if (!response)return;
-
-	float Y1, Y2;
-	float iteratii = response->size();
-	float pas;
-	//avem nevoie de o variabila pas pentru a vedea care este distanta pe x dintre puncte
-	if (frame->isAntiAlise)
-	{
-		frame->antiAlise_mem->Blit(0, 0, frame->maxPanel_width, frame->panel_height, (frame->grid_mem), 0, 0);
-	}
-	else
-	{
-		frame->back_mem->Blit(0, 0, frame->maxPanel_width, frame->panel_height, (frame->grid_mem), 0, 0);
-	}
-
-	float k = frame->panel_height*0.5 / frame->VerticalSize;
-	// vertical size represents maximum voltage to be displayed on the screen
-	// since the signal can go frm max voltage to -max voltage,
-	// the screen height represents 2 times the max voltage
-	// then, the amplitude, in pixels is:
-	// Value[px] = Value[V] * panel_height / (2 * max voltage)
-
-	if (iteratii < frame->panel_width)
-	{
-		pas = frame->panel_width / iteratii;
-		--iteratii;
-		if (frame->isAntiAlise)
-		{
-			for (int i = 0; i < iteratii; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i] * k;
-				Y2 = frame->panel_mid - (*response)[i + 1] * k;
-				frame->antiAlise_mem->DrawLine(i*pas, Y1 + 1, (i + 1)*pas, Y2 + 1);
-				frame->antiAlise_mem->DrawLine(i*pas, Y1 - 1, (i + 1)*pas, Y2 - 1);
-			}
-			frame->back_mem->Blit(0, 0, frame->panel_width, frame->panel_height, (frame->antiAlise_mem), 0, 0);
-			for (int i = 0; i < iteratii; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i] * k;
-				Y2 = frame->panel_mid - (*response)[i + 1] * k;
-				frame->back_mem->DrawLine(i*pas, Y1, (i + 1)*pas, Y2);
-			}
-		}
-		else
-		{
-			for (int i = 0; i < iteratii; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i] * k;
-				Y2 = frame->panel_mid - (*response)[i + 1] * k;
-				frame->back_mem->DrawLine(i*pas, Y1, (i + 1)*pas, Y2);
-			}
-		}
-	}
-	else
-	{
-		pas = iteratii / frame->panel_width;
-		float prag = frame->panel_width - 1;
-		if (frame->isAntiAlise)
-		{
-			for (float i = 0; i < prag; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i*pas] * k;
-				Y2 = frame->panel_mid - (*response)[(i + 1)*pas] * k;
-				frame->antiAlise_mem->DrawLine(i, Y1 + 1, (i + 1), Y2 + 1);
-				frame->antiAlise_mem->DrawLine(i, Y1 - 1, (i + 1), Y2 - 1);
-			}
-			frame->back_mem->Blit(0, 0, frame->panel_width, frame->panel_height, (frame->antiAlise_mem), 0, 0);
-			for (float i = 0; i < prag; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i*pas] * k;
-				Y2 = frame->panel_mid - (*response)[(i + 1)*pas] * k;
-				frame->back_mem->DrawLine(i, Y1, (i + 1), Y2);
-			}
-		}
-		else
-		{
-			for (float i = 0; i < prag; ++i)
-			{
-				Y1 = frame->panel_mid - (*response)[i*pas] * k;
-				Y2 = frame->panel_mid - (*response)[(i + 1)*pas] * k;
-				frame->back_mem->DrawLine(i, Y1, (i + 1), Y2);
-			}
-		}
-	}
-
-	response->Destroy();
-
-	frame->paint_mem->Blit(0, 0, frame->panel_width, frame->panel_height, frame->back_mem, 0, 0);
-	frame->Invalidate();
+	return Initialize();
 }
 
 void WorkingFrame::Close(wxCloseEvent& event)

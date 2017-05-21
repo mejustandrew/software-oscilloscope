@@ -42,12 +42,12 @@ void Manager::SwitchSignalSourceToAudio()
 	dataProvider = audioDataProvider;
 }
 
-void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalSignal)
+void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal)
 {
-	sinusoidalSignalLeftChannelGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
-	sinusoidalSignalLeftChannelGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
-	sinusoidalSignalRightChannelGenerator->SetAmplitude(sinusoidalSignal.GetAmplitude() / 1000); //convert to mV
-	sinusoidalSignalRightChannelGenerator->SetFrequency(sinusoidalSignal.GetFrequency());
+	sinusoidalSignalLeftChannelGenerator->SetAmplitude(sinusoidalLeftChannelSignal.GetAmplitude() / 1000); //convert to mV
+	sinusoidalSignalLeftChannelGenerator->SetFrequency(sinusoidalLeftChannelSignal.GetFrequency());
+	sinusoidalSignalRightChannelGenerator->SetAmplitude(sinusoidalRightChannelSignal.GetAmplitude() / 1000); //convert to mV
+	sinusoidalSignalRightChannelGenerator->SetFrequency(sinusoidalRightChannelSignal.GetFrequency());
 	customDataProvider->ChangeLeftChannelGenerator(sinusoidalSignalLeftChannelGenerator);
 	customDataProvider->ChangeRightChannelGenerator(sinusoidalSignalRightChannelGenerator);
 

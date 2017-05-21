@@ -38,6 +38,9 @@ protected:
 	virtual void OnSignalSource(wxCommandEvent& event);
 	void Close( wxCloseEvent& event );
 
+	void WorkingFrame::DisplayInitializeErrorMessage();
+	bool WorkingFrame::InitializeAudioStream();
+
 	SpectrumFrame* spectrumLeft,*spectrumRight;
 	std::atomic_bool active;
 	int prev_seconds_selection, prev_seconds_selection2, prev_volt_selection,prev_volt_selection2;
@@ -49,10 +52,6 @@ protected:
 public:
 	WorkingFrame( wxWindow* parent );
 	~WorkingFrame(); 
-
-	static void Refresh(PanelSpecs* frame);
-	static void Create(PanelSpecs* frame);
-	static void Draw(PanelSpecs* frame);
 };
 
 #endif
