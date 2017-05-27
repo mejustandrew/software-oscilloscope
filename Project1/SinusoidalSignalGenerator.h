@@ -4,8 +4,8 @@
 class SinusoidalSignalGenerator : public SignalGenerator
 {
 private:
-	double amplitude;
-	double frequency;
+	float amplitude;
+	float frequency;
 public:
 	SinusoidalSignalGenerator(float amplitude, float frequency, float sampleRate = 192000);
 	void SetAmplitude(float amplitude);

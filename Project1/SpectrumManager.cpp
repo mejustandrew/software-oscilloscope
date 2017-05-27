@@ -52,6 +52,14 @@ void SpectrumManager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinu
 
 void SpectrumManager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise)
 {
+	//gaussianNoiseLeftChannelGenerator->SetMean(gaussianNoiseLeftChannelSignal.GetMean());
+	//gaussianNoiseLeftChannelGenerator->SetVariance(gaussianNoiseLeftChannelSignal.GetVariance());
+	//gaussianNoiseRightChannelGenerator->SetMean(gaussianNoiseRightChannelSignal.GetMean());
+	//gaussianNoiseRightChannelGenerator->SetVariance(gaussianNoiseRightChannelSignal.GetVariance());
+	//customDualChannelDataProvider->ChangeLeftChannelGenerator(gaussianNoiseLeftChannelGenerator);
+	//customDualChannelDataProvider->ChangeRightChannelGenerator(gaussianNoiseRightChannelGenerator);
+
+	//dataProvider = customDualChannelDataProvider;
 }
 
 void SpectrumManager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)

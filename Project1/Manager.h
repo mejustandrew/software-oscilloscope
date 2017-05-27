@@ -5,6 +5,7 @@
 #include "PanelSpecs.h"
 #include "CustomDualChannelDataProvider.h"
 #include "SinusoidalSignalGenerator.h"
+#include "GaussianNoiseGenerator.h"
 #include "SignalModels.h"
 #include <vector>
 
@@ -15,6 +16,8 @@ class Manager
 	CustomDualChannelDataProvider *customDualChannelDataProvider;
 	SinusoidalSignalGenerator *sinusoidalSignalLeftChannelGenerator;
 	SinusoidalSignalGenerator *sinusoidalSignalRightChannelGenerator;
+	GaussianNoiseGenerator *gaussianNoiseLeftChannelGenerator;
+	GaussianNoiseGenerator *gaussianNoiseRightChannelGenerator;
 
 	IDualChannelDataProvider *dataProvider;
 	DataSocketSender *dataSocketSender;
@@ -31,6 +34,6 @@ public:
 	void StopProcessingData();
 	void SwitchSignalSourceToAudio();
 	void SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal);
-	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise);
+	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannelSignal, GaussianNoise gaussianNoiseRightChannelSignal);
 	void SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal);
 };

@@ -118,7 +118,10 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 		}
 		else if (signalType == SignalType::Noise)
 		{
+			GaussianNoise gaussianNoiseLeftSignalModel = signalSourceForm->GetGaussianNoiseProperties();
+			GaussianNoise gaussianNoiseRightSignalModel = signalSourceForm->GetGaussianNoiseProperties();
 
+			manager->SwitchSignalSourceToCustomGaussianNoise(gaussianNoiseLeftSignalModel, gaussianNoiseRightSignalModel);
 		}
 		else if (signalType == SignalType::PWM)
 		{

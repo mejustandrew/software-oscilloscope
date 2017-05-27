@@ -85,6 +85,7 @@
     <ClCompile Include="DataRequest.cpp" />
     <ClCompile Include="DataSocketSender.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="GaussianNoiseGenerator.cpp" />
     <ClCompile Include="IDualChannelDataProvider.cpp" />
     <ClCompile Include="ISingleChannelDataProvider.cpp" />
     <ClCompile Include="main.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="AudioDualChannelDataProvider.h" />
     <ClInclude Include="DataSocketSender.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="GaussianNoiseGenerator.h" />
     <ClInclude Include="IDualChannelDataProvider.h" />
     <ClInclude Include="ISingleChannelDataProvider.h" />
     <ClInclude Include="Manager.h" />

@@ -9,6 +9,9 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	dataProvider = audioDualChannelDataProvider;
 	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(0, 0);
 	sinusoidalSignalRightChannelGenerator = new SinusoidalSignalGenerator(0, 0);
+	gaussianNoiseLeftChannelGenerator = new GaussianNoiseGenerator(0, 0);
+	gaussianNoiseRightChannelGenerator = new GaussianNoiseGenerator(0, 0);
+
 	customDualChannelDataProvider = new CustomDualChannelDataProvider(sinusoidalSignalLeftChannelGenerator, sinusoidalSignalRightChannelGenerator);
 
 	//dataSocketSender = new DataSocketSender;
@@ -53,8 +56,16 @@ void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLe
 	dataProvider = customDualChannelDataProvider;
 }
 
-void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise)
+void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannelSignal, GaussianNoise gaussianNoiseRightChannelSignal)
 {
+	gaussianNoiseLeftChannelGenerator->SetMean(gaussianNoiseLeftChannelSignal.GetMean());
+	gaussianNoiseLeftChannelGenerator->SetVariance(gaussianNoiseLeftChannelSignal.GetVariance());
+	gaussianNoiseRightChannelGenerator->SetMean(gaussianNoiseRightChannelSignal.GetMean());
+	gaussianNoiseRightChannelGenerator->SetVariance(gaussianNoiseRightChannelSignal.GetVariance());
+	customDualChannelDataProvider->ChangeLeftChannelGenerator(gaussianNoiseLeftChannelGenerator);
+	customDualChannelDataProvider->ChangeRightChannelGenerator(gaussianNoiseRightChannelGenerator);
+
+	dataProvider = customDualChannelDataProvider;
 }
 
 void Manager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)
