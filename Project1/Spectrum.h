@@ -50,4 +50,5 @@ public:
 	void Stop() { active = false; }
 	bool IsRunning() { return active; }
 	void SetDataProvider(ISingleChannelDataProvider * dataProvider);
+	void SetSampleRate(double sampleRate);
 };

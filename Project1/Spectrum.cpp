@@ -1,5 +1,4 @@
 #include"Spectrum.h"
-#include"Imported.h"
 #include<thread>
 
 SpectrumFrame::SpectrumFrame(wxWindow* parent, ISingleChannelDataProvider * dataProvider)
@@ -80,6 +79,11 @@ void SpectrumFrame::SetDataProvider(ISingleChannelDataProvider * dataProvider)
 	data_provider = dataProvider;
 }
 
+void SpectrumFrame::SetSampleRate(double sampleRate)
+{
+	sample_rate = sampleRate;
+}
+
 void SpectrumFrame::StartSpectrumDisplayThread(SpectrumFrame*frame)
 {
 	std::thread Display(Refresh, this);
@@ -118,7 +122,6 @@ void SpectrumFrame::OnResize(wxSizeEvent& event)
 		paint_mem.SelectObject(grid_bmp);
 		paint_mem.SetBackground(*wxBLACK_BRUSH);
 		paint_mem.Clear();
-		sample_rate = Get_sample_rate();
 		RefreshContainers();
 		first_resized = false;
 	}

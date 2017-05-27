@@ -13,6 +13,8 @@ SpectrumManager::SpectrumManager()
 
 	spectrumLeft = new SpectrumFrame(nullptr, audioLeftChannelDataProvider);
 	spectrumRight = new SpectrumFrame(nullptr, audioRightChannelDataProvider);
+	spectrumLeft->SetSampleRate(192000);
+	spectrumRight->SetSampleRate(192000);
 }
 
 void SpectrumManager::ShowLeftChannelSpectrum()
