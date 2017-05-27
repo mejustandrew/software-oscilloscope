@@ -8,6 +8,9 @@ SpectrumManager::SpectrumManager()
 	sinusiodalLeftSignalGenerator = new SinusoidalSignalGenerator(0, 0);
 	sinusiodalRightSignalGenerator = new SinusoidalSignalGenerator(0, 0);
 
+	gaussianNoiseLeftSignalGenerator = new GaussianNoiseGenerator(0, 0);
+	gaussianNoiseRightSignalGenerator = new GaussianNoiseGenerator(0, 0);
+
 	customLeftDataProvider = new CustomSingleChannelDataProvider(sinusiodalLeftSignalGenerator);
 	customRightDataProvider = new CustomSingleChannelDataProvider(sinusiodalRightSignalGenerator);
 
@@ -50,16 +53,17 @@ void SpectrumManager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinu
 	spectrumRight->SetDataProvider(customRightDataProvider);
 }
 
-void SpectrumManager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise)
+void SpectrumManager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannel, GaussianNoise gaussianNoiseRightChannel)
 {
-	//gaussianNoiseLeftChannelGenerator->SetMean(gaussianNoiseLeftChannelSignal.GetMean());
-	//gaussianNoiseLeftChannelGenerator->SetVariance(gaussianNoiseLeftChannelSignal.GetVariance());
-	//gaussianNoiseRightChannelGenerator->SetMean(gaussianNoiseRightChannelSignal.GetMean());
-	//gaussianNoiseRightChannelGenerator->SetVariance(gaussianNoiseRightChannelSignal.GetVariance());
-	//customDualChannelDataProvider->ChangeLeftChannelGenerator(gaussianNoiseLeftChannelGenerator);
-	//customDualChannelDataProvider->ChangeRightChannelGenerator(gaussianNoiseRightChannelGenerator);
+	gaussianNoiseLeftSignalGenerator->SetMean(gaussianNoiseLeftChannel.GetMean());
+	gaussianNoiseLeftSignalGenerator->SetVariance(gaussianNoiseLeftChannel.GetVariance());
+	gaussianNoiseRightSignalGenerator->SetMean(gaussianNoiseRightChannel.GetMean());
+	gaussianNoiseRightSignalGenerator->SetVariance(gaussianNoiseRightChannel.GetVariance());
+	customLeftDataProvider->ChangeSignalGenerator(gaussianNoiseLeftSignalGenerator);
+	customRightDataProvider->ChangeSignalGenerator(gaussianNoiseRightSignalGenerator);
 
-	//dataProvider = customDualChannelDataProvider;
+	spectrumLeft->SetDataProvider(customLeftDataProvider);
+	spectrumRight->SetDataProvider(customRightDataProvider);
 }
 
 void SpectrumManager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)

@@ -4,13 +4,16 @@
 #include "CustomSingleChannelDataProvider.h"
 #include "SinusoidalSignalGenerator.h"
 #include "SignalModels.h"
+#include "GaussianNoiseGenerator.h"
 
 class SpectrumManager
 {
-	SpectrumFrame* spectrumLeft, *spectrumRight;
+	SpectrumFrame *spectrumLeft, *spectrumRight;
 	AudioSingleChannelDataProvider *audioLeftChannelDataProvider, *audioRightChannelDataProvider;
 	CustomSingleChannelDataProvider *customLeftDataProvider, *customRightDataProvider;
-	SinusoidalSignalGenerator * sinusiodalLeftSignalGenerator, *sinusiodalRightSignalGenerator;
+	SinusoidalSignalGenerator *sinusiodalLeftSignalGenerator, *sinusiodalRightSignalGenerator;
+	GaussianNoiseGenerator *gaussianNoiseLeftSignalGenerator, *gaussianNoiseRightSignalGenerator;
+
 
 public:
 	SpectrumManager();
@@ -18,7 +21,7 @@ public:
 	void ShowRightChannelSpectrum();
 	void SwitchSignalSourceToAudio();
 	void SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal);
-	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise);
+	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannel, GaussianNoise gaussianNoiseRightChannel);
 	void SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal);
 	void Close();
 };
