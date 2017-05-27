@@ -35,11 +35,11 @@ SinusoidalSignal SignalSourceFormLogic::GetSinusoidalSignalProperties()
 
 GaussianNoise SignalSourceFormLogic::GetGaussianNoiseProperties()
 {
-	int varianceSelection = signalSettings.SinusoidalAmplitudeChoice;
+	int varianceSelection = signalSettings.VarianceChoice;
 	string varianceText = gaussianNoiseProperties.varianceLevels[varianceSelection];
 	double varianceValue = stod(varianceText);
 
-	int meanSelection = signalSettings.FrequencyChoice;
+	int meanSelection = signalSettings.MeanChoice;
 	string meanText = gaussianNoiseProperties.meanLevels[meanSelection];
 	double meanValue = stod(meanText);
 
@@ -52,7 +52,7 @@ PwmSignal SignalSourceFormLogic::GetPwmSignalProperties()
 	string amplitudeText = pwmProperties.amplitudeLevels[amplitudeSelection];
 	double amplitudeValue = stod(amplitudeText);
 
-	int dutyCycleSelection = signalSettings.FrequencyChoice;
+	int dutyCycleSelection = signalSettings.DutyCycleChoice;
 	string dutyCycleText = pwmProperties.dutyCycleLevels[dutyCycleSelection];
 	double dutyCycleValue = stod(dutyCycleText);
 

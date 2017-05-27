@@ -42,6 +42,6 @@ void GaussianNoiseGenerator::PopulateResponseBuffer()
 	{
 		number = distribution(e2);
 		i++;
-		response->AddValue((number - distributionMean) / 100); //patch: scalling output
+		response->AddValue((number - distributionMean) / 100); //patch: scaling output
 	}
 }
