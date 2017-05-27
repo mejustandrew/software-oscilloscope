@@ -5,10 +5,10 @@
 #include "IDataRequest.h"
 #include "../dlltry/IDataResponse.h"
 #include "Project.h"
-#include "Spectrum.h"
 #include <atomic>
 #include "Manager.h"
 #include "SignalSourceFormLogic.h"
+#include "SpectrumManager.h"
 
 class WorkingFrame : public BuiltFrame
 {
@@ -43,13 +43,13 @@ protected:
 	void WorkingFrame::DisplayInitializeErrorMessage();
 	bool WorkingFrame::InitializeAudioStream();
 
-	SpectrumFrame* spectrumLeft,*spectrumRight;
 	std::atomic_bool active;
 	int prev_seconds_selection, prev_seconds_selection2, prev_volt_selection,prev_volt_selection2;
 	static bool audioStreamInitializedSuccessfully;
 	wxString display_frequency;
 	PanelSpecs *panel1_specs,*panel2_specs;
 	Manager *manager;
+	SpectrumManager *spectrumManager;
 	SignalSourceFormLogic* signalSourceForm;
 
 public:

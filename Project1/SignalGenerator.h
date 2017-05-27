@@ -16,4 +16,5 @@ public:
 		response = new ResponseBuffer(responseSize);
 	}
 	virtual IDataResponse * GetSignal(IDataRequest * request) = 0;
+	virtual IDataResponse * GetSignal(int numberOfSamples) = 0;
 };

@@ -2,13 +2,13 @@
 #include"IDataRequest.h"
 #include"DataContainer.h"
 
-class IDataProvider
+class IDualChannelDataProvider
 {
 protected:
 	DataContainer* container;
 
 public:
-	IDataProvider();
-	~IDataProvider();
+	IDualChannelDataProvider();
+	~IDualChannelDataProvider();
 	virtual DataContainer* GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest) = 0;
 };

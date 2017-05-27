@@ -63,13 +63,25 @@
     <ClCompile Include="SinusoidalSignalGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AudioDataProvider.cpp">
+    <ClCompile Include="IDualChannelDataProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CustomDataProvider.cpp">
+    <ClCompile Include="ISingleChannelDataProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IDataProvider.cpp">
+    <ClCompile Include="AudioDualChannelDataProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSingleChannelDataProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDualChannelDataProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomSingleChannelDataProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpectrumManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,13 +146,25 @@
     <ClInclude Include="SinusoidalSignalGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDataProvider.h">
+    <ClInclude Include="IDualChannelDataProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioDataProvider.h">
+    <ClInclude Include="ISingleChannelDataProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CustomDataProvider.h">
+    <ClInclude Include="AudioDualChannelDataProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSingleChannelDataProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDualChannelDataProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomSingleChannelDataProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpectrumManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

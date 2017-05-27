@@ -1,9 +1,9 @@
-#include "AudioDataProvider.h"
+#include "AudioDualChannelDataProvider.h"
 #include "Imported.h"
 #include <thread>
 #include"WorkingFrame.h"
 
-DataContainer * AudioDataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
+DataContainer * AudioDualChannelDataProvider::GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest)
 {
 	if (!WorkingFrame::IsAudioStreamInitialized())
 		return container;

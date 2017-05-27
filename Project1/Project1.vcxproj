@@ -76,14 +76,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioSingleChannelDataProvider.cpp" />
     <ClCompile Include="ConnectionHandler.cpp" />
-    <ClCompile Include="CustomDataProvider.cpp" />
+    <ClCompile Include="CustomDualChannelDataProvider.cpp" />
+    <ClCompile Include="CustomSingleChannelDataProvider.cpp" />
     <ClCompile Include="DataDrawer.cpp" />
-    <ClCompile Include="AudioDataProvider.cpp" />
+    <ClCompile Include="AudioDualChannelDataProvider.cpp" />
     <ClCompile Include="DataRequest.cpp" />
     <ClCompile Include="DataSocketSender.cpp" />
     <ClCompile Include="Frame.cpp" />
-    <ClCompile Include="IDataProvider.cpp" />
+    <ClCompile Include="IDualChannelDataProvider.cpp" />
+    <ClCompile Include="ISingleChannelDataProvider.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="PanelSpecs.cpp" />
@@ -94,17 +97,21 @@
     <ClCompile Include="SignalTypesAvaiableProperties.cpp" />
     <ClCompile Include="SinusoidalSignalGenerator.cpp" />
     <ClCompile Include="Spectrum.cpp" />
+    <ClCompile Include="SpectrumManager.cpp" />
     <ClCompile Include="WorkingFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioSingleChannelDataProvider.h" />
     <ClInclude Include="ConnectionHandler.h" />
-    <ClInclude Include="CustomDataProvider.h" />
+    <ClInclude Include="CustomDualChannelDataProvider.h" />
+    <ClInclude Include="CustomSingleChannelDataProvider.h" />
     <ClInclude Include="DataContainer.h" />
     <ClInclude Include="DataDrawer.h" />
-    <ClInclude Include="AudioDataProvider.h" />
+    <ClInclude Include="AudioDualChannelDataProvider.h" />
     <ClInclude Include="DataSocketSender.h" />
     <ClInclude Include="Frame.h" />
-    <ClInclude Include="IDataProvider.h" />
+    <ClInclude Include="IDualChannelDataProvider.h" />
+    <ClInclude Include="ISingleChannelDataProvider.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="PanelSpecs.h" />
     <ClInclude Include="IDataRequest.h" />
@@ -118,6 +125,7 @@
     <ClInclude Include="SignalTypesAvaiableProperties.h" />
     <ClInclude Include="SinusoidalSignalGenerator.h" />
     <ClInclude Include="Spectrum.h" />
+    <ClInclude Include="SpectrumManager.h" />
     <ClInclude Include="StringDTOBuilder.h" />
     <ClInclude Include="WorkingFrame.h" />
   </ItemGroup>

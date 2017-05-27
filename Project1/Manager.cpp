@@ -5,12 +5,11 @@
 Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
-	float sampleRate = 192000;
-	audioDataProvider = new AudioDataProvider;//TODO: Ensure that audio data provider is successfuly initialized and can provide data
-	dataProvider = audioDataProvider;
-	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
-	sinusoidalSignalRightChannelGenerator = new SinusoidalSignalGenerator(sampleRate, 0, 0);
-	customDataProvider = new CustomDataProvider(sinusoidalSignalLeftChannelGenerator, sinusoidalSignalRightChannelGenerator);
+	audioDualChannelDataProvider = new AudioDualChannelDataProvider;//TODO: Ensure that audio data provider is successfuly initialized and can provide data
+	dataProvider = audioDualChannelDataProvider;
+	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(0, 0);
+	sinusoidalSignalRightChannelGenerator = new SinusoidalSignalGenerator(0, 0);
+	customDualChannelDataProvider = new CustomDualChannelDataProvider(sinusoidalSignalLeftChannelGenerator, sinusoidalSignalRightChannelGenerator);
 
 	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
@@ -19,7 +18,7 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 
 Manager::~Manager()
 {
-	delete audioDataProvider;
+	delete audioDualChannelDataProvider;
 	delete dataSocketSender;
 	delete dataDrawer;
 	delete oldResponse;
@@ -39,7 +38,7 @@ void Manager::StopProcessingData()
 
 void Manager::SwitchSignalSourceToAudio()
 {
-	dataProvider = audioDataProvider;
+	dataProvider = audioDualChannelDataProvider;
 }
 
 void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal)
@@ -48,10 +47,10 @@ void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLe
 	sinusoidalSignalLeftChannelGenerator->SetFrequency(sinusoidalLeftChannelSignal.GetFrequency());
 	sinusoidalSignalRightChannelGenerator->SetAmplitude(sinusoidalRightChannelSignal.GetAmplitude() / 1000); //convert to mV
 	sinusoidalSignalRightChannelGenerator->SetFrequency(sinusoidalRightChannelSignal.GetFrequency());
-	customDataProvider->ChangeLeftChannelGenerator(sinusoidalSignalLeftChannelGenerator);
-	customDataProvider->ChangeRightChannelGenerator(sinusoidalSignalRightChannelGenerator);
+	customDualChannelDataProvider->ChangeLeftChannelGenerator(sinusoidalSignalLeftChannelGenerator);
+	customDualChannelDataProvider->ChangeRightChannelGenerator(sinusoidalSignalRightChannelGenerator);
 
-	dataProvider = customDataProvider;
+	dataProvider = customDualChannelDataProvider;
 }
 
 void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoise)
@@ -77,10 +76,6 @@ void Manager::ProcessData()
 		if(responseContainer->RightChannelData)responseContainer->RightChannelData->Destroy();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-
-		/*if (dataSocketSender->HasFinishedSendingData())
-			dataSocketSender->SendData(leftBuffer, rightBuffer);*/
 	}
 	delete responseContainer;
 }

@@ -13,8 +13,6 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 	BuiltFrame(parent)
 {
 	Initialize();
-	spectrumLeft = new SpectrumFrame(nullptr, GetSpectrumLeftSamples);
-	spectrumRight = new SpectrumFrame(nullptr, GetSpectrumRightSamples);
 
 	prev_seconds_selection = 1;
 	prev_volt_selection = 1;
@@ -35,7 +33,7 @@ WorkingFrame::WorkingFrame(wxWindow* parent)
 		DisplayInitializeErrorMessage();
 	}
 
-
+	spectrumManager = new SpectrumManager;
 	delete panel2_specs->back_mem;
 	panel2_specs->back_mem = panel1_specs->back_mem;
 	manager = new Manager(panel1_specs, panel2_specs);
@@ -108,6 +106,7 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 	if (signalSource == SignalSource::Audio)
 	{
 		manager->SwitchSignalSourceToAudio();
+		spectrumManager->SwitchSignalSourceToAudio();
 	}
 	else
 	{
@@ -120,6 +119,7 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 			SinusoidalSignal sinusoidalRightSignalModel = signalSourceForm->GetSinusoidalSignalProperties();
 
 			manager->SwitchSignalSourceToCustomSinusoidal(sinusoidalLeftSignalModel, sinusoidalRightSignalModel);
+			spectrumManager->SwitchSignalSourceToCustomSinusoidal(sinusoidalLeftSignalModel, sinusoidalRightSignalModel);
 		}
 		else if (signalType == SignalType::Noise)
 		{
@@ -134,16 +134,12 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 
 void WorkingFrame::OnSpectrumClick(wxCommandEvent& event)
 {
-	if (spectrumLeft->IsShown()) return;
-	spectrumLeft->Show();
-	spectrumLeft->Start();
+	spectrumManager->ShowLeftChannelSpectrum();
 }
 
 void WorkingFrame::OnSpectrumClickChannel2(wxCommandEvent& event)
 {
-	if (spectrumRight->IsShown()) return;
-	spectrumRight->Show();
-	spectrumRight->Start();
+	spectrumManager->ShowRightChannelSpectrum();
 }
 
 WorkingFrame::~WorkingFrame()
@@ -396,17 +392,7 @@ void WorkingFrame::Close(wxCloseEvent& event)
 	panel2_specs->active = false;
 	this->Hide();
 
-	if (spectrumLeft->IsShown())
-	{
-		spectrumLeft->Hide();
-		spectrumLeft->Stop();
-	}
-
-	if (spectrumRight->IsShown())
-	{
-		spectrumRight->Hide();
-		spectrumRight->Stop();
-	}
+	spectrumManager->Close();
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	exit(0);

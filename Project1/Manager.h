@@ -1,9 +1,9 @@
 #pragma once
-#include "AudioDataProvider.h"
+#include "AudioDualChannelDataProvider.h"
 #include "DataSocketSender.h"
 #include "DataDrawer.h"
 #include "PanelSpecs.h"
-#include "CustomDataProvider.h"
+#include "CustomDualChannelDataProvider.h"
 #include "SinusoidalSignalGenerator.h"
 #include "SignalModels.h"
 #include <vector>
@@ -11,12 +11,12 @@
 class Manager
 {
 	PanelSpecs *panelSpecsLeft, *panelSpecsRight;
-	AudioDataProvider *audioDataProvider;
-	CustomDataProvider *customDataProvider;
+	AudioDualChannelDataProvider *audioDualChannelDataProvider;
+	CustomDualChannelDataProvider *customDualChannelDataProvider;
 	SinusoidalSignalGenerator *sinusoidalSignalLeftChannelGenerator;
 	SinusoidalSignalGenerator *sinusoidalSignalRightChannelGenerator;
 
-	IDataProvider *dataProvider;
+	IDualChannelDataProvider *dataProvider;
 	DataSocketSender *dataSocketSender;
 	DataDrawer *dataDrawer;
 	bool isActive;

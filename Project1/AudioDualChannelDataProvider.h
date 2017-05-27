@@ -1,7 +1,7 @@
 #pragma once
-#include"IDataProvider.h"
+#include"IDualChannelDataProvider.h"
 
-class AudioDataProvider : public IDataProvider
+class AudioDualChannelDataProvider : public IDualChannelDataProvider
 {
 public:
 
