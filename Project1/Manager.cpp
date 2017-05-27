@@ -71,38 +71,18 @@ void Manager::ProcessData()
 	{
 		responseContainer = MakeCallForData();
 
-		std::vector<float> newLeftBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->LeftChannelData, panelSpecsLeft);
-		std::vector<float> newRightBuffer = ConvertToMaxSizedVectorWithScaling(responseContainer->RightChannelData, panelSpecsRight);
-
-		if (newLeftBuffer.size())leftBuffer = newLeftBuffer;
-		if (newRightBuffer.size())rightBuffer = newRightBuffer;
+		dataDrawer->DrawData(responseContainer->LeftChannelData, responseContainer->RightChannelData);
 
 		if(responseContainer->LeftChannelData)responseContainer->LeftChannelData->Destroy();
 		if(responseContainer->RightChannelData)responseContainer->RightChannelData->Destroy();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
 		/*if (dataSocketSender->HasFinishedSendingData())
 			dataSocketSender->SendData(leftBuffer, rightBuffer);*/
 	}
 	delete responseContainer;
-}
-
-std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * response, PanelSpecs * panelSpecs)
-{
-	float scalingFactor = panelSpecs->panel_height / 2 / panelSpecs->VerticalSize;
-	std::vector<float> result;
-	if (!response)
-		return result;
-
-	for (int i = 0; i < response->size(); i++)
-	{
-		result.push_back(panelSpecs->panel_mid - (*response)[i] * scalingFactor);
-	}
-
-	return result;
 }
 
 DataContainer * Manager::MakeCallForData()
