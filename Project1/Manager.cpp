@@ -97,19 +97,11 @@ std::vector<float> Manager::ConvertToMaxSizedVectorWithScaling(IDataResponse * r
 	if (!response)
 		return result;
 
-	if(panelSpecs->panel_width > response->size())
 	for (int i = 0; i < response->size(); i++)
 	{
 		result.push_back(panelSpecs->panel_mid - (*response)[i] * scalingFactor);
 	}
-	else
-	{
-		float step = response->size() / panelSpecs->panel_width;
-		for (int i = 0; i < panelSpecs->panel_width; i++)
-		{
-			result.push_back(panelSpecs->panel_mid - (*response)[i * step] * scalingFactor);
-		}
-	}
+
 	return result;
 }
 
