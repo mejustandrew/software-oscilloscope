@@ -83,11 +83,6 @@ void WorkingFrame::OnPanelPaint(wxPaintEvent& event)
 	paint.Blit(0, 0, panel1_specs->panel_width, panel1_specs->panel_height, panel1_specs->paint_mem, 0, 0);
 }
 
-void WorkingFrame::OnAntiAliase(wxCommandEvent& event)
-{
-	panel1_specs->isAntiAlise = !panel1_specs->isAntiAlise;
-}
-
 void WorkingFrame::OnPositionChanged(wxSpinEvent& event)
 {
 	panel1_specs->panel_mid = panel1_specs->panel_height*0.5 - 5 * PositionValue->GetValue();
@@ -331,11 +326,13 @@ void WorkingFrame::OnVolts2Changed(wxCommandEvent& event)
 
 void WorkingFrame::OnPanelResized(wxSizeEvent& event)
 {
+	isResizing = true;
 	m_panel1->GetSize(&panel1_specs->panel_width, &panel1_specs->panel_height);
 	panel1_specs->panel_mid = panel1_specs->panel_height*0.5;
 	panel2_specs->panel_width = panel1_specs->panel_width;
 	panel2_specs->panel_height = panel1_specs->panel_height;
 	panel2_specs->panel_mid = panel1_specs->panel_mid;
+	isResizing = false;
 }
 
 void WorkingFrame::OnStateChanged(wxMouseEvent& event)
