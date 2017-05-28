@@ -74,21 +74,37 @@ void Manager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)
 
 void Manager::ProcessData()
 {
-	DataContainer * responseContainer = new DataContainer;
-	std::vector<float> leftBuffer, rightBuffer;
+	DataContainer * responseContainer;
 
 	while (isActive)
 	{
 		responseContainer = MakeCallForData();
-
-		dataDrawer->DrawData(responseContainer->LeftChannelData, responseContainer->RightChannelData);
+		ConvertResponseToVector(responseContainer);
+		dataDrawer->DrawData(leftBuffer, rightBuffer);
 
 		if(responseContainer->LeftChannelData)responseContainer->LeftChannelData->Destroy();
 		if(responseContainer->RightChannelData)responseContainer->RightChannelData->Destroy();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
-	delete responseContainer;
+}
+
+void Manager::ConvertResponseToVector(DataContainer * responseContainer)
+{
+	IDataResponse * leftResponse = responseContainer->LeftChannelData;
+	IDataResponse * rightResponse = responseContainer->RightChannelData;
+	if (leftResponse)
+	{
+		leftBuffer.clear();
+		for (int i = 0; i < leftResponse->size(); i++)
+			leftBuffer.push_back((*leftResponse)[i]);
+	}
+	if (rightResponse)
+	{
+		rightBuffer.clear();
+		for (int i = 0; i < rightResponse->size(); i++)
+			rightBuffer.push_back((*rightResponse)[i]);
+	}
 }
 
 DataContainer * Manager::MakeCallForData()

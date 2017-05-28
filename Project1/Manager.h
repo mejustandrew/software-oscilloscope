@@ -24,9 +24,12 @@ class Manager
 	DataDrawer *dataDrawer;
 	bool isActive;
 	void ProcessData();
+	void ConvertResponseToVector(DataContainer * responseContainer);
 
 	DataContainer * oldResponse;
 	DataContainer * MakeCallForData();
+	std::vector<float> leftBuffer, rightBuffer;
+
 public:
 	Manager(PanelSpecs *panelSpecsLeft, PanelSpecs *panelSpecsRight);
 	~Manager();

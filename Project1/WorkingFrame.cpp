@@ -85,12 +85,12 @@ void WorkingFrame::OnPanelPaint(wxPaintEvent& event)
 
 void WorkingFrame::OnPositionChanged(wxSpinEvent& event)
 {
-	panel1_specs->panel_mid = panel1_specs->panel_height*0.5 - 5 * PositionValue->GetValue();
+	panel1_specs->panel_mid = panel1_specs->panel_height / 2 - PositionValue->GetValue();
 }
 
 void WorkingFrame::OnPosition2Changed(wxSpinEvent& event)
 {
-	panel2_specs->panel_mid = panel2_specs->panel_height*0.5 - 5 * PositionValueChannel2->GetValue();
+	panel2_specs->panel_mid = panel2_specs->panel_height / 2 - PositionValueChannel2->GetValue();
 }
 
 void WorkingFrame::OnSignalSource(wxCommandEvent & event)
@@ -332,10 +332,8 @@ void WorkingFrame::OnPanelResized(wxSizeEvent& event)
 {
 	isResizing = true;
 	m_panel1->GetSize(&panel1_specs->panel_width, &panel1_specs->panel_height);
-	panel1_specs->panel_mid = panel1_specs->panel_height*0.5;
 	panel2_specs->panel_width = panel1_specs->panel_width;
 	panel2_specs->panel_height = panel1_specs->panel_height;
-	panel2_specs->panel_mid = panel1_specs->panel_mid;
 	isResizing = false;
 }
 

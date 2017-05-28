@@ -7,10 +7,10 @@ class DataDrawer
 {
 	PanelSpecs* panelSpecsLeftChannel, *panelSpecsRightChannel;
 
-	void Draw(PanelSpecs* panelSpecs, IDataResponse *buffer);
-	void DrawBothBuffersSameTime(IDataResponse *leftBuffer, IDataResponse *rightBuffer);
+	void Draw(PanelSpecs* panelSpecs, std::vector<float> buffer);
+	void DrawBothBuffersSameTime(std::vector<float> leftBuffer, std::vector<float> rightBuffer);
 	void ClearPanel();
 public:
 	DataDrawer(PanelSpecs* panelSpecsLeftChannel, PanelSpecs* panelSpecsRightChannel);
-	void DrawData(IDataResponse *leftBuffer, IDataResponse *rightBufer);
+	void DrawData(std::vector<float> leftBuffer, std::vector<float> rightBufer);
 };
