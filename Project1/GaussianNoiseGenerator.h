@@ -11,7 +11,7 @@ private:
 	void PopulateResponseBuffer();
 
 public:
-	GaussianNoiseGenerator(float variance, float mean, float sampleRate = 192000);
+	GaussianNoiseGenerator(float variance, float mean, float sampleRate = 96000);
 	void SetVariance(float variance);
 	void SetMean(float mean);
 	virtual IDataResponse * GetSignal(IDataRequest * request) override;

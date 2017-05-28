@@ -10,7 +10,7 @@ IDataResponse * AudioSingleChannelDataProvider::GetNewData(int numberOfSamples)
 	return GetSamples(numberOfSamples);
 }
 
-AudioSingleChannelDataProvider::AudioSingleChannelDataProvider(IDataResponse *(*GetSamples)(int numberOfSamples), float sampleRate) 
-	: GetSamples(GetSamples), sampleRate(sampleRate)
+AudioSingleChannelDataProvider::AudioSingleChannelDataProvider(IDataResponse *(*GetSamples)(int numberOfSamples)) 
+	: GetSamples(GetSamples)
 {
 }

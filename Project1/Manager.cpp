@@ -85,7 +85,7 @@ void Manager::ProcessData()
 		if(responseContainer->LeftChannelData)responseContainer->LeftChannelData->Destroy();
 		if(responseContainer->RightChannelData)responseContainer->RightChannelData->Destroy();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 }
 
