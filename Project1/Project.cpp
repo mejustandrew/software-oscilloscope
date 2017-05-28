@@ -80,7 +80,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	gbSizer41->Add( SpectrumButton, wxGBPosition( 4, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	state_button = new wxButton( this, wxID_ANY, wxT("Off"), wxDefaultPosition, wxSize( 45,23 ), 0 );
-	gbSizer41->Add( state_button, wxGBPosition( 4, 5 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer41->Add( state_button, wxGBPosition( 4, 4 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	horizontalPosition = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 100,-1 ), wxSP_ARROW_KEYS, -100, 100, 0 );
 	gbSizer41->Add( horizontalPosition, wxGBPosition( 5, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
@@ -93,11 +93,11 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	int leftSlopeChoiceNChoices = sizeof( leftSlopeChoiceChoices ) / sizeof( wxString );
 	leftSlopeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 100,-1 ), leftSlopeChoiceNChoices, leftSlopeChoiceChoices, 0 );
 	leftSlopeChoice->SetSelection( 0 );
-	gbSizer41->Add( leftSlopeChoice, wxGBPosition( 6, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer41->Add( leftSlopeChoice, wxGBPosition( 5, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	m_staticText21 = new wxStaticText( this, wxID_ANY, wxT("Slope"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText21->Wrap( -1 );
-	gbSizer41->Add( m_staticText21, wxGBPosition( 6, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer41->Add( m_staticText21, wxGBPosition( 5, 4 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
 	gbSizer1->Add( gbSizer41, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
@@ -160,11 +160,11 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	int rightSlopeChoiceNChoices = sizeof( rightSlopeChoiceChoices ) / sizeof( wxString );
 	rightSlopeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 100,-1 ), rightSlopeChoiceNChoices, rightSlopeChoiceChoices, 0 );
 	rightSlopeChoice->SetSelection( 0 );
-	gbSizer42->Add( rightSlopeChoice, wxGBPosition( 6, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer42->Add( rightSlopeChoice, wxGBPosition( 5, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	m_staticText22 = new wxStaticText( this, wxID_ANY, wxT("Slope"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText22->Wrap( -1 );
-	gbSizer42->Add( m_staticText22, wxGBPosition( 6, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer42->Add( m_staticText22, wxGBPosition( 5, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	m_staticText20 = new wxStaticText( this, wxID_ANY, wxT("Horizontal Position"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText20->Wrap( -1 );
@@ -178,7 +178,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	gbSizer42->Add( SpectrumButton2, wxGBPosition( 4, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	state_button2 = new wxButton( this, wxID_ANY, wxT("Off"), wxDefaultPosition, wxSize( 45,23 ), 0 );
-	gbSizer42->Add( state_button2, wxGBPosition( 4, 5 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	gbSizer42->Add( state_button2, wxGBPosition( 4, 3 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	
 	gbSizer1->Add( gbSizer42, wxGBPosition( 0, 15 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );

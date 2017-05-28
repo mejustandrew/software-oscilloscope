@@ -44,7 +44,7 @@
             <property name="minimum_size">800,553</property>
             <property name="name">BuiltFrame</property>
             <property name="pos"></property>
-            <property name="size">1010,760</property>
+            <property name="size">1010,725</property>
             <property name="style">wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass"></property>
             <property name="title">Oscilloscope</property>
@@ -1196,7 +1196,7 @@
                                 <object class="gbsizeritem" expanded="0">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">5</property>
+                                    <property name="column">4</property>
                                     <property name="flag">wxALL</property>
                                     <property name="row">4</property>
                                     <property name="rowspan">1</property>
@@ -1464,9 +1464,9 @@
                                 <object class="gbsizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">1</property>
+                                    <property name="column">3</property>
                                     <property name="flag">wxALL</property>
-                                    <property name="row">6</property>
+                                    <property name="row">5</property>
                                     <property name="rowspan">1</property>
                                     <object class="wxChoice" expanded="1">
                                         <property name="BottomDockable">1</property>
@@ -1555,9 +1555,9 @@
                                 <object class="gbsizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">2</property>
+                                    <property name="column">4</property>
                                     <property name="flag">wxALL</property>
-                                    <property name="row">6</property>
+                                    <property name="row">5</property>
                                     <property name="rowspan">1</property>
                                     <object class="wxStaticText" expanded="1">
                                         <property name="BottomDockable">1</property>
@@ -2642,9 +2642,9 @@
                                 <object class="gbsizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">0</property>
+                                    <property name="column">2</property>
                                     <property name="flag">wxALL</property>
-                                    <property name="row">6</property>
+                                    <property name="row">5</property>
                                     <property name="rowspan">1</property>
                                     <object class="wxChoice" expanded="1">
                                         <property name="BottomDockable">1</property>
@@ -2733,9 +2733,9 @@
                                 <object class="gbsizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">1</property>
+                                    <property name="column">3</property>
                                     <property name="flag">wxALL</property>
-                                    <property name="row">6</property>
+                                    <property name="row">5</property>
                                     <property name="rowspan">1</property>
                                     <object class="wxStaticText" expanded="1">
                                         <property name="BottomDockable">1</property>
@@ -3082,7 +3082,7 @@
                                 <object class="gbsizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="colspan">1</property>
-                                    <property name="column">5</property>
+                                    <property name="column">3</property>
                                     <property name="flag">wxALL</property>
                                     <property name="row">4</property>
                                     <property name="rowspan">1</property>

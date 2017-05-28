@@ -116,7 +116,7 @@ class BuiltFrame : public wxFrame
 	
 	public:
 		
-		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1010,760 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		BuiltFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Oscilloscope"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1010,725 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~BuiltFrame();
 	

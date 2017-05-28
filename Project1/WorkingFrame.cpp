@@ -105,9 +105,6 @@ void WorkingFrame::OnSignalSource(wxCommandEvent & event)
 	}
 	else
 	{
-		panel1_specs->active = true;
-		panel2_specs->active = true;
-
 		if (signalType == SignalType::Sinusoidal)
 		{
 			SinusoidalSignal sinusoidalLeftSignalModel = signalSourceForm->GetSinusoidalSignalProperties();

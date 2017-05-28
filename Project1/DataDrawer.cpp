@@ -57,13 +57,15 @@ DataDrawer::DataDrawer(PanelSpecs * panelSpecsLeftChannel, PanelSpecs * panelSpe
 void DataDrawer::DrawData(std::vector<float> leftBuffer, std::vector<float> rightBufer)
 {
 	ClearPanel();
-		if (leftBuffer.size() == rightBufer.size() && panelSpecsLeftChannel->active && panelSpecsRightChannel->active)
-			DrawBothBuffersSameTime(leftBuffer, rightBufer);
-		else
-		{
+	if (leftBuffer.size() == rightBufer.size() && panelSpecsLeftChannel->active && panelSpecsRightChannel->active)
+		DrawBothBuffersSameTime(leftBuffer, rightBufer);
+	else
+	{
+		if (panelSpecsLeftChannel->active)
 			Draw(panelSpecsLeftChannel, leftBuffer);
+		if (panelSpecsRightChannel->active)
 			Draw(panelSpecsRightChannel, rightBufer);
-		}
+	}
 
 	panelSpecsLeftChannel->paint_mem->Blit(0, 0, panelSpecsLeftChannel->panel_width, panelSpecsLeftChannel->panel_height, panelSpecsLeftChannel->back_mem, 0, 0);
 	panelSpecsLeftChannel->Invalidate();
