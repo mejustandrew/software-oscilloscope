@@ -385,6 +385,20 @@ void WorkingFrame::OnHorizontalPosition2Changed(wxSpinEvent & event)
 	panel2_specs->horizontalPosition = horizontalPositionChannell2->GetValue();
 }
 
+void WorkingFrame::OnLeftSlopeChoice(wxCommandEvent & event)
+{
+	int selection = leftSlopeChoice->GetSelection();
+	bool isPositiveSlope = selection == 0;
+	manager->SetLeftSlope(isPositiveSlope);
+}
+
+void WorkingFrame::OnRightSlopeChoice(wxCommandEvent & event)
+{
+	int selection = rightSlopeChoice->GetSelection();
+	bool isPositiveSlope = selection == 0;
+	manager->SetRightSlope(isPositiveSlope);
+}
+
 void WorkingFrame::Close(wxCloseEvent& event)
 {
 	panel1_specs->active = false;

@@ -40,6 +40,12 @@ IDataResponse * DoubleBufferHandler::GetBufferWithSizeOf(int size, float treshol
 	return response;
 }
 
+void DoubleBufferHandler::SetSlope(bool positive)
+{
+	responseBuffer1->SetSlope(positive);
+	responseBuffer2->SetSlope(positive);
+}
+
 ResponseBuffer * DoubleBufferHandler::GetInsertingBuffer()
 {
 	return isBuffer1Inserting ? responseBuffer1 : responseBuffer2;
@@ -48,6 +54,4 @@ ResponseBuffer * DoubleBufferHandler::GetInsertingBuffer()
 void DoubleBufferHandler::SwapBuffers()
 {
 	isBuffer1Inserting = !isBuffer1Inserting;
-	/*if (isBuffer1Inserting)responseBuffer1->Destroy();
-	else responseBuffer2->Destroy();*/
 }

@@ -22,3 +22,13 @@ DataContainer * CustomDualChannelDataProvider::GetNewData(IDataRequest * leftCha
 
 	return container;
 }
+
+void CustomDualChannelDataProvider::SetLeftSlope(bool positive)
+{
+	leftChannelGenerator->SetSignalSlope(positive);
+}
+
+void CustomDualChannelDataProvider::SetRightSlope(bool positive)
+{
+	rightChannelGenerator->SetSignalSlope(positive);
+}

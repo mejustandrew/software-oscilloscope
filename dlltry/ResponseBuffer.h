@@ -7,6 +7,7 @@ class _declspec(dllexport) ResponseBuffer : IDataResponse
 	int desiredSize;
 	int accessPosition;
 	CircularBuffer * circularBuffer;
+	bool isPositiveSlope;
 
 	int GetPositionOverTreshold(float threshold);
 public:
@@ -19,4 +20,5 @@ public:
 	void AddValue(float value);
 	IDataResponse * GetBufferWithLoopSize(int numberOfSamples);
 	IDataResponse * GetBufferWithLoopSize(int numberOfSamples, float threshold);
+	void SetSlope(bool positive);
 };

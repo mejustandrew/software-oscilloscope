@@ -17,4 +17,5 @@ public:
 	void AddValue(float value);
 	IDataResponse* GetBufferWithSizeOf(int size);
 	IDataResponse* GetBufferWithSizeOf(int size, float treshold);
+	void SetSlope(bool positive);
 };

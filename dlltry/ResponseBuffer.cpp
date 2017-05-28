@@ -4,6 +4,7 @@ ResponseBuffer::ResponseBuffer()
 {
 	circularBuffer = new CircularBuffer;
 	accessPosition = 0;
+	isPositiveSlope = true;
 }
 
 ResponseBuffer::ResponseBuffer(int bufferSize)
@@ -65,11 +66,26 @@ IDataResponse * ResponseBuffer::GetBufferWithLoopSize(int numberOfSamples, float
 	return nullptr;
 }
 
+void ResponseBuffer::SetSlope(bool positive)
+{
+	isPositiveSlope = positive;
+}
+
 int ResponseBuffer::GetPositionOverTreshold(float threshold)
 {
-	for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues(); i++)
+	if (isPositiveSlope)
 	{
-		if ((*circularBuffer)[i] < threshold && threshold <= (*circularBuffer)[i + 1]) return i+1;
+		for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues(); i++)
+		{
+			if ((*circularBuffer)[i] < threshold && threshold <= (*circularBuffer)[i + 1]) return i + 1;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < circularBuffer->GetNumberOfAvaiableValues(); i++)
+		{
+			if ((*circularBuffer)[i] > threshold && threshold >= (*circularBuffer)[i + 1]) return i + 1;
+		}
 	}
 	return -1;
 }

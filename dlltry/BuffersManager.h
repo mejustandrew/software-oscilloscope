@@ -19,4 +19,6 @@ public:
 	virtual IDataResponse* GetSignalRightSamples(int numberOfSamples, float threshold) override;
 	virtual IDataResponse* GetSpectrumLeftSamples(int numberOfSamples) override;
 	virtual IDataResponse* GetSpectrumRightSamples(int numberOfSamples) override;
+	virtual void SetLeftSlope(bool positive) override;
+	virtual void SetRightSlope(bool positive) override;
 };

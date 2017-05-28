@@ -47,3 +47,13 @@ IDataResponse * BuffersManager::GetSpectrumRightSamples(int numberOfSamples)
 {
 	return rightSpectrumBuffer->GetBufferWithSizeOf(numberOfSamples);
 }
+
+void BuffersManager::SetLeftSlope(bool positive)
+{
+	rightSignalBuffer->SetSlope(positive);
+}
+
+void BuffersManager::SetRightSlope(bool positive)
+{
+	leftSignalBuffer->SetSlope(positive);
+}

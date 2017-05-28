@@ -37,6 +37,8 @@ protected:
 	virtual void OnSignalSource(wxCommandEvent& event);
 	virtual void OnHorizontalPositionChanged(wxSpinEvent& event);
 	virtual void OnHorizontalPosition2Changed(wxSpinEvent& event);
+	virtual void OnLeftSlopeChoice(wxCommandEvent& event);
+	virtual void OnRightSlopeChoice(wxCommandEvent& event);
 	void Close(wxCloseEvent& event);
 
 	void WorkingFrame::DisplayInitializeErrorMessage();

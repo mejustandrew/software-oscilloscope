@@ -92,6 +92,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="PanelSpecs.cpp" />
     <ClCompile Include="Project.cpp" />
+    <ClCompile Include="SignalGenerator.cpp" />
     <ClCompile Include="SignalModels.cpp" />
     <ClCompile Include="SignalSourceForm.cpp" />
     <ClCompile Include="SignalSourceFormLogic.cpp" />

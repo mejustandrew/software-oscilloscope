@@ -1,6 +1,7 @@
 #include"Initialize.h"
 #include<chrono>
 #include<thread>
+#include "..\Project1\Imported.h"
 
 
 bool InitializeResult = false;
@@ -58,6 +59,18 @@ IDataResponse* GetSpectrumRightSamples(int numberOfSamples)
 {
 	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
 	return provider->GetSpectrumRightSamples(numberOfSamples);
+}
+
+void SetLeftSignalSlope(bool positive)
+{
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	provider->SetLeftSlope(positive);
+}
+
+void SetRightSignalSlope(bool positive)
+{
+	ISampleBufferProvider *provider = BufferManagerSingleton::GetSampleBufferProvider();
+	provider->SetRightSlope(positive);
 }
 
 IDataResponse* GetSpectrumLeftSamples(int numberOfSamples)

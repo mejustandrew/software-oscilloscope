@@ -23,6 +23,9 @@ class Manager
 	DataSocketSender *dataSocketSender;
 	DataDrawer *dataDrawer;
 	bool isActive;
+	bool leftSignalSlope, rightSignalSlope;
+
+	void EnsureSlopeIsUpdated();
 	void ProcessData();
 	void ConvertResponseToVector(DataContainer * responseContainer);
 
@@ -39,4 +42,6 @@ public:
 	void SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal);
 	void SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannelSignal, GaussianNoise gaussianNoiseRightChannelSignal);
 	void SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal);
+	void SetLeftSlope(bool positive);
+	void SetRightSlope(bool positive);
 };

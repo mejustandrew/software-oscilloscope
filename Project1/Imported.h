@@ -8,4 +8,6 @@ extern "C" _declspec(dllimport) IDataResponse* GetSignalLeftSamples(IDataRequest
 extern "C" _declspec(dllimport) IDataResponse* GetSpectrumLeftSamples(int numberOfSamples);
 extern "C" _declspec(dllimport) IDataResponse* GetSignalRightSamples(IDataRequest*request);
 extern "C" _declspec(dllimport) IDataResponse* GetSpectrumRightSamples(int numberOfSample);
+extern "C" _declspec(dllimport) void SetLeftSignalSlope(bool positive);
+extern "C" _declspec(dllimport) void SetRightSignalSlope(bool positive);
 extern "C" _declspec(dllimport) bool Initialize();

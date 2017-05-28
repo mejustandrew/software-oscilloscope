@@ -5,6 +5,8 @@
 Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)
 {
+	leftSignalSlope = true;
+	rightSignalSlope = true;
 	audioDualChannelDataProvider = new AudioDualChannelDataProvider;//TODO: Ensure that audio data provider is successfuly initialized and can provide data
 	dataProvider = audioDualChannelDataProvider;
 	sinusoidalSignalLeftChannelGenerator = new SinusoidalSignalGenerator(0, 0);
@@ -14,7 +16,6 @@ Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 
 	customDualChannelDataProvider = new CustomDualChannelDataProvider(sinusoidalSignalLeftChannelGenerator, sinusoidalSignalRightChannelGenerator);
 
-	//dataSocketSender = new DataSocketSender;
 	dataDrawer = new DataDrawer(panelSpecsLeft, panelSpecsRight);
 	oldResponse = new DataContainer;
 }
@@ -42,6 +43,7 @@ void Manager::StopProcessingData()
 void Manager::SwitchSignalSourceToAudio()
 {
 	dataProvider = audioDualChannelDataProvider;
+	EnsureSlopeIsUpdated();
 }
 
 void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLeftChannelSignal, SinusoidalSignal sinusoidalRightChannelSignal)
@@ -54,6 +56,7 @@ void Manager::SwitchSignalSourceToCustomSinusoidal(SinusoidalSignal sinusoidalLe
 	customDualChannelDataProvider->ChangeRightChannelGenerator(sinusoidalSignalRightChannelGenerator);
 
 	dataProvider = customDualChannelDataProvider;
+	EnsureSlopeIsUpdated();
 }
 
 void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNoiseLeftChannelSignal, GaussianNoise gaussianNoiseRightChannelSignal)
@@ -66,10 +69,29 @@ void Manager::SwitchSignalSourceToCustomGaussianNoise(GaussianNoise gaussianNois
 	customDualChannelDataProvider->ChangeRightChannelGenerator(gaussianNoiseRightChannelGenerator);
 
 	dataProvider = customDualChannelDataProvider;
+	EnsureSlopeIsUpdated();
 }
 
 void Manager::SwitchSignalSourceToCustomPWM(PwmSignal pwmSignal)
 {
+}
+
+void Manager::SetLeftSlope(bool positive)
+{
+	leftSignalSlope = positive;
+	dataProvider->SetLeftSlope(positive);
+}
+
+void Manager::SetRightSlope(bool positive)
+{
+	rightSignalSlope = positive;
+	dataProvider->SetRightSlope(positive);
+}
+
+void Manager::EnsureSlopeIsUpdated()
+{
+	dataProvider->SetLeftSlope(leftSignalSlope);
+	dataProvider->SetRightSlope(rightSignalSlope);
 }
 
 void Manager::ProcessData()

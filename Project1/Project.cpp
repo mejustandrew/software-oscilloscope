@@ -89,6 +89,16 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_staticText19->Wrap( -1 );
 	gbSizer41->Add( m_staticText19, wxGBPosition( 5, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
+	wxString leftSlopeChoiceChoices[] = { wxT("Positive"), wxT("Negative") };
+	int leftSlopeChoiceNChoices = sizeof( leftSlopeChoiceChoices ) / sizeof( wxString );
+	leftSlopeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 100,-1 ), leftSlopeChoiceNChoices, leftSlopeChoiceChoices, 0 );
+	leftSlopeChoice->SetSelection( 0 );
+	gbSizer41->Add( leftSlopeChoice, wxGBPosition( 6, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	m_staticText21 = new wxStaticText( this, wxID_ANY, wxT("Slope"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText21->Wrap( -1 );
+	gbSizer41->Add( m_staticText21, wxGBPosition( 6, 2 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
 	
 	gbSizer1->Add( gbSizer41, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
 	
@@ -145,6 +155,16 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	horizontalPositionChannell2 = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 100,-1 ), wxSP_ARROW_KEYS, -100, 100, 0 );
 	gbSizer42->Add( horizontalPositionChannell2, wxGBPosition( 5, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	wxString rightSlopeChoiceChoices[] = { wxT("Positive"), wxT("Negative") };
+	int rightSlopeChoiceNChoices = sizeof( rightSlopeChoiceChoices ) / sizeof( wxString );
+	rightSlopeChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxSize( 100,-1 ), rightSlopeChoiceNChoices, rightSlopeChoiceChoices, 0 );
+	rightSlopeChoice->SetSelection( 0 );
+	gbSizer42->Add( rightSlopeChoice, wxGBPosition( 6, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	
+	m_staticText22 = new wxStaticText( this, wxID_ANY, wxT("Slope"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText22->Wrap( -1 );
+	gbSizer42->Add( m_staticText22, wxGBPosition( 6, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 	
 	m_staticText20 = new wxStaticText( this, wxID_ANY, wxT("Horizontal Position"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText20->Wrap( -1 );
@@ -253,6 +273,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	SpectrumButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClick ), NULL, this );
 	state_button->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 	horizontalPosition->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnHorizontalPositionChanged ), NULL, this );
+	leftSlopeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnLeftSlopeChoice ), NULL, this );
 	VerticalSizeChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::VerticalSize2Changed ), NULL, this );
 	voltSelectionChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVolts2Changed ), NULL, this );
 	timeBaseChannel2->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::TimeBase2Changed ), NULL, this );
@@ -260,6 +281,7 @@ BuiltFrame::BuiltFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	TresholdChannel2->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::Treshold2Changed ), NULL, this );
 	PositionValueChannel2->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPosition2Changed ), NULL, this );
 	horizontalPositionChannell2->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnHorizontalPosition2Changed ), NULL, this );
+	rightSlopeChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnRightSlopeChoice ), NULL, this );
 	SpectrumButton2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClickChannel2 ), NULL, this );
 	state_button2->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChangedChannel2 ), NULL, this );
 	m_panel1->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave ), NULL, this );
@@ -282,6 +304,7 @@ BuiltFrame::~BuiltFrame()
 	SpectrumButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClick ), NULL, this );
 	state_button->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChanged ), NULL, this );
 	horizontalPosition->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnHorizontalPositionChanged ), NULL, this );
+	leftSlopeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnLeftSlopeChoice ), NULL, this );
 	VerticalSizeChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::VerticalSize2Changed ), NULL, this );
 	voltSelectionChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnVolts2Changed ), NULL, this );
 	timeBaseChannel2->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::TimeBase2Changed ), NULL, this );
@@ -289,6 +312,7 @@ BuiltFrame::~BuiltFrame()
 	TresholdChannel2->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::Treshold2Changed ), NULL, this );
 	PositionValueChannel2->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnPosition2Changed ), NULL, this );
 	horizontalPositionChannell2->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( BuiltFrame::OnHorizontalPosition2Changed ), NULL, this );
+	rightSlopeChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( BuiltFrame::OnRightSlopeChoice ), NULL, this );
 	SpectrumButton2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BuiltFrame::OnSpectrumClickChannel2 ), NULL, this );
 	state_button2->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( BuiltFrame::OnStateChangedChannel2 ), NULL, this );
 	m_panel1->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( BuiltFrame::PanelLeave ), NULL, this );

@@ -12,4 +12,6 @@ public:
 	void ChangeLeftChannelGenerator(SignalGenerator * signalGenerator);
 	void ChangeRightChannelGenerator(SignalGenerator * signalGenerator);
 	virtual DataContainer* GetNewData(IDataRequest * leftChannelRequest, IDataRequest * rightChannelRequest);
+	virtual void SetLeftSlope(bool positive);
+	virtual void SetRightSlope(bool positive);
 };
