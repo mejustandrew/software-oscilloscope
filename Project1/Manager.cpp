@@ -1,6 +1,6 @@
 #include "Manager.h"
-#include <thread>
 #include "DataRequest.h"
+#include <thread>
 
 Manager::Manager(PanelSpecs * panelSpecsLeft, PanelSpecs * panelSpecsRight):
 	panelSpecsLeft(panelSpecsLeft), panelSpecsRight(panelSpecsRight)

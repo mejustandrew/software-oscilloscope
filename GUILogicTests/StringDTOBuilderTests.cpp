@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "StringDTOBuilder.h"
+#include<thread>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
