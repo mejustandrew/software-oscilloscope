@@ -101,6 +101,7 @@ namespace DataAcquisitionTests
 			int numberOfWantedValues = 200;
 			float threshold = 200;
 			DoubleBufferHandler handler(numberOfValues);
+			handler.SetSlope(true);
 			PopulateBuffer(handler, numberOfValues);
 
 			IDataResponse *response = handler.GetBufferWithSizeOf(numberOfWantedValues, threshold);
