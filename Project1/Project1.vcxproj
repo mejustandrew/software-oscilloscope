@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,12 +20,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -55,7 +55,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;$(SolutionDir)\Debug\Digital_Oscilloscope.lib;$(WXWIN)\lib\vc_lib\wxbase31ud.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_core.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_adv.lib;$(WXWIN)\lib\vc_lib\wxpngd.lib;$(WXWIN)\lib\vc_lib\wxtiffd.lib;$(WXWIN)\lib\vc_lib\wxjpegd.lib;$(WXWIN)\lib\vc_lib\wxzlibd.lib;$(WXWIN)\lib\vc_lib\wxregexud.lib;$(WXWIN)\lib\vc_lib\wxexpatd.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;$(SolutionDir)$(Configuration)\Digital_Oscilloscope.lib;$(WXWIN)\lib\vc_lib\wxbase31ud.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_core.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_adv.lib;$(WXWIN)\lib\vc_lib\wxpngd.lib;$(WXWIN)\lib\vc_lib\wxtiffd.lib;$(WXWIN)\lib\vc_lib\wxjpegd.lib;$(WXWIN)\lib\vc_lib\wxzlibd.lib;$(WXWIN)\lib\vc_lib\wxregexud.lib;$(WXWIN)\lib\vc_lib\wxexpatd.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
