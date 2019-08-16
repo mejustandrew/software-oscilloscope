@@ -109,7 +109,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="dlltry.cpp" />
     <ClCompile Include="DoubleBufferHandler.cpp" />
     <ClCompile Include="Initialize.cpp" />
     <ClCompile Include="ResponseBuffer.cpp" />
