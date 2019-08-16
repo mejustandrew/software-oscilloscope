@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{78D31890-37C0-4D5A-B5F2-0A833BB5EF53}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>OscilloscopeUI</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\ucrt\x86</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswud\;$(WXWIN)\include\;C:\Program Files (x86)\Windows Kits\10\Include\10.0.10150.0\ucrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_DEBUG;UNICODE;_UNICODE;_DEBUG;__WXDEBUG__;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;$(SolutionDir)$(Configuration)\DataAcquisition.lib;$(WXWIN)\lib\vc_lib\wxbase31ud.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_core.lib;$(WXWIN)\lib\vc_lib\wxmsw31ud_adv.lib;$(WXWIN)\lib\vc_lib\wxpngd.lib;$(WXWIN)\lib\vc_lib\wxtiffd.lib;$(WXWIN)\lib\vc_lib\wxjpegd.lib;$(WXWIN)\lib\vc_lib\wxzlibd.lib;$(WXWIN)\lib\vc_lib\wxregexud.lib;$(WXWIN)\lib\vc_lib\wxexpatd.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x86</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;$(SolutionDir)\Debug\Digital_Oscilloscope.lib;$(WXWIN)\lib\vc_lib\wxbase31u.lib;$(WXWIN)\lib\vc_lib\wxmsw31u_core.lib;$(WXWIN)\lib\vc_lib\wxmsw31u_adv.lib;$(WXWIN)\lib\vc_lib\wxpng.lib;$(WXWIN)\lib\vc_lib\wxtiff.lib;$(WXWIN)\lib\vc_lib\wxjpeg.lib;$(WXWIN)\lib\vc_lib\wxzlib.lib;$(WXWIN)\lib\vc_lib\wxregexu.lib;$(WXWIN)\lib\vc_lib\wxexpat.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;odbc32.lib;odbccp32.lib;winmm.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioSingleChannelDataProvider.cpp" />
+    <ClCompile Include="ConnectionHandler.cpp" />
+    <ClCompile Include="CustomDualChannelDataProvider.cpp" />
+    <ClCompile Include="CustomSingleChannelDataProvider.cpp" />
+    <ClCompile Include="DataDrawer.cpp" />
+    <ClCompile Include="AudioDualChannelDataProvider.cpp" />
+    <ClCompile Include="DataRequest.cpp" />
+    <ClCompile Include="DataSocketSender.cpp" />
+    <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="GaussianNoiseGenerator.cpp" />
+    <ClCompile Include="IDualChannelDataProvider.cpp" />
+    <ClCompile Include="ISingleChannelDataProvider.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="OscilloscopeUI.cpp" />
+    <ClCompile Include="PanelSpecs.cpp" />
+    <ClCompile Include="SignalGenerator.cpp" />
+    <ClCompile Include="SignalModels.cpp" />
+    <ClCompile Include="SignalSourceForm.cpp" />
+    <ClCompile Include="SignalSourceFormLogic.cpp" />
+    <ClCompile Include="SignalTypesAvaiableProperties.cpp" />
+    <ClCompile Include="SinusoidalSignalGenerator.cpp" />
+    <ClCompile Include="Spectrum.cpp" />
+    <ClCompile Include="SpectrumManager.cpp" />
+    <ClCompile Include="WorkingFrame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AudioSingleChannelDataProvider.h" />
+    <ClInclude Include="ConnectionHandler.h" />
+    <ClInclude Include="CustomDualChannelDataProvider.h" />
+    <ClInclude Include="CustomSingleChannelDataProvider.h" />
+    <ClInclude Include="DataContainer.h" />
+    <ClInclude Include="DataDrawer.h" />
+    <ClInclude Include="AudioDualChannelDataProvider.h" />
+    <ClInclude Include="DataSocketSender.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="GaussianNoiseGenerator.h" />
+    <ClInclude Include="IDualChannelDataProvider.h" />
+    <ClInclude Include="ISingleChannelDataProvider.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="PanelSpecs.h" />
+    <ClInclude Include="IDataRequest.h" />
+    <ClInclude Include="Imported.h" />
+    <ClInclude Include="DataRequest.h" />
+    <ClInclude Include="SignalGenerator.h" />
+    <ClInclude Include="SignalModels.h" />
+    <ClInclude Include="SignalSourceForm.h" />
+    <ClInclude Include="SignalSourceFormLogic.h" />
+    <ClInclude Include="SignalTypesAvaiableProperties.h" />
+    <ClInclude Include="SinusoidalSignalGenerator.h" />
+    <ClInclude Include="Spectrum.h" />
+    <ClInclude Include="SpectrumManager.h" />
+    <ClInclude Include="StringDTOBuilder.h" />
+    <ClInclude Include="WorkingFrame.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
