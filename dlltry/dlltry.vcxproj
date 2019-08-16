@@ -86,8 +86,6 @@
     <ClInclude Include="BufferManagerSingleton.h" />
     <ClInclude Include="BuffersManager.h" />
     <ClInclude Include="CircularBuffer.h" />
-    <ClInclude Include="ContainersManager.h" />
-    <ClInclude Include="DataResponse.h" />
     <ClInclude Include="DoubleBufferHandler.h" />
     <ClInclude Include="Exported.h" />
     <ClInclude Include="IDataRequest.h" />
@@ -96,7 +94,6 @@
     <ClInclude Include="ISampleBuffersProvider.h" />
     <ClInclude Include="ISamplesHolder.h" />
     <ClInclude Include="ResponseBuffer.h" />
-    <ClInclude Include="Singletone.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -104,8 +101,6 @@
     <ClCompile Include="BufferManagerSingleton.cpp" />
     <ClCompile Include="BuffersManager.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
-    <ClCompile Include="ContainersManager.cpp" />
-    <ClCompile Include="DataResponse.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -118,7 +113,6 @@
     <ClCompile Include="DoubleBufferHandler.cpp" />
     <ClCompile Include="Initialize.cpp" />
     <ClCompile Include="ResponseBuffer.cpp" />
-    <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

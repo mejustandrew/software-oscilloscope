@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="NewSources">
-      <UniqueIdentifier>{97c6980e-8773-4ca0-8753-a211a2ae3f81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewHeaders">
-      <UniqueIdentifier>{b11864d9-7390-446e-87f7-f4c7f26d9b85}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,44 +27,35 @@
     <ClInclude Include="Exported.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataResponse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IDataRequest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IDataResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Initialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Singletone.h">
+    <ClInclude Include="ResponseBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ContainersManager.h">
+    <ClInclude Include="BufferManagerSingleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuffersManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CircularBuffer.h">
-      <Filter>NewHeaders</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DoubleBufferHandler.h">
-      <Filter>NewHeaders</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BuffersManager.h">
-      <Filter>NewHeaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ISamplesHolder.h">
-      <Filter>NewHeaders</Filter>
+    <ClInclude Include="IDataResponse.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ISampleBuffersProvider.h">
-      <Filter>NewHeaders</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BufferManagerSingleton.h">
-      <Filter>NewHeaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ResponseBuffer.h">
-      <Filter>NewHeaders</Filter>
+    <ClInclude Include="ISamplesHolder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,32 +68,23 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataResponse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Singletone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Initialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ContainersManager.cpp">
+    <ClCompile Include="ResponseBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BufferManagerSingleton.cpp">
-      <Filter>NewSources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BuffersManager.cpp">
-      <Filter>NewSources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
-      <Filter>NewSources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DoubleBufferHandler.cpp">
-      <Filter>NewSources</Filter>
-    </ClCompile>
-    <ClCompile Include="ResponseBuffer.cpp">
-      <Filter>NewSources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
